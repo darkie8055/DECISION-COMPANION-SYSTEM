@@ -5,7 +5,20 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates';
 import type { Decision } from '@/lib/decision-engine';
-import { ChevronRight, Briefcase, Zap, MapPin, TrendingUp, Lightbulb, Home, GraduationCap, Settings } from 'lucide-react';
+import { 
+  ChevronRight, 
+  Briefcase, 
+  Zap, 
+  MapPin, 
+  TrendingUp, 
+  Lightbulb, 
+  Home, 
+  GraduationCap,
+  Settings,
+  HelpCircle,
+  PlayCircle,
+  Clock
+} from 'lucide-react';
 
 interface TemplatesSelectorProps {
   onSelectTemplate: (template: Decision) => void;
@@ -30,6 +43,36 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
           Make better decisions with weighted scoring and data-driven analysis
         </p>
       </div>
+
+      {/* Help Banner */}
+      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-blue-900 dark:text-blue-100">
+            <HelpCircle className="w-5 h-5" />
+            How This Works (Super Simple!)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-4 gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">1</div>
+              <span className="text-blue-800 dark:text-blue-200">Pick a template or create custom</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">2</div>
+              <span className="text-blue-800 dark:text-blue-200">Rate what matters most</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">3</div>
+              <span className="text-blue-800 dark:text-blue-200">Score your options 0-10</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">4</div>
+              <span className="text-blue-800 dark:text-blue-200">Get your best choice!</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-6">
         {TEMPLATE_CATEGORIES.map((category) => (
@@ -60,22 +103,42 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
                     <CardContent>
                       <div className="space-y-4">
                         <div className="text-sm">
-                          <p className="font-semibold text-foreground mb-2 text-xs uppercase tracking-wide">Top Criteria:</p>
+                          <p className="font-semibold text-foreground mb-2 text-xs uppercase tracking-wide flex items-center gap-1">
+                            <PlayCircle className="w-3 h-3" />
+                            What We'll Compare:
+                          </p>
                           <ul className="text-xs space-y-1">
                             {template.criteria.slice(0, 3).map((criterion) => (
                               <li key={criterion.id} className="flex justify-between items-center">
                                 <span className="text-muted-foreground">{criterion.name}</span>
                                 <Badge variant="outline" className="text-xs font-bold">
-                                  {criterion.weight}%
+                                  {criterion.weight}% important
                                 </Badge>
                               </li>
                             ))}
                             {template.criteria.length > 3 && (
                               <li className="text-muted-foreground text-xs pt-1">
-                                + {template.criteria.length - 3} more criteria
+                                + {template.criteria.length - 3} more factors
                               </li>
                             )}
                           </ul>
+                        </div>
+                        
+                        {/* Example use case */}
+                        <div className="bg-secondary/30 p-2 rounded text-xs">
+                          <div className="flex items-center gap-1 mb-1">
+                            <Clock className="w-3 h-3 text-muted-foreground" />
+                            <span className="font-medium text-muted-foreground">Takes ~5 minutes</span>
+                          </div>
+                          <span className="text-muted-foreground">
+                            {template.name === 'Job Offer Evaluation' && 'Perfect for comparing multiple job offers'}
+                            {template.name === 'Laptop Purchase Decision' && 'Great for finding the best laptop for your budget'}
+                            {template.name === 'Vacation Destination' && 'Choose your next trip destination easily'}
+                            {template.name === 'Business Investment' && 'Evaluate investment opportunities objectively'}
+                            {template.name === 'Real Estate Purchase' && 'Compare houses or apartments systematically'}
+                            {template.name === 'College/University Selection' && 'Pick the right school for your future'}
+                            {template.name === 'Vendor/Supplier Selection' && 'Choose the best business partner'}
+                          </span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 mt-2">
                           <Button
@@ -126,9 +189,10 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
         <Button
           variant="secondary"
           className="h-12"
+          onClick={() => window.open('https://github.com/yourusername/decision-companion', '_blank')}
         >
-          <Briefcase className="w-4 h-4 mr-2" />
-          View Examples
+          <HelpCircle className="w-4 h-4 mr-2" />
+          Need Help? See Examples
         </Button>
       </div>
 

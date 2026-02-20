@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { TemplatesSelector } from '@/components/templates-selector';
 import { TemplateCustomizer } from '@/components/template-customizer';
 import { DecisionForm } from '@/components/decision-form';
-import { ScoringMatrix } from '@/components/scoring-matrix';
+import { ScoringMatrix } from '@/components/scoring-matrix-improved';
 import { AnalysisResults } from '@/components/analysis-results';
 import { SensitivityAnalysis } from '@/components/sensitivity-analysis';
 import { DecisionHistory } from '@/components/decision-history';
 import { RiskAssessment } from '@/components/risk-assessment';
+import { OnboardingTour } from '@/components/onboarding-tour';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
@@ -23,6 +24,7 @@ export default function Home() {
   const [selectedTemplate, setSelectedTemplate] = useState<Decision | null>(null);
   const [decisionHistory, setDecisionHistory] = useState<Decision[]>([]);
   const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history'>('analysis');
+  const [showOnboarding, setShowOnboarding] = useState(true);
 
   const handleSelectTemplate = (template: Decision) => {
     const newDecision = { ...template, id: Date.now().toString() };
@@ -51,6 +53,14 @@ export default function Home() {
   const handleBackFromCustomize = () => {
     setSelectedTemplate(null);
     setStep('templates');
+  };
+
+  const handleCompleteOnboarding = () => {
+    setShowOnboarding(false);
+  };
+
+  const handleSkipOnboarding = () => {
+    setShowOnboarding(false);
   };
 
   const handleDecisionCreate = (newDecision: Decision) => {
@@ -131,6 +141,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background">
       <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+        {/* Onboarding Tour */}
+        {showOnboarding && (
+          <OnboardingTour
+            onComplete={handleCompleteOnboarding}
+            onSkip={handleSkipOnboarding}
+          />
+        )}
         {/* Header Navigation */}
         {step !== 'templates' && step !== 'history' && (
           <div className="flex items-center justify-between mb-8 pb-6 border-b">
