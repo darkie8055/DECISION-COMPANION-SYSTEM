@@ -74,109 +74,113 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
         </CardContent>
       </Card>
 
-      <div className="grid gap-6">
-        {TEMPLATE_CATEGORIES.map((category) => (
-          <div key={category.name} className="space-y-4">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20">
+      <div className="space-y-8">
+        <div className="flex flex-wrap gap-6 justify-center">
+          {TEMPLATE_CATEGORIES.map((category) => (
+            <div key={category.name} className="flex items-center gap-3 px-6 py-3 glass-card rounded-full hover-lift">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20">
                 {CATEGORY_ICONS[category.name]}
               </div>
-              <h2 className="text-2xl font-bold gradient-text">{category.name}</h2>
+              <h2 className="text-lg font-bold gradient-text">{category.name}</h2>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {category.templates.map((templateId) => {
-                const template = TEMPLATES[templateId];
-                return (
-                  <Card
-                    key={templateId}
-                    className="glass-card hover-lift group border border-white/20 dark:border-gray-700/20 transition-all duration-300 hover:scale-[1.02]"
-                  >
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between mb-2">
-                        <CardTitle className="group-hover:text-primary transition-colors text-lg font-bold">
-                          {template.name}
-                        </CardTitle>
-                        <Badge variant="secondary" className="ml-auto bg-gradient-to-r from-primary/10 to-accent/10 text-primary font-semibold border-primary/20">
-                          {template.criteria.length} criteria
-                        </Badge>
+          ))}
+        </div>
+
+        {/* All templates in one grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {TEMPLATE_CATEGORIES.flatMap(category => 
+            category.templates.map((templateId) => {
+              const template = TEMPLATES[templateId];
+              return (
+                <Card
+                  key={templateId}
+                  className="glass-card hover-lift group border border-white/20 dark:border-gray-700/20 transition-all duration-300 hover:scale-[1.02]"
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <CardTitle className="group-hover:text-primary transition-colors text-lg font-bold">
+                        {template.name}
+                      </CardTitle>
+                      <Badge variant="secondary" className="ml-auto bg-gradient-to-r from-primary/10 to-accent/10 text-primary font-semibold border-primary/20">
+                        {template.criteria.length} criteria
+                      </Badge>
+                    </div>
+                    <CardDescription className="text-sm leading-relaxed">{template.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="text-sm">
+                        <p className="font-semibold text-foreground mb-2 text-xs uppercase tracking-wide flex items-center gap-1">
+                          <PlayCircle className="w-3 h-3" />
+                          What We'll Compare:
+                        </p>
+                        <ul className="text-xs space-y-1">
+                          {template.criteria.slice(0, 3).map((criterion) => (
+                            <li key={criterion.id} className="flex justify-between items-center">
+                              <span className="text-muted-foreground">{criterion.name}</span>
+                              <Badge variant="outline" className="text-xs font-bold">
+                                {criterion.weight}% important
+                              </Badge>
+                            </li>
+                          ))}
+                          {template.criteria.length > 3 && (
+                            <li className="text-muted-foreground text-xs pt-1">
+                              + {template.criteria.length - 3} more factors
+                            </li>
+                          )}
+                        </ul>
                       </div>
-                      <CardDescription className="text-sm leading-relaxed">{template.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="text-sm">
-                          <p className="font-semibold text-foreground mb-2 text-xs uppercase tracking-wide flex items-center gap-1">
-                            <PlayCircle className="w-3 h-3" />
-                            What We'll Compare:
-                          </p>
-                          <ul className="text-xs space-y-1">
-                            {template.criteria.slice(0, 3).map((criterion) => (
-                              <li key={criterion.id} className="flex justify-between items-center">
-                                <span className="text-muted-foreground">{criterion.name}</span>
-                                <Badge variant="outline" className="text-xs font-bold">
-                                  {criterion.weight}% important
-                                </Badge>
-                              </li>
-                            ))}
-                            {template.criteria.length > 3 && (
-                              <li className="text-muted-foreground text-xs pt-1">
-                                + {template.criteria.length - 3} more factors
-                              </li>
-                            )}
-                          </ul>
+                      
+                      {/* Example use case */}
+                      <div className="bg-secondary/30 p-2 rounded text-xs">
+                        <div className="flex items-center gap-1 mb-1">
+                          <Clock className="w-3 h-3 text-muted-foreground" />
+                          <span className="font-medium text-muted-foreground">Takes ~5 minutes</span>
                         </div>
-                        
-                        {/* Example use case */}
-                        <div className="bg-secondary/30 p-2 rounded text-xs">
-                          <div className="flex items-center gap-1 mb-1">
-                            <Clock className="w-3 h-3 text-muted-foreground" />
-                            <span className="font-medium text-muted-foreground">Takes ~5 minutes</span>
-                          </div>
-                          <span className="text-muted-foreground">
-                            {template.name === 'Job Offer Evaluation' && 'Perfect for comparing multiple job offers'}
-                            {template.name === 'Laptop Purchase Decision' && 'Great for finding the best laptop for your budget'}
-                            {template.name === 'Vacation Destination' && 'Choose your next trip destination easily'}
-                            {template.name === 'Business Investment' && 'Evaluate investment opportunities objectively'}
-                            {template.name === 'Real Estate Purchase' && 'Compare houses or apartments systematically'}
-                            {template.name === 'College/University Selection' && 'Pick the right school for your future'}
-                            {template.name === 'Vendor/Supplier Selection' && 'Choose the best business partner'}
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2 mt-2">
+                        <span className="text-muted-foreground">
+                          {template.name === 'Job Offer Evaluation' && 'Perfect for comparing multiple job offers'}
+                          {template.name === 'Laptop Purchase Decision' && 'Great for finding the best laptop for your budget'}
+                          {template.name === 'Vacation Destination' && 'Choose your next trip destination easily'}
+                          {template.name === 'Business Investment' && 'Evaluate investment opportunities objectively'}
+                          {template.name === 'Real Estate Purchase' && 'Compare houses or apartments systematically'}
+                          {template.name === 'College/University Selection' && 'Pick the right school for your future'}
+                          {template.name === 'Vendor/Supplier Selection' && 'Choose the best business partner'}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectTemplate(template);
+                          }}
+                          className="group/btn"
+                        >
+                          Use Now
+                          <ChevronRight className="w-4 h-4 ml-1" />
+                        </Button>
+                        {onCustomizeTemplate && (
                           <Button
-                            variant="outline"
                             size="sm"
                             onClick={(e) => {
                               e.stopPropagation();
-                              onSelectTemplate(template);
+                              onCustomizeTemplate(template);
                             }}
-                            className="group/btn"
+                            className="group/btn gap-1"
                           >
-                            Use Now
-                            <ChevronRight className="w-4 h-4 ml-1" />
+                            <Settings className="w-4 h-4" />
+                            Customize
                           </Button>
-                          {onCustomizeTemplate && (
-                            <Button
-                              size="sm"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                onCustomizeTemplate(template);
-                              }}
-                              className="group/btn gap-1"
-                            >
-                              <Settings className="w-4 h-4" />
-                              Customize
-                            </Button>
-                          )}
-                        </div>
+                        )}
                       </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 mt-12">
