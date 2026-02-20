@@ -82,6 +82,71 @@ export const TEMPLATES: Record<string, Decision> = {
   },
 };
 
+export const TEMPLATES_DATA: Record<string, Decision> = {
+  'home-purchase': {
+    id: 'home-purchase',
+    name: 'Real Estate Purchase',
+    description: 'Evaluate properties based on location, price, and features',
+    criteria: [
+      { id: '1', name: 'Price & Affordability', weight: 25 },
+      { id: '2', name: 'Location Quality', weight: 20 },
+      { id: '3', name: 'Property Condition', weight: 20 },
+      { id: '4', name: 'Neighborhood Safety', weight: 15 },
+      { id: '5', name: 'Schools & Amenities', weight: 10 },
+      { id: '6', name: 'Investment Potential', weight: 10 },
+    ],
+    options: [
+      { id: 'a', name: 'Property A' },
+      { id: 'b', name: 'Property B' },
+      { id: 'c', name: 'Property C' },
+    ],
+    scores: [],
+    createdAt: new Date(),
+  },
+  'college-choice': {
+    id: 'college-choice',
+    name: 'College/University Selection',
+    description: 'Compare universities for your academic future',
+    criteria: [
+      { id: '1', name: 'Academic Reputation', weight: 22 },
+      { id: '2', name: 'Tuition & Financial Aid', weight: 20 },
+      { id: '3', name: 'Location & Campus', weight: 15 },
+      { id: '4', name: 'Program Quality', weight: 18 },
+      { id: '5', name: 'Student Life', weight: 10 },
+      { id: '6', name: 'Career Services', weight: 15 },
+    ],
+    options: [
+      { id: 'a', name: 'University A' },
+      { id: 'b', name: 'University B' },
+      { id: 'c', name: 'University C' },
+    ],
+    scores: [],
+    createdAt: new Date(),
+  },
+  'vendor-selection': {
+    id: 'vendor-selection',
+    name: 'Vendor/Supplier Selection',
+    description: 'Choose the best vendor for your business needs',
+    criteria: [
+      { id: '1', name: 'Price Competitiveness', weight: 20 },
+      { id: '2', name: 'Quality Standards', weight: 25 },
+      { id: '3', name: 'Delivery Reliability', weight: 20 },
+      { id: '4', name: 'Customer Support', weight: 15 },
+      { id: '5', name: 'Financial Stability', weight: 10 },
+      { id: '6', name: 'Scalability', weight: 10 },
+    ],
+    options: [
+      { id: 'a', name: 'Vendor A' },
+      { id: 'b', name: 'Vendor B' },
+      { id: 'c', name: 'Vendor C' },
+    ],
+    scores: [],
+    createdAt: new Date(),
+  },
+};
+
+Object.assign(TEMPLATES, TEMPLATES_DATA);
+
 export const TEMPLATE_CATEGORIES = [
   {
     name: 'Career',
@@ -97,6 +162,10 @@ export const TEMPLATE_CATEGORIES = [
   },
   {
     name: 'Business',
-    templates: ['business-investment'],
+    templates: ['business-investment', 'home-purchase', 'vendor-selection'],
+  },
+  {
+    name: 'Education',
+    templates: ['college-choice'],
   },
 ];

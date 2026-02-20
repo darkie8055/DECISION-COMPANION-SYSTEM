@@ -3,10 +3,13 @@
 import { useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ScatterChart, Scatter, LineChart, Line } from 'recharts';
 import type { Decision, AnalysisResult } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
-import { Download, Share2 } from 'lucide-react';
+import { Download, Share2, TrendingUp, Award, Zap } from 'lucide-react';
 
 interface AnalysisResultsProps {
   decision: Decision;
@@ -54,27 +57,48 @@ export function AnalysisResults({
     <div className="space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Top Recommendation</CardTitle>
+        <Card className="border-green-200 dark:border-green-800/50 bg-gradient-to-br from-green-50 to-green-50/50 dark:from-green-950/20 dark:to-transparent">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Award className="w-4 h-4 text-green-600" />
+              Top Recommendation
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-primary">{results[0]?.optionName}</div>
-            <p className="text-sm text-muted-foreground mt-2">
-              Score: {results[0]?.totalScore.toFixed(2)}/10
+            <div className="text-2xl font-bold text-green-700 dark:text-green-400 mb-1">{results[0]?.optionName}</div>
+            <div className="flex items-center gap-2">
+              <div className="text-3xl font-bold">{results[0]?.totalScore.toFixed(1)}</div>
+              <div className="text-muted-foreground text-sm">/10</div>
+            </div>
+            <Progress value={(results[0]?.totalScore || 0) / 10 * 100} className="mt-3 h-2" />
+            <p className="text-xs text-muted-foreground mt-2">
+              {results[0]?.percentage.toFixed(0)}% confidence score
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Average Score</CardTitle>
+        <Card className="border-blue-200 dark:border-blue-800/50 bg-gradient-to-br from-blue-50 to-blue-50/50 dark:from-blue-950/20 dark:to-transparent">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-blue-600" />
+              Average Score
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-accent">
-              {(results.reduce((sum, r) => sum + r.totalScore, 0) / results.length).toFixed(2)}
+            <div className="text-3xl font-bold text-blue-700 dark:text-blue-400">
+              {(results.reduce((sum, r) => sum + r.totalScore, 0) / results.length).toFixed(1)}
             </div>
-            <p className="text-sm text-muted-foreground mt-2">across all options</p>
+            <p className="text-sm text-muted-foreground mt-2">across {results.length} option{results.length !== 1 ? 's' : ''}</p>
+            <div className="mt-2 text-xs space-y-1">
+              <div className="flex justify-between">
+                <span>Best:</span>
+                <span className="font-semibold">{Math.max(...results.map(r => r.totalScore)).toFixed(1)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Worst:</span>
+                <span className="font-semibold">{Math.min(...results.map(r => r.totalScore)).toFixed(1)}</span>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -121,39 +145,90 @@ export function AnalysisResults({
         </CardContent>
       </Card>
 
+      {/* Ranking with Progress Bars */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="w-5 h-5" />
+            Rankings & Scores
+          </CardTitle>
+          <CardDescription>How each option compares</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {results.map((result, index) => (
+            <div key={result.optionId} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Badge 
+                    variant={index === 0 ? "default" : index === 1 ? "secondary" : "outline"}
+                    className="text-base px-3 py-1"
+                  >
+                    #{result.rank}
+                  </Badge>
+                  <div>
+                    <p className="font-semibold">{result.optionName}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {result.totalScore.toFixed(2)} / 10
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xl font-bold text-primary">
+                    {result.percentage.toFixed(0)}%
+                  </div>
+                </div>
+              </div>
+              <Progress value={result.totalScore / 10 * 100} className="h-3" />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
       {/* Detailed Results Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Detailed Breakdown</CardTitle>
-          <CardDescription>Score breakdown by criterion for each option</CardDescription>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="w-5 h-5" />
+            Detailed Breakdown
+          </CardTitle>
+          <CardDescription>Complete score breakdown by criterion</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-4 font-semibold">Option</th>
-                  <th className="text-right py-2 px-4 font-semibold">Rank</th>
+                <tr className="border-b-2">
+                  <th className="text-left py-3 px-4 font-semibold">Option</th>
+                  <th className="text-center py-3 px-4 font-semibold">Rank</th>
                   {decision.criteria.map((criterion) => (
-                    <th key={criterion.id} className="text-right py-2 px-4 font-semibold">
-                      <div>{criterion.name.substring(0, 15)}</div>
-                      <div className="font-normal text-xs text-muted-foreground">{criterion.weight}%</div>
+                    <th key={criterion.id} className="text-center py-3 px-4 font-semibold">
+                      <div className="whitespace-nowrap text-xs">{criterion.name.substring(0, 12)}</div>
+                      <div className="font-normal text-xs text-muted-foreground">{criterion.weight}% wt</div>
                     </th>
                   ))}
-                  <th className="text-right py-2 px-4 font-semibold">Total</th>
+                  <th className="text-center py-3 px-4 font-semibold">Total Score</th>
                 </tr>
               </thead>
               <tbody>
-                {comparisonData.map((result) => (
-                  <tr key={result.optionId} className="border-b hover:bg-secondary/50">
-                    <td className="py-3 px-4 font-medium">{result.optionName}</td>
-                    <td className="py-3 px-4 text-right font-bold">{result.rank}</td>
+                {comparisonData.map((result, idx) => (
+                  <tr key={result.optionId} className={idx !== comparisonData.length - 1 ? 'border-b' : ''}>
+                    <td className="py-3 px-4 font-semibold">{result.optionName}</td>
+                    <td className="py-3 px-4 text-center">
+                      <Badge variant={idx === 0 ? "default" : "outline"}>
+                        #{result.rank}
+                      </Badge>
+                    </td>
                     {result.scores.map((score) => (
-                      <td key={score.criterionName} className="py-3 px-4 text-right">
-                        {score.score.toFixed(1)}
+                      <td key={score.criterionName} className="py-3 px-4 text-center">
+                        <Badge 
+                          variant="outline" 
+                          className={score.score >= 7 ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/50' : 'bg-secondary'}
+                        >
+                          {score.score.toFixed(1)}
+                        </Badge>
                       </td>
                     ))}
-                    <td className="py-3 px-4 text-right font-bold bg-primary/5">
+                    <td className="py-3 px-4 text-center font-bold bg-primary/5 rounded border">
                       {result.totalScore.toFixed(2)}
                     </td>
                   </tr>
@@ -165,22 +240,21 @@ export function AnalysisResults({
       </Card>
 
       {/* Actions */}
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={() => onExport(decision, results)}
           variant="outline"
-          className="flex-1"
+          className="gap-2"
         >
-          <Download className="w-4 h-4 mr-2" />
+          <Download className="w-4 h-4" />
           Export Report
         </Button>
         <Button
           onClick={onSensitivityAnalysis}
-          variant="outline"
-          className="flex-1"
+          className="gap-2"
         >
-          <Share2 className="w-4 h-4 mr-2" />
-          Sensitivity Analysis
+          <Zap className="w-4 h-4" />
+          Test Sensitivity
         </Button>
       </div>
     </div>

@@ -6,18 +6,25 @@ import { DecisionForm } from '@/components/decision-form';
 import { ScoringMatrix } from '@/components/scoring-matrix';
 import { AnalysisResults } from '@/components/analysis-results';
 import { SensitivityAnalysis } from '@/components/sensitivity-analysis';
+import { DecisionHistory } from '@/components/decision-history';
+import { RiskAssessment } from '@/components/risk-assessment';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle } from 'lucide-react';
+import { generateDetailedReport, downloadFile } from '@/lib/export-utils';
 
-type Step = 'templates' | 'setup' | 'scoring' | 'results' | 'sensitivity';
+type Step = 'templates' | 'setup' | 'scoring' | 'results' | 'sensitivity' | 'risk' | 'history';
 
 export default function Home() {
   const [step, setStep] = useState<Step>('templates');
   const [decision, setDecision] = useState<Decision | null>(null);
+  const [decisionHistory, setDecisionHistory] = useState<Decision[]>([]);
+  const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history'>('analysis');
 
   const handleSelectTemplate = (template: Decision) => {
-    setDecision(template);
+    const newDecision = { ...template, id: Date.now().toString() };
+    setDecision(newDecision);
     setStep('scoring');
   };
 
@@ -27,7 +34,12 @@ export default function Home() {
   };
 
   const handleDecisionCreate = (newDecision: Decision) => {
-    setDecision(newDecision);
+    const enhancedDecision = {
+      ...newDecision,
+      id: Date.now().toString(),
+      createdAt: new Date(),
+    };
+    setDecision(enhancedDecision);
     setStep('scoring');
   };
 
@@ -42,8 +54,26 @@ export default function Home() {
   };
 
   const handleExport = (decision: Decision, results: AnalysisResult[]) => {
-    const reportContent = generateReport(decision, results);
-    downloadReport(reportContent, decision.name);
+    const reportContent = generateDetailedReport(decision, results);
+    const filename = `decision-report-${decision.name.toLowerCase().replace(/\s+/g, '-')}-${new Date().getTime()}.txt`;
+    downloadFile(reportContent, filename, 'text/plain');
+  };
+
+  const handleSaveDecision = () => {
+    if (decision && !decisionHistory.some(d => d.id === decision.id)) {
+      setDecisionHistory([...decisionHistory, decision]);
+    }
+  };
+
+  const handleLoadDecision = (savedDecision: Decision) => {
+    setDecision(savedDecision);
+    setStep('scoring');
+  };
+
+  const handleCompareDecisions = () => {
+    if (decisionHistory.length > 0) {
+      setStep('history');
+    }
   };
 
   const handleGoBack = () => {
@@ -57,10 +87,17 @@ export default function Home() {
         setStep('templates');
         break;
       case 'results':
+        setActiveTab('analysis');
         setStep('scoring');
         break;
       case 'sensitivity':
+      case 'risk':
+        setActiveTab('analysis');
         setStep('results');
+        break;
+      case 'history':
+        setStep('templates');
+        setDecision(null);
         break;
       default:
         break;
@@ -68,27 +105,84 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        {/* Header with navigation */}
-        {step !== 'templates' && (
-          <div className="flex items-center gap-4 mb-8">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleGoBack}
-              className="gap-2"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Back
-            </Button>
-            <div className="flex-1">
-              <h1 className="text-2xl font-bold">
-                {step === 'setup' && 'Create Decision'}
-                {step === 'scoring' && 'Score Options'}
-                {step === 'results' && 'Analysis Results'}
-                {step === 'sensitivity' && 'Sensitivity Analysis'}
-              </h1>
+    <main className="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background">
+      <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+        {/* Header Navigation */}
+        {step !== 'templates' && step !== 'history' && (
+          <div className="flex items-center justify-between mb-8 pb-6 border-b">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleGoBack}
+                className="gap-2"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Back
+              </Button>
+              <div className="h-6 w-px bg-border" />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setStep('templates');
+                  setDecision(null);
+                }}
+                className="gap-2"
+              >
+                <HomeIcon className="w-4 h-4" />
+                Home
+              </Button>
+            </div>
+            <div className="flex items-center gap-2">
+              {decision && step === 'results' && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleSaveDecision}
+                    className="gap-2"
+                  >
+                    <History className="w-4 h-4" />
+                    Save
+                  </Button>
+                  {decisionHistory.length > 0 && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCompareDecisions}
+                      className="gap-2"
+                    >
+                      <BarChart3 className="w-4 h-4" />
+                      Compare
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <Share2 className="w-4 h-4" />
+                    Share
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Home Header */}
+        {step === 'templates' && (
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-2">
+                  Decision Companion
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-2xl">
+                  Make smarter decisions with weighted scoring, visual analysis, and AI-powered insights. Compare options objectively and explore trade-offs.
+                </p>
+              </div>
             </div>
           </div>
         )}
@@ -108,8 +202,8 @@ export default function Home() {
 
           {step === 'scoring' && decision && (
             <div className="space-y-6">
-              <div className="bg-white dark:bg-card p-6 rounded-lg border">
-                <h2 className="text-xl font-semibold mb-2">{decision.name}</h2>
+              <div className="bg-gradient-to-br from-primary/5 to-primary/2 p-6 rounded-lg border border-primary/10">
+                <h2 className="text-2xl font-bold mb-2">{decision.name}</h2>
                 {decision.description && (
                   <p className="text-muted-foreground">{decision.description}</p>
                 )}
@@ -124,29 +218,56 @@ export default function Home() {
 
           {step === 'results' && decision && (
             <div className="space-y-6">
-              <div className="bg-white dark:bg-card p-6 rounded-lg border">
-                <h2 className="text-xl font-semibold mb-2">{decision.name}</h2>
+              <div className="bg-gradient-to-br from-primary/5 to-primary/2 p-6 rounded-lg border border-primary/10">
+                <h2 className="text-2xl font-bold mb-2">{decision.name}</h2>
                 {decision.description && (
                   <p className="text-muted-foreground">{decision.description}</p>
                 )}
               </div>
-              <AnalysisResults
-                decision={decision}
-                onExport={handleExport}
-                onSensitivityAnalysis={() => setStep('sensitivity')}
-              />
+              
+              <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="analysis" className="gap-2">
+                    <BarChart3 className="w-4 h-4" />
+                    Analysis
+                  </TabsTrigger>
+                  <TabsTrigger value="risk" className="gap-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    Risk Assessment
+                  </TabsTrigger>
+                  <TabsTrigger value="history" className="gap-2">
+                    <History className="w-4 h-4" />
+                    Sensitivity
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="analysis" className="space-y-4">
+                  <AnalysisResults
+                    decision={decision}
+                    onExport={handleExport}
+                    onSensitivityAnalysis={() => {
+                      setActiveTab('history');
+                    }}
+                  />
+                </TabsContent>
+
+                <TabsContent value="risk" className="space-y-4">
+                  <RiskAssessment decision={decision} />
+                </TabsContent>
+
+                <TabsContent value="history" className="space-y-4">
+                  <SensitivityAnalysis decision={decision} />
+                </TabsContent>
+              </Tabs>
             </div>
           )}
 
-          {step === 'sensitivity' && decision && (
+          {step === 'history' && decisionHistory.length > 0 && (
             <div className="space-y-6">
-              <div className="bg-white dark:bg-card p-6 rounded-lg border">
-                <h2 className="text-xl font-semibold mb-2">{decision.name}</h2>
-                {decision.description && (
-                  <p className="text-muted-foreground">{decision.description}</p>
-                )}
-              </div>
-              <SensitivityAnalysis decision={decision} />
+              <DecisionHistory
+                decisions={decisionHistory}
+                onSelectDecision={handleLoadDecision}
+              />
             </div>
           )}
         </div>
@@ -155,68 +276,4 @@ export default function Home() {
   );
 }
 
-function generateReport(decision: Decision, results: AnalysisResult[]): string {
-  const timestamp = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  let report = `DECISION ANALYSIS REPORT
-========================\n`;
-  report += `Generated: ${timestamp}\n`;
-  report += `Decision: ${decision.name}\n`;
-  if (decision.description) {
-    report += `Description: ${decision.description}\n`;
-  }
-
-  report += `\nCRITERIA & WEIGHTS\n`;
-  report += `------------------\n`;
-  decision.criteria.forEach((criterion) => {
-    report += `• ${criterion.name}: ${criterion.weight}%\n`;
-  });
-
-  report += `\nOPTIONS EVALUATED\n`;
-  report += `------------------\n`;
-  decision.options.forEach((option) => {
-    report += `• ${option.name}\n`;
-  });
-
-  report += `\nSCORING MATRIX\n`;
-  report += `------------------\n`;
-  report += `Option`;
-  decision.criteria.forEach((c) => {
-    report += `\t${c.name}`;
-  });
-  report += `\tTotal\n`;
-
-  results.forEach((result) => {
-    report += `${result.optionName}`;
-    result.scores.forEach((score) => {
-      report += `\t${score.score}`;
-    });
-    report += `\t${result.totalScore.toFixed(2)}\n`;
-  });
-
-  report += `\nRANKINGS\n`;
-  report += `------------------\n`;
-  results.forEach((result) => {
-    report += `${result.rank}. ${result.optionName} - ${result.totalScore.toFixed(2)}/10 (${result.percentage.toFixed(1)}%)\n`;
-  });
-
-  report += `\nRECOMMENDATION\n`;
-  report += `------------------\n`;
-  report += `Based on the weighted scoring analysis, "${results[0].optionName}" is the recommended choice with a score of ${results[0].totalScore.toFixed(2)}/10.\n`;
-
-  return report;
-}
-
-function downloadReport(content: string, decisionName: string) {
-  const element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-  element.setAttribute('download', `decision-report-${decisionName.toLowerCase().replace(/\s+/g, '-')}.txt`);
-  element.style.display = 'none';
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
-}
+// Export is now handled by handleExport which uses the utility functions
