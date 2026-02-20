@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates';
 import type { Decision } from '@/lib/decision-engine';
-import { ChevronRight, Briefcase, Zap, MapPin, TrendingUp, Lightbulb, Home, GraduationCap } from 'lucide-react';
+import { ChevronRight, Briefcase, Zap, MapPin, TrendingUp, Lightbulb, Home, GraduationCap, Settings } from 'lucide-react';
 
 interface TemplatesSelectorProps {
   onSelectTemplate: (template: Decision) => void;
+  onCustomizeTemplate?: (template: Decision) => void;
   onCreateCustom: () => void;
 }
 
@@ -20,7 +21,7 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   Education: <GraduationCap className="w-5 h-5" />,
 };
 
-export function TemplatesSelector({ onSelectTemplate, onCreateCustom }: TemplatesSelectorProps) {
+export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCreateCustom }: TemplatesSelectorProps) {
   return (
     <div className="space-y-8">
       <div className="text-center space-y-2">
@@ -43,8 +44,7 @@ export function TemplatesSelector({ onSelectTemplate, onCreateCustom }: Template
                 return (
                   <Card
                     key={templateId}
-                    className="hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group border-2"
-                    onClick={() => onSelectTemplate(template)}
+                    className="hover:shadow-md hover:border-primary/30 transition-all group border-2"
                   >
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between mb-2">
@@ -77,17 +77,33 @@ export function TemplatesSelector({ onSelectTemplate, onCreateCustom }: Template
                             )}
                           </ul>
                         </div>
-                        <Button
-                          className="w-full mt-2 group/btn"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectTemplate(template);
-                          }}
-                        >
-                          Use Template
-                          <ChevronRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                        </Button>
+                        <div className="grid grid-cols-2 gap-2 mt-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSelectTemplate(template);
+                            }}
+                            className="group/btn"
+                          >
+                            Use Now
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                          </Button>
+                          {onCustomizeTemplate && (
+                            <Button
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onCustomizeTemplate(template);
+                              }}
+                              className="group/btn gap-1"
+                            >
+                              <Settings className="w-4 h-4" />
+                              Customize
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>

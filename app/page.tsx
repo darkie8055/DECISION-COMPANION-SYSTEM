@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { TemplatesSelector } from '@/components/templates-selector';
+import { TemplateCustomizer } from '@/components/template-customizer';
 import { DecisionForm } from '@/components/decision-form';
 import { ScoringMatrix } from '@/components/scoring-matrix';
 import { AnalysisResults } from '@/components/analysis-results';
@@ -14,11 +15,12 @@ import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
 import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle } from 'lucide-react';
 import { generateDetailedReport, downloadFile } from '@/lib/export-utils';
 
-type Step = 'templates' | 'setup' | 'scoring' | 'results' | 'sensitivity' | 'risk' | 'history';
+type Step = 'templates' | 'customize' | 'setup' | 'scoring' | 'results' | 'sensitivity' | 'risk' | 'history';
 
 export default function Home() {
   const [step, setStep] = useState<Step>('templates');
   const [decision, setDecision] = useState<Decision | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<Decision | null>(null);
   const [decisionHistory, setDecisionHistory] = useState<Decision[]>([]);
   const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history'>('analysis');
 
@@ -28,9 +30,27 @@ export default function Home() {
     setStep('scoring');
   };
 
+  const handleCustomizeTemplate = (template: Decision) => {
+    setSelectedTemplate(template);
+    setStep('customize');
+  };
+
   const handleCreateCustom = () => {
     setDecision(null);
+    setSelectedTemplate(null);
     setStep('setup');
+  };
+
+  const handleConfirmCustomization = (customizedTemplate: Decision) => {
+    const newDecision = { ...customizedTemplate, id: Date.now().toString() };
+    setDecision(newDecision);
+    setSelectedTemplate(null);
+    setStep('scoring');
+  };
+
+  const handleBackFromCustomize = () => {
+    setSelectedTemplate(null);
+    setStep('templates');
   };
 
   const handleDecisionCreate = (newDecision: Decision) => {
@@ -82,6 +102,10 @@ export default function Home() {
         setStep('templates');
         setDecision(null);
         break;
+      case 'customize':
+        setStep('templates');
+        setSelectedTemplate(null);
+        break;
       case 'scoring':
         setDecision(null);
         setStep('templates');
@@ -127,6 +151,7 @@ export default function Home() {
                 onClick={() => {
                   setStep('templates');
                   setDecision(null);
+                  setSelectedTemplate(null);
                 }}
                 className="gap-2"
               >
@@ -192,7 +217,16 @@ export default function Home() {
           {step === 'templates' && (
             <TemplatesSelector
               onSelectTemplate={handleSelectTemplate}
+              onCustomizeTemplate={handleCustomizeTemplate}
               onCreateCustom={handleCreateCustom}
+            />
+          )}
+
+          {step === 'customize' && selectedTemplate && (
+            <TemplateCustomizer
+              template={selectedTemplate}
+              onConfirm={handleConfirmCustomization}
+              onBack={handleBackFromCustomize}
             />
           )}
 
