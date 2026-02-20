@@ -139,8 +139,25 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background via-secondary/5 to-background">
-      <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Floating background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl animate-float" />
+        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-xl animate-float-delayed" />
+        <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-gradient-to-br from-purple-400/15 to-pink-400/15 rounded-full blur-xl animate-float" />
+        <div className="absolute bottom-40 right-10 w-28 h-28 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl animate-float-delayed" />
+        <div className="absolute top-1/3 left-1/2 w-20 h-20 bg-gradient-to-br from-yellow-400/15 to-orange-400/15 rounded-full blur-xl animate-gentle-pulse" />
+        
+        {/* Geometric patterns */}
+        <div className="absolute top-0 left-0 w-full h-full backdrop-elements" />
+        
+        {/* Floating particles */}
+        <div className="absolute top-1/4 right-1/3 w-2 h-2 bg-blue-400/40 rounded-full animate-gentle-pulse" />
+        <div className="absolute top-3/4 left-1/5 w-1.5 h-1.5 bg-purple-400/40 rounded-full animate-gentle-pulse" style={{animationDelay: '1s'}} />
+        <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-cyan-400/40 rounded-full animate-gentle-pulse" style={{animationDelay: '2s'}} />
+      </div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-6 md:py-10">
         {/* Onboarding Tour */}
         {showOnboarding && (
           <OnboardingTour
@@ -150,80 +167,95 @@ export default function Home() {
         )}
         {/* Header Navigation */}
         {step !== 'templates' && step !== 'history' && (
-          <div className="flex items-center justify-between mb-8 pb-6 border-b">
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleGoBack}
-                className="gap-2"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                Back
-              </Button>
-              <div className="h-6 w-px bg-border" />
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setStep('templates');
-                  setDecision(null);
-                  setSelectedTemplate(null);
-                }}
-                className="gap-2"
-              >
-                <HomeIcon className="w-4 h-4" />
-                Home
-              </Button>
-            </div>
-            <div className="flex items-center gap-2">
-              {decision && step === 'results' && (
-                <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleSaveDecision}
-                    className="gap-2"
-                  >
-                    <History className="w-4 h-4" />
-                    Save
-                  </Button>
-                  {decisionHistory.length > 0 && (
+          <div className="glass-card rounded-2xl p-6 mb-8 hover-lift">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleGoBack}
+                  className="gap-2 hover:bg-white/20 dark:hover:bg-gray-800/20"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Back
+                </Button>
+                <div className="h-6 w-px bg-gradient-to-b from-transparent via-border to-transparent" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setStep('templates');
+                    setDecision(null);
+                    setSelectedTemplate(null);
+                  }}
+                  className="gap-2 hover:bg-white/20 dark:hover:bg-gray-800/20"
+                >
+                  <HomeIcon className="w-4 h-4" />
+                  Home
+                </Button>
+              </div>
+              <div className="flex items-center gap-2">
+                {decision && step === 'results' && (
+                  <>
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={handleCompareDecisions}
-                      className="gap-2"
+                      onClick={handleSaveDecision}
+                      className="gap-2 bg-white/10 dark:bg-gray-800/10 border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-700/20"
                     >
-                      <BarChart3 className="w-4 h-4" />
-                      Compare
+                      <History className="w-4 h-4" />
+                      Save
                     </Button>
-                  )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Share2 className="w-4 h-4" />
-                    Share
-                  </Button>
-                </>
-              )}
+                    {decisionHistory.length > 0 && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleCompareDecisions}
+                        className="gap-2 bg-white/10 dark:bg-gray-800/10 border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-700/20"
+                      >
+                        <BarChart3 className="w-4 h-4" />
+                        Compare
+                      </Button>
+                    )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 bg-white/10 dark:bg-gray-800/10 border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-700/20"
+                    >
+                      <Share2 className="w-4 h-4" />
+                      Share
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}
 
         {/* Home Header */}
         {step === 'templates' && (
-          <div className="mb-12">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-2">
-                  Decision Companion
+          <div className="mb-12 text-center">
+            <div className="relative">
+              {/* Background glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 blur-3xl rounded-full" />
+              
+              <div className="relative">
+                <h1 className="text-6xl md:text-7xl font-bold mb-4">
+                  <span className="gradient-text animate-gradient">
+                    Decision Companion
+                  </span>
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-2xl">
-                  Make smarter decisions with weighted scoring, visual analysis, and AI-powered insights. Compare options objectively and explore trade-offs.
+                <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+                  Make smarter decisions with weighted scoring, visual analysis, and AI-powered insights. 
+                  <span className="text-primary font-semibold">Compare options objectively</span> and explore trade-offs.
                 </p>
+                
+                {/* Decorative elements */}
+                <div className="flex justify-center mt-8 gap-4">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-gentle-pulse" />
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-gentle-pulse" style={{animationDelay: '0.5s'}} />
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-gentle-pulse" style={{animationDelay: '1s'}} />
+                </div>
               </div>
             </div>
           </div>
@@ -253,11 +285,13 @@ export default function Home() {
 
           {step === 'scoring' && decision && (
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-primary/5 to-primary/2 p-6 rounded-lg border border-primary/10">
-                <h2 className="text-2xl font-bold mb-2">{decision.name}</h2>
-                {decision.description && (
-                  <p className="text-muted-foreground">{decision.description}</p>
-                )}
+              <div className="glass-card p-8 rounded-2xl hover-lift">
+                <div className="text-center md:text-left">
+                  <h2 className="text-3xl font-bold mb-3 gradient-text">{decision.name}</h2>
+                  {decision.description && (
+                    <p className="text-muted-foreground text-lg leading-relaxed">{decision.description}</p>
+                  )}
+                </div>
               </div>
               <ScoringMatrix
                 decision={decision}
@@ -269,47 +303,53 @@ export default function Home() {
 
           {step === 'results' && decision && (
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-primary/5 to-primary/2 p-6 rounded-lg border border-primary/10">
-                <h2 className="text-2xl font-bold mb-2">{decision.name}</h2>
-                {decision.description && (
-                  <p className="text-muted-foreground">{decision.description}</p>
-                )}
+              <div className="glass-card p-8 rounded-2xl hover-lift">
+                <div className="text-center md:text-left">
+                  <h2 className="text-3xl font-bold mb-3 gradient-text">{decision.name}</h2>
+                  {decision.description && (
+                    <p className="text-muted-foreground text-lg leading-relaxed">{decision.description}</p>
+                  )}
+                </div>
               </div>
               
-              <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="analysis" className="gap-2">
-                    <BarChart3 className="w-4 h-4" />
-                    Analysis
-                  </TabsTrigger>
-                  <TabsTrigger value="risk" className="gap-2">
-                    <AlertTriangle className="w-4 h-4" />
-                    Risk Assessment
-                  </TabsTrigger>
-                  <TabsTrigger value="history" className="gap-2">
-                    <History className="w-4 h-4" />
-                    Sensitivity
-                  </TabsTrigger>
-                </TabsList>
+              <div className="glass-card rounded-2xl overflow-hidden">
+                <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
+                  <TabsList className="grid w-full grid-cols-3 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+                    <TabsTrigger value="analysis" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
+                      <BarChart3 className="w-4 h-4" />
+                      Analysis
+                    </TabsTrigger>
+                    <TabsTrigger value="risk" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
+                      <AlertTriangle className="w-4 h-4" />
+                      Risk Assessment
+                    </TabsTrigger>
+                    <TabsTrigger value="history" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
+                      <History className="w-4 h-4" />
+                      Sensitivity
+                    </TabsTrigger>
+                  </TabsList>
 
-                <TabsContent value="analysis" className="space-y-4">
-                  <AnalysisResults
-                    decision={decision}
-                    onExport={handleExport}
-                    onSensitivityAnalysis={() => {
-                      setActiveTab('history');
-                    }}
-                  />
-                </TabsContent>
+                  <div className="p-6">
+                    <TabsContent value="analysis" className="space-y-4">
+                      <AnalysisResults
+                        decision={decision}
+                        onExport={handleExport}
+                        onSensitivityAnalysis={() => {
+                          setActiveTab('history');
+                        }}
+                      />
+                    </TabsContent>
 
-                <TabsContent value="risk" className="space-y-4">
-                  <RiskAssessment decision={decision} />
-                </TabsContent>
+                    <TabsContent value="risk" className="space-y-4">
+                      <RiskAssessment decision={decision} />
+                    </TabsContent>
 
-                <TabsContent value="history" className="space-y-4">
-                  <SensitivityAnalysis decision={decision} />
-                </TabsContent>
-              </Tabs>
+                    <TabsContent value="history" className="space-y-4">
+                      <SensitivityAnalysis decision={decision} />
+                    </TabsContent>
+                  </div>
+                </Tabs>
+              </div>
             </div>
           )}
 

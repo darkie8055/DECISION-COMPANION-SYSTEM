@@ -45,30 +45,30 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
       </div>
 
       {/* Help Banner */}
-      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+      <Card className="glass-card border-blue-200/30 dark:border-blue-800/30 hover-lift">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-blue-900 dark:text-blue-100">
-            <HelpCircle className="w-5 h-5" />
+          <CardTitle className="flex items-center gap-2 gradient-text">
+            <HelpCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             How This Works (Super Simple!)
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-4 gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">1</div>
-              <span className="text-blue-800 dark:text-blue-200">Pick a template or create custom</span>
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shadow-lg">1</div>
+              <span className="text-blue-800 dark:text-blue-200 font-medium">Pick a template or create custom</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">2</div>
-              <span className="text-blue-800 dark:text-blue-200">Rate what matters most</span>
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white flex items-center justify-center text-xs font-bold shadow-lg">2</div>
+              <span className="text-blue-800 dark:text-blue-200 font-medium">Rate what matters most</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">3</div>
-              <span className="text-blue-800 dark:text-blue-200">Score your options 0-10</span>
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-green-600 to-cyan-600 text-white flex items-center justify-center text-xs font-bold shadow-lg">3</div>
+              <span className="text-blue-800 dark:text-blue-200 font-medium">Score your options 0-10</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">4</div>
-              <span className="text-blue-800 dark:text-blue-200">Get your best choice!</span>
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-orange-600 to-pink-600 text-white flex items-center justify-center text-xs font-bold shadow-lg">4</div>
+              <span className="text-blue-800 dark:text-blue-200 font-medium">Get your best choice!</span>
             </div>
           </div>
         </CardContent>
@@ -77,9 +77,11 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
       <div className="grid gap-6">
         {TEMPLATE_CATEGORIES.map((category) => (
           <div key={category.name} className="space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              {CATEGORY_ICONS[category.name]}
-              <h2 className="text-xl font-semibold">{category.name}</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20">
+                {CATEGORY_ICONS[category.name]}
+              </div>
+              <h2 className="text-2xl font-bold gradient-text">{category.name}</h2>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category.templates.map((templateId) => {
@@ -87,18 +89,18 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
                 return (
                   <Card
                     key={templateId}
-                    className="hover:shadow-md hover:border-primary/30 transition-all group border-2"
+                    className="glass-card hover-lift group border border-white/20 dark:border-gray-700/20 transition-all duration-300 hover:scale-[1.02]"
                   >
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between mb-2">
-                        <CardTitle className="group-hover:text-primary transition-colors text-lg">
+                        <CardTitle className="group-hover:text-primary transition-colors text-lg font-bold">
                           {template.name}
                         </CardTitle>
-                        <Badge variant="secondary" className="ml-auto">
+                        <Badge variant="secondary" className="ml-auto bg-gradient-to-r from-primary/10 to-accent/10 text-primary font-semibold border-primary/20">
                           {template.criteria.length} criteria
                         </Badge>
                       </div>
-                      <CardDescription className="text-xs">{template.description}</CardDescription>
+                      <CardDescription className="text-sm leading-relaxed">{template.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
@@ -177,47 +179,49 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2 mt-12">
         <Button
           variant="outline"
-          className="h-12"
+          className="h-14 glass border-primary/30 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-300 text-lg font-semibold"
           onClick={onCreateCustom}
         >
-          <Lightbulb className="w-4 h-4 mr-2" />
+          <Lightbulb className="w-5 h-5 mr-3" />
           Create Custom Decision
         </Button>
         <Button
           variant="secondary"
-          className="h-12"
+          className="h-14 glass border-secondary/30 hover:bg-gradient-to-r hover:from-secondary/10 hover:to-muted/10 transition-all duration-300 text-lg font-semibold"
           onClick={() => window.open('https://github.com/yourusername/decision-companion', '_blank')}
         >
-          <HelpCircle className="w-4 h-4 mr-2" />
+          <HelpCircle className="w-5 h-5 mr-3" />
           Need Help? See Examples
         </Button>
       </div>
 
-      <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/10">
+      <Card className="glass-card border-primary/20 hover-lift mt-8">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Lightbulb className="w-5 h-5 text-primary" />
-            How Decision Companion Works
+          <CardTitle className="flex items-center gap-3 text-2xl">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20">
+              <Lightbulb className="w-6 h-6 text-primary" />
+            </div>
+            <span className="gradient-text">How Decision Companion Works</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
-              { num: 1, text: 'Choose a template or create a custom decision framework' },
-              { num: 2, text: 'Define your criteria and assign importance weights' },
-              { num: 3, text: 'Rate each option on a 0-10 scale for every criterion' },
-              { num: 4, text: 'Get automatic weighted scoring and rankings' },
-              { num: 5, text: 'Explore risk assessment and sensitivity analysis' },
-              { num: 6, text: 'Export your analysis and compare past decisions' },
+              { num: 1, text: 'Choose a template or create a custom decision framework', gradient: 'from-blue-500 to-cyan-500' },
+              { num: 2, text: 'Define your criteria and assign importance weights', gradient: 'from-purple-500 to-blue-500' },
+              { num: 3, text: 'Rate each option on a 0-10 scale for every criterion', gradient: 'from-green-500 to-cyan-500' },
+              { num: 4, text: 'Get automatic weighted scoring and rankings', gradient: 'from-orange-500 to-pink-500' },
+              { num: 5, text: 'Explore risk assessment and sensitivity analysis', gradient: 'from-pink-500 to-purple-500' },
+              { num: 6, text: 'Export your analysis and compare past decisions', gradient: 'from-indigo-500 to-blue-500' },
             ].map((item) => (
-              <div key={item.num} className="flex gap-3">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
+              <div key={item.num} className="flex gap-4 items-start group">
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r ${item.gradient} text-white flex items-center justify-center text-sm font-bold shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {item.num}
                 </div>
-                <span className="text-sm">{item.text}</span>
+                <span className="text-sm leading-relaxed group-hover:text-primary transition-colors duration-300">{item.text}</span>
               </div>
             ))}
           </div>
