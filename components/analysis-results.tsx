@@ -128,7 +128,7 @@ export function AnalysisResults({
               <XAxis dataKey="name" />
               <YAxis domain={[0, 10]} />
               <Tooltip
-                formatter={(value) => value.toFixed(2)}
+                formatter={(value) => typeof value === 'number' ? value.toFixed(2) : value}
                 contentStyle={{
                   backgroundColor: 'var(--background)',
                   border: '1px solid var(--border)',

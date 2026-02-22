@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates';
 import type { Decision } from '@/lib/decision-engine';
 import { 
@@ -192,14 +193,78 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
           <Lightbulb className="w-5 h-5 mr-3" />
           Create Custom Decision
         </Button>
-        <Button
-          variant="secondary"
-          className="h-14 glass border-secondary/30 hover:bg-gradient-to-r hover:from-secondary/10 hover:to-muted/10 transition-all duration-300 text-lg font-semibold"
-          onClick={() => window.open('https://github.com/yourusername/decision-companion', '_blank')}
-        >
-          <HelpCircle className="w-5 h-5 mr-3" />
-          Need Help? See Examples
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="secondary"
+              className="h-14 glass border-secondary/30 hover:bg-gradient-to-r hover:from-secondary/10 hover:to-muted/10 transition-all duration-300 text-lg font-semibold"
+            >
+              <HelpCircle className="w-5 h-5 mr-3" />
+              Need Help? View Guide
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>How to Use Decision Companion</DialogTitle>
+              <DialogDescription>
+                Quick examples to get you started
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-semibold mb-2">Example: Laptop Purchase Decision</h3>
+                <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg text-sm">
+                  <p><strong>Criteria & Weights:</strong></p>
+                  <ul className="ml-4 space-y-1">
+                    <li>• Price (40%) - Budget is important</li>
+                    <li>• Performance (30%) - Need for work</li>
+                    <li>• Battery Life (20%) - Travel frequently</li>
+                    <li>• Portability (10%) - Nice to have</li>
+                  </ul>
+                  <p className="mt-3"><strong>Options:</strong></p>
+                  <ul className="ml-4 space-y-1">
+                    <li>• MacBook Air M3</li>
+                    <li>• Dell XPS 13</li>
+                    <li>• ThinkPad X1 Carbon</li>
+                  </ul>
+                  <p className="mt-3"><strong>Scoring:</strong> Rate each laptop 0-10 on each criterion, get recommendation!</p>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold mb-2">Tips for Good Decisions:</h3>
+                <div className="grid gap-3 text-sm">
+                  <div className="flex gap-2">
+                    <span className="font-medium text-green-600">✓</span>
+                    <span>Use specific criteria that matter to YOU</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="font-medium text-green-600">✓</span>
+                    <span>Set weights based on your priorities (more important = higher %)</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="font-medium text-green-600">✓</span>
+                    <span>Score honestly - compare each option to your ideal</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="font-medium text-green-600">✓</span>
+                    <span>Use the sensitivity analysis to test "what if" scenarios</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold mb-2">Common Use Cases:</h3>
+                <div className="grid gap-2 text-sm">
+                  <div>• <strong>Career:</strong> Job offers, colleges, career paths</div>
+                  <div>• <strong>Purchases:</strong> Cars, homes, gadgets, software</div>
+                  <div>• <strong>Business:</strong> Vendors, investments, strategies</div>
+                  <div>• <strong>Personal:</strong> Vacations, living locations, major choices</div>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Card className="glass-card border-primary/20 hover-lift mt-8">
