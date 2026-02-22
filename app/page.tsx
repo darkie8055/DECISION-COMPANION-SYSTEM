@@ -13,8 +13,7 @@ import { OnboardingTour } from '@/components/onboarding-tour';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
-import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle } from 'lucide-react';
-import { generateDetailedReport, downloadFile } from '@/lib/export-utils';
+import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle, Check, Loader2 } from 'lucide-react';
 
 type Step = 'templates' | 'customize' | 'setup' | 'scoring' | 'results' | 'sensitivity' | 'risk' | 'history';
 
@@ -25,6 +24,9 @@ export default function Home() {
   const [decisionHistory, setDecisionHistory] = useState<Decision[]>([]);
   const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history'>('analysis');
   const [showOnboarding, setShowOnboarding] = useState(true);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'shared'>('idle');
+  const [previousStep, setPreviousStep] = useState<Step | null>(null);
 
   const handleSelectTemplate = (template: Decision) => {
     const newDecision = { ...template, id: Date.now().toString() };
@@ -83,15 +85,109 @@ export default function Home() {
     setStep('results');
   };
 
-  const handleExport = (decision: Decision, results: AnalysisResult[]) => {
-    const reportContent = generateDetailedReport(decision, results);
-    const filename = `decision-report-${decision.name.toLowerCase().replace(/\s+/g, '-')}-${new Date().getTime()}.txt`;
-    downloadFile(reportContent, filename, 'text/plain');
+  const handleSaveDecision = async () => {
+    if (decision) {
+      // Check if current decision (by original ID) is already saved
+      const isAlreadySaved = decisionHistory.some(d => d.id.startsWith(decision.id.split('-saved-')[0]));
+      
+      if (!isAlreadySaved) {
+        setSaveStatus('saving');
+        
+        // Simulate save operation
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Create a unique saved version with timestamp
+        const now = new Date();
+        const savedDecision = {
+          ...decision,
+          id: `${decision.id}-saved-${Date.now()}`, // Unique ID for saved version
+          savedAt: now,
+          displayName: `${decision.name} (${now.toLocaleDateString()} ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})})`,
+        };
+        
+        setDecisionHistory([...decisionHistory, savedDecision]);
+        setSaveStatus('saved');
+        
+        // Reset status after 2 seconds
+        setTimeout(() => setSaveStatus('idle'), 2000);
+      }
+    }
   };
 
-  const handleSaveDecision = () => {
-    if (decision && !decisionHistory.some(d => d.id === decision.id)) {
-      setDecisionHistory([...decisionHistory, decision]);
+  const handleShareDecision = async () => {
+    if (!decision) return;
+    
+    setShareStatus('sharing');
+    
+    try {
+      const shareData = {
+        title: `Decision Analysis: ${decision.name}`,
+        text: `Check out my decision analysis for "${decision.name}"`,
+        url: window.location.href,
+      };
+
+      if (navigator.share && navigator.canShare?.(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback to clipboard
+        const shareText = `Decision Analysis: ${decision.name}\n\n${decision.description || 'No description'}\n\nCriteria: ${decision.criteria.map(c => `${c.name} (${c.weight}%)`).join(', ')}\n\nOptions: ${decision.options.map(o => o.name).join(', ')}\n\nShared from Decision Companion`;
+        await navigator.clipboard.writeText(shareText);
+      }
+      
+      setShareStatus('shared');
+    } catch (error) {
+      console.error('Error sharing:', error);
+      setShareStatus('idle');
+    }
+    
+    // Reset status after 2 seconds
+    setTimeout(() => setShareStatus('idle'), 2000);
+  };
+
+  const getSaveButtonContent = () => {
+    switch (saveStatus) {
+      case 'saving':
+        return (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Saving...
+          </>
+        );
+      case 'saved':
+        return (
+          <>
+            <Check className="w-4 h-4" />
+            Saved!
+          </>
+        );
+      default:
+        return 'Save Decision';
+    }
+  };
+
+  const getShareButtonContent = () => {
+    switch (shareStatus) {
+      case 'sharing':
+        return (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Sharing...
+          </>
+        );
+      case 'shared':
+        return (
+          <>
+            <Check className="w-4 h-4" />
+            Shared!
+          </>
+        );
+      default:
+        return (
+          <>
+            <Share2 className="w-4 h-4" />
+            Share
+          </>
+        );
     }
   };
 
@@ -102,6 +198,7 @@ export default function Home() {
 
   const handleCompareDecisions = () => {
     if (decisionHistory.length > 0) {
+      setPreviousStep(step); // Save current step before going to history
       setStep('history');
     }
   };
@@ -130,8 +227,19 @@ export default function Home() {
         setStep('results');
         break;
       case 'history':
-        setStep('templates');
-        setDecision(null);
+        // Go back to the previous step before coming to history
+        if (previousStep && decision) {
+          setStep(previousStep);
+          setPreviousStep(null);
+          // If coming back from history to results, make sure we're on analysis tab
+          if (previousStep === 'results') {
+            setActiveTab('analysis');
+          }
+        } else {
+          // Fallback to templates if no previous step or decision
+          setStep('templates');
+          setDecision(null);
+        }
         break;
       default:
         break;
@@ -164,6 +272,84 @@ export default function Home() {
             onComplete={handleCompleteOnboarding}
             onSkip={handleSkipOnboarding}
           />
+        )}
+
+        {/* Global Header Navigation */}
+        {step !== 'templates' && step !== 'customize' && (
+          <div className="mb-8">
+            <div className="glass-card p-4 rounded-xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <Button
+                    onClick={handleGoBack}
+                    variant="outline"
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    Back
+                  </Button>
+                  <Button
+                    onClick={() => setStep('templates')}
+                    variant="outline"
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <HomeIcon className="w-4 h-4" />
+                    Home
+                  </Button>
+                </div>
+                
+                {decision && step === 'results' && (
+                  <div className="flex items-center gap-3">
+                    <Button
+                      onClick={handleSaveDecision}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      disabled={
+                        saveStatus !== 'idle' || 
+                        !decision ||
+                        decisionHistory.some(d => d.id.startsWith(decision.id.split('-saved-')[0]))
+                      }
+                    >
+                      {getSaveButtonContent()}
+                    </Button>
+                    <Button
+                      onClick={handleCompareDecisions}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      disabled={decisionHistory.length === 0}
+                    >
+                      Compare
+                    </Button>
+                    <Button
+                      onClick={handleShareDecision}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      disabled={shareStatus !== 'idle'}
+                    >
+                      {getShareButtonContent()}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Templates Header */}
+        {step === 'templates' && (
+          <div className="mb-8">
+            <div className="flex items-center gap-4">
+              <div>
+                <h2 className="text-2xl font-bold">Select Template</h2>
+                <p className="text-muted-foreground">Choose a template or create a custom decision</p>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Home Header */}
@@ -267,7 +453,6 @@ export default function Home() {
                     <TabsContent value="analysis" className="space-y-4">
                       <AnalysisResults
                         decision={decision}
-                        onExport={handleExport}
                         onSensitivityAnalysis={() => {
                           setActiveTab('history');
                         }}
@@ -300,5 +485,3 @@ export default function Home() {
     </main>
   );
 }
-
-// Export is now handled by handleExport which uses the utility functions

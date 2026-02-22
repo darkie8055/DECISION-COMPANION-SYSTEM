@@ -6,14 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ScatterChart, Scatter, LineChart, Line } from 'recharts';
 import type { Decision, AnalysisResult } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
-import { Download, Share2, TrendingUp, Award, Zap } from 'lucide-react';
+import { exportDecision } from '@/lib/export-utils';
+import { Download, Share2, TrendingUp, Award, Zap, ChevronDown, FileText, Database, Table as TableIcon, Globe, BarChart3 } from 'lucide-react';
 
 interface AnalysisResultsProps {
   decision: Decision;
-  onExport: (decision: Decision, results: AnalysisResult[]) => void;
   onSensitivityAnalysis: () => void;
 }
 
@@ -21,7 +22,6 @@ const COLORS = ['#2563eb', '#06b6d4', '#10b981', '#f59e0b', '#8b5cf6'];
 
 export function AnalysisResults({
   decision,
-  onExport,
   onSensitivityAnalysis,
 }: AnalysisResultsProps) {
   const results = useMemo(() => analyzeDecision(decision), [decision]);
@@ -241,14 +241,53 @@ export function AnalysisResults({
 
       {/* Actions */}
       <div className="grid grid-cols-2 gap-3">
-        <Button
-          onClick={() => onExport(decision, results)}
-          variant="outline"
-          className="gap-2"
-        >
-          <Download className="w-4 h-4" />
-          Export Report
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="gap-2">
+              <Download className="w-4 h-4" />
+              Export Report
+              <ChevronDown className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-56">
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'txt')} className="gap-2">
+              <FileText className="w-4 h-4" />
+              <div>
+                <div className="font-medium">Text Report</div>
+                <div className="text-xs text-muted-foreground">Detailed formatted report</div>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'pdf')} className="gap-2">
+              <Globe className="w-4 h-4" />
+              <div>
+                <div className="font-medium">PDF Ready (HTML)</div>
+                <div className="text-xs text-muted-foreground">Professional formatted report</div>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'excel')} className="gap-2">
+              <BarChart3 className="w-4 h-4" />
+              <div>
+                <div className="font-medium">Excel Format</div>
+                <div className="text-xs text-muted-foreground">Spreadsheet with multiple sheets</div>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'csv')} className="gap-2">
+              <TableIcon className="w-4 h-4" />
+              <div>
+                <div className="font-medium">CSV Data</div>
+                <div className="text-xs text-muted-foreground">Simple tabular format</div>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'json')} className="gap-2">
+              <Database className="w-4 h-4" />
+              <div>
+                <div className="font-medium">JSON Data</div>
+                <div className="text-xs text-muted-foreground">Structured data format</div>
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Button
           onClick={onSensitivityAnalysis}
           className="gap-2"

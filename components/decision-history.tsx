@@ -28,8 +28,9 @@ export function DecisionHistory({ decisions, onSelectDecision }: DecisionHistory
 
   const analysisData = decisions.map((decision) => {
     const results = analyzeDecision(decision);
+    const displayName = (decision as any).displayName || decision.name;
     return {
-      name: decision.name.substring(0, 15),
+      name: displayName.length > 20 ? displayName.substring(0, 18) + '...' : displayName,
       decision,
       results,
       topScore: results[0]?.totalScore || 0,
@@ -41,8 +42,9 @@ export function DecisionHistory({ decisions, onSelectDecision }: DecisionHistory
   // Chart data for comparison
   const comparisonData = decisions.map((decision) => {
     const results = analyzeDecision(decision);
+    const displayName = (decision as any).displayName || decision.name;
     return {
-      name: decision.name.substring(0, 12),
+      name: displayName.length > 15 ? displayName.substring(0, 13) + '...' : displayName,
       topScore: results[0]?.totalScore || 0,
       avgScore: results.reduce((sum, r) => sum + r.totalScore, 0) / results.length,
       options: decision.options.length,
@@ -51,7 +53,7 @@ export function DecisionHistory({ decisions, onSelectDecision }: DecisionHistory
 
   // Best choices across decisions
   const bestChoices = analysisData.map((data) => ({
-    decision: data.decision.name,
+    decision: (data.decision as any).displayName || data.decision.name,
     choice: data.results[0]?.optionName,
     score: data.results[0]?.totalScore,
     confidence: (data.results[0]?.totalScore || 0) / 10 * 100,
@@ -138,25 +140,33 @@ export function DecisionHistory({ decisions, onSelectDecision }: DecisionHistory
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {decisions.map((decision, index) => (
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-colors">
-                  <div>
-                    <p className="font-medium">{decision.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {decision.options.length} options • {decision.criteria.length} criteria
-                    </p>
+              {decisions.map((decision, index) => {
+                const displayName = (decision as any).displayName || decision.name;
+                const savedAt = (decision as any).savedAt;
+                const savedAtText = savedAt ? 
+                  (savedAt instanceof Date ? savedAt : new Date(savedAt)).toLocaleDateString() : null;
+                
+                return (
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-secondary/50 hover:bg-secondary/70 transition-colors">
+                    <div>
+                      <p className="font-medium">{displayName}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {decision.options.length} options • {decision.criteria.length} criteria
+                        {savedAtText && ` • Saved ${savedAtText}`}
+                      </p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onSelectDecision(decision)}
+                      className="gap-2"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                      View
+                    </Button>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onSelectDecision(decision)}
-                    className="gap-2"
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                    View
-                  </Button>
-                </div>
-              ))}
+                );
+              })}
             </CardContent>
           </Card>
         </TabsContent>
