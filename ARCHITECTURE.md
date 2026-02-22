@@ -581,10 +581,8 @@ App Root
 │   │       │   └── Risk comparisons
 │   │       └── Load Decision Button
 │   │
-│   └── Header Navigation
-│       ├── Breadcrumb/Back Button
-│       ├── Home Button
-│       └── Action Buttons (Save/Compare/Share)
+│   └── Note: Global Header Navigation Removed
+│       └── Component-level navigation maintained for clarity
 ```
 
 ---

@@ -477,14 +477,16 @@ Modified: app/page.tsx
 
 Added:
 - Tabbed interface (Analysis, Risk, Sensitivity)
-- Header navigation with Home/Back
-- Save/Compare/Share buttons
+- Header navigation with Home/Back (later removed in navigation cleanup)
+- Save/Compare/Share buttons (later moved to component-specific areas)
 - Better state management for multiple views
 ```
 
 **State Management**: Tracked active tab and current step
 **Trade-off**: More component state vs. URL-based routing
 - Chose component state for simplicity in MVP
+
+**Later Refinement**: Removed global header navigation to eliminate duplicate navigation elements and improve UX clarity
 
 ### 5.4 Export System
 ```

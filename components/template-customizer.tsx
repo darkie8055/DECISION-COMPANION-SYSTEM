@@ -375,10 +375,7 @@ export function TemplateCustomizer({ template, onConfirm, onBack }: TemplateCust
       </Card>
 
       {/* Actions */}
-      <div className="flex justify-between">
-        <Button variant="outline" onClick={onBack}>
-          Cancel
-        </Button>
+      <div className="flex justify-end">
         <Button
           onClick={() => onConfirm(customizedTemplate)}
           disabled={!isWeightValid || customizedTemplate.criteria.length === 0 || customizedTemplate.options.length < 2}
