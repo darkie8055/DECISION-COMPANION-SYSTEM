@@ -4,18 +4,18 @@
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                    APPLICATION ENTRY POINT                          │
-│                         (app/page.tsx)                              │
+│                    APPLICATION ENTRY POINT                           │
+│                         (app/page.tsx)                               │
 └──────────────────────────────────────────────────────────────────────┘
                                   │
                                   ▼
-                    ┌─────────────────────────┐
-                    │   Initialize State      │
-                    │ ├─ step = 'templates'   │
-                    │ ├─ decision = null      │
-                    │ ├─ history = []         │
-                    │ └─ activeTab = 'analysis'
-                    └─────────────────────────┘
+                    ┌──────────────────────────┐
+                    │   Initialize State       │
+                    │ ├─ step = 'templates'    │
+                    │ ├─ decision = null       │
+                    │ ├─ history = []          │
+                    │ └─ activeTab = 'analysis'│
+                    └──────────────────────────┘
                                   │
                                   ▼
                     ┌─────────────────────────┐
@@ -30,16 +30,16 @@
          │ SELECT TEMPLATE     │    │ CREATE CUSTOM        │
          │                     │    │                      │
          │ User clicks:        │    │ User clicks:         │
-         │ • Job Offer        │    │ "Create Custom"      │
-         │ • Laptop Purchase  │    │                      │
-         │ • Vacation         │    │ → step = 'setup'     │
-         │ • Investment       │    │                      │
-         │ • Real Estate      │    └──────────────────────┘
-         │ • College          │
-         │ • Vendor           │
-         │                    │
-         │ → Decision loaded  │
-         │ → step = 'scoring' │
+         │ • Job Offer         │    │ "Create Custom"      │
+         │ • Laptop Purchase   │    │                      │
+         │ • Vacation          │    │ → step = 'setup'     │
+         │ • Investment        │    │                      │
+         │ • Real Estate       │    └──────────────────────┘
+         │ • College           │
+         │ • Vendor            │
+         │                     │
+         │ → Decision loaded   │
+         │ → step = 'scoring'  │
          └─────────────────────┘
                    │
                    │
@@ -56,7 +56,7 @@
     │ • Decision name *                    │
     │ • Description (optional)             │
     │ • Criteria (2+ required)             │
-    │ • Criterion weights (sum to 100%)   │
+    │ • Criterion weights (sum to 100%)    │
     │ • Options to compare (2+ required)   │
     │                                      │
     │ Real-time validation:                │
@@ -77,16 +77,16 @@
     │ Display:                             │
     │ ├─ Decision summary card             │
     │ ├─ Scoring matrix table              │
-    │ │  ├─ Rows: Options                 │
-    │ │  ├─ Columns: Criteria + weights   │
-    │ │  └─ Cells: Interactive sliders    │
+    │ │  ├─ Rows: Options                  │
+    │ │  ├─ Columns: Criteria + weights    │
+    │ │  └─ Cells: Interactive sliders     │
     │ ├─ Color feedback (R/Y/G)            │
-    │ ├─ Progress bar (% complete)        │
+    │ ├─ Progress bar (% complete)         │
     │ ├─ Scoring guide                     │
-    │ └─ "Analyze Results" button         │
+    │ └─ "Analyze Results" button          │
     │                                      │
     │ User interaction:                    │
-    │ • Adjusts sliders 0-10 for each cell│
+    │ • Adjusts sliders 0-10 for each cell │
     │ • Progress bar updates               │
     │ • Color changes based on score       │
     │ • Button enabled when all scored     │
@@ -125,49 +125,49 @@
     │   STEP: RESULTS                      │
     │   (Tabbed Interface)                 │
     │                                      │
-    │ ┌────────────────────────────────┐  │
-    │ │ ANALYSIS TAB (default)         │  │
-    │ │                                │  │
-    │ │ Display:                       │  │
-    │ │ • Summary cards                │  │
-    │ │   - Top recommendation         │  │
-    │ │   - Average score              │  │
-    │ │   - Best/worst range           │  │
-    │ │ • Rankings with progress bars  │  │
-    │ │ • Detailed breakdown table     │  │
-    │ │ • Bar & radar charts           │  │
-    │ │ • Action buttons               │  │
-    │ │   - Save Decision              │  │
-    │ │   - Export Report              │  │
-    │ │   - Test Sensitivity           │  │
-    │ └────────────────────────────────┘  │
+    │ ┌────────────────────────────────┐   │
+    │ │ ANALYSIS TAB (default)         │   │
+    │ │                                │   │
+    │ │ Display:                       │   │
+    │ │ • Summary cards                │   │
+    │ │   - Top recommendation         │   │ 
+    │ │   - Average score              │   │
+    │ │   - Best/worst range           │   │
+    │ │ • Rankings with progress bars  │   │
+    │ │ • Detailed breakdown table     │   │
+    │ │ • Bar & radar charts           │   │
+    │ │ • Action buttons               │   │
+    │ │   - Save Decision              │   │
+    │ │   - Export Report              │   │
+    │ │   - Test Sensitivity           │   │
+    │ └────────────────────────────────┘   │
     │                                      │
-    │ ┌────────────────────────────────┐  │
-    │ │ RISK ASSESSMENT TAB            │  │
-    │ │                                │  │
-    │ │ Display:                       │  │
-    │ │ • Risk level (RED/YELLOW/GREEN)│  │
-    │ │ • Variance analysis            │  │
-    │ │ • Decision clarity metrics     │  │
-    │ │ • Option diversity check       │  │
-    │ │ • Actionable recommendations   │  │
-    │ │ • Risk timeline visualization  │  │
-    │ └────────────────────────────────┘  │
+    │ ┌────────────────────────────────┐   │
+    │ │ RISK ASSESSMENT TAB            │   │
+    │ │                                │   │
+    │ │ Display:                       │   │
+    │ │ • Risk level (RED/YELLOW/GREEN)│   │
+    │ │ • Variance analysis            │   │
+    │ │ • Decision clarity metrics     │   │
+    │ │ • Option diversity check       │   │
+    │ │ • Actionable recommendations   │   │
+    │ │ • Risk timeline visualization  │   │
+    │ └────────────────────────────────┘   │
     │                                      │
-    │ ┌────────────────────────────────┐  │
-    │ │ SENSITIVITY ANALYSIS TAB       │  │
-    │ │                                │  │
-    │ │ User can:                      │  │
-    │ │ • Adjust criterion weights     │  │
-    │ │ • See scores update in real-time
-    │ │ • View impact on ranking       │  │
-    │ │ • Answer "What if?" questions  │  │
-    │ │                                │  │
-    │ │ Display:                       │  │
-    │ │ • Interactive weight sliders   │  │
-    │ │ • Score trajectory lines       │  │
-    │ │ • Critical factors highlighted │  │
-    │ └────────────────────────────────┘  │
+    │ ┌─────────────────────────────────┐  │
+    │ │ SENSITIVITY ANALYSIS TAB        │  │
+    │ │                                 │  │
+    │ │ User can:                       │  │
+    │ │ • Adjust criterion weights      │  │
+    │ │ • See scores update in real-time│  │
+    │ │ • View impact on ranking        │  │
+    │ │ • Answer "What if?" questions   │  │
+    │ │                                 │  │
+    │ │ Display:                        │  │
+    │ │ • Interactive weight sliders    │  │
+    │ │ • Score trajectory lines        │  │
+    │ │ • Critical factors highlighted  │  │
+    │ └─────────────────────────────────┘  │
     └──────────────────────────────────────┘
                     │
         ┌───────────┼───────────┬──────────────┐
@@ -183,18 +183,18 @@
     State]      Report]
         │       │          │              │
         │       │          ▼              │
-        │       │    ┌──────────────┐    │
-        │       │    │ HISTORY VIEW │    │
-        │       │    │ (comparison) │    │
-        │       │    └──────────────┘    │
+        │       │    ┌──────────────┐     │
+        │       │    │ HISTORY VIEW │     │
+        │       │    │ (comparison) │     │
+        │       │    └──────────────┘     │
         │       │          │              │
         │       │          └──────────────┘
         │       │
         └───────┴──────────────┐
                                │
-                        ┌──────▼──────┐
+                        ┌──────▼───────┐
                         │ NEW DECISION │
-                        │ OR REFINEMENT │
+                        │ OR REFINEMENT│
                         │              │
                         │ User chooses:│
                         │ • Adjust     │
@@ -247,7 +247,7 @@
     │                │    │    shows total       │
     │ Feedback:      │    │ 4. Add/remove rows   │
     │ • Red if error │    │ 5. Validation alert  │
-    │ • Green if OK  │    │    if total ≠ 100%  │
+    │ • Green if OK  │    │    if total ≠ 100%   │
     │                │    │                      │
     │                │    │ Minimum: 2 criteria  │
     │                │    │ Validation: Sum=100% │
@@ -263,10 +263,10 @@
         │             │ • Progress bar red      │
         │             │ • Submit button disabled│
         │             │                         │
-        │             │ User adjusts until:    │
+        │             │ User adjusts until:     │
         │             │ Sum = 100%              │
-        │             │ ✓ Alert clears         │
-        │             │ ✓ Submit enabled       │
+        │             │ ✓ Alert clears          │
+        │             │ ✓ Submit enabled        │
         │             └─────────────────────────┘
         │                           │
         │                           ▼
@@ -517,9 +517,9 @@
 ```
 FROM RESULTS PAGE - FOUR MAIN PATHS
 
-┌────────────────────┬─────────────────┬──────────────┬──────────────┐
-│                    │                 │              │              │
-▼                    ▼                 ▼              ▼              ▼
+┌────────────────────┬─────────────────┬──────────────┬
+│                    │                 │              │              
+▼                    ▼                 ▼              ▼              
 
 PATH 1:          PATH 2:           PATH 3:          PATH 4:
 SAVE             EXPORT            SENSITIVITY      BACK/HOME
@@ -541,7 +541,7 @@ array        report file       analysis tab    step
 │ User clicks "Save Decision" button                                │
 │         │                                                         │
 │         ▼                                                         │
-│ Check if decision already in history                             │
+│ Check if decision already in history                              │
 │         │                                                         │
 │    ┌────┴────┐                                                    │
 │    │          │                                                   │
@@ -571,39 +571,39 @@ array        report file       analysis tab    step
 │ User clicks "Export Report" button                                │
 │         │                                                         │
 │         ▼                                                         │
-│ Call generateDetailedReport(decision, results)                   │
+│ Call generateDetailedReport(decision, results)                    │
 │         │                                                         │
 │         ▼                                                         │
 │ Format decision data into readable text:                          │
-│ ┌──────────────────────────────────────────┐                     │
-│ │ DECISION ANALYSIS REPORT                 │                     │
-│ │ Generated: Feb 20, 2026                  │                     │
-│ │ Decision: Choose Laptop                  │                     │
-│ │                                          │                     │
-│ │ CRITERIA & WEIGHTS                       │                     │
-│ │ • Price: 25%                             │                     │
-│ │ • Performance: 35%                       │                     │
-│ │ ...                                      │                     │
-│ │                                          │                     │
-│ │ SCORING MATRIX                           │                     │
-│ │ Option  Price  Performance  ...  Total   │                     │
-│ │ MacBook    6        9      ...   8.05   │                     │
-│ │ ...                                      │                     │
-│ │                                          │                     │
-│ │ RANKINGS                                 │                     │
-│ │ 1. MacBook: 8.05/10 (33.3%)              │                     │
-│ │ ...                                      │                     │
-│ │                                          │                     │
-│ │ RECOMMENDATION                           │                     │
-│ │ "MacBook Pro" is recommended...          │                     │
-│ └──────────────────────────────────────────┘                     │
+│ ┌──────────────────────────────────────────┐                      │
+│ │ DECISION ANALYSIS REPORT                 │                      │
+│ │ Generated: Feb 20, 2026                  │                      │
+│ │ Decision: Choose Laptop                  │                      │
+│ │                                          │                      │
+│ │ CRITERIA & WEIGHTS                       │                      │
+│ │ • Price: 25%                             │                      │
+│ │ • Performance: 35%                       │                      │
+│ │ ...                                      │                      │
+│ │                                          │                      │
+│ │ SCORING MATRIX                           │                      │
+│ │ Option  Price  Performance  ...  Total   │                      │
+│ │ MacBook    6        9      ...   8.05    │                      │
+│ │ ...                                      │                      │
+│ │                                          │                      │
+│ │ RANKINGS                                 │                      │
+│ │ 1. MacBook: 8.05/10 (33.3%)              │                      │
+│ │ ...                                      │                      │
+│ │                                          │                      │
+│ │ RECOMMENDATION                           │                      │
+│ │ "MacBook Pro" is recommended...          │                      │
+│ └──────────────────────────────────────────┘                      │
 │         │                                                         │
 │         ▼                                                         │
 │ Call downloadFile(content, filename)                              │
 │         │                                                         │
 │         ▼                                                         │
 │ Browser download triggered                                        │
-│ File: decision-report-choose-laptop-[timestamp].txt              │
+│ File: decision-report-choose-laptop-[timestamp].txt               │
 │         │                                                         │
 │         ▼                                                         │
 │ User receives file locally                                        │
@@ -624,41 +624,41 @@ array        report file       analysis tab    step
 │         │                                                         │
 │         ▼                                                         │
 │ Sensitivity Analysis Component Rendered                           │
-│ ┌────────────────────────────────────────┐                       │
-│ │ For each criterion:                    │                       │
-│ │ • Slider to adjust weight (0-100%)     │                       │
-│ │ • Current weight display               │                       │
-│ │ • Real-time score update               │                       │
-│ │                                        │                       │
-│ │ Results visualization:                 │                       │
-│ │ • Line chart with trajectories         │                       │
-│ │ • Option score lines as weights change │                       │
-│ │ • Identify crossing points             │                       │
-│ │                                        │                       │
-│ │ Critical factors highlighted:          │                       │
-│ │ • Which criteria swing rankings        │                       │
-│ │ • Threshold values                     │                       │
-│ │ • Decision stability assessment        │                       │
-│ └────────────────────────────────────────┘                       │
+│ ┌────────────────────────────────────────┐                        │
+│ │ For each criterion:                    │                        │
+│ │ • Slider to adjust weight (0-100%)     │                        │
+│ │ • Current weight display               │                        │
+│ │ • Real-time score update               │                        │
+│ │                                        │                        │
+│ │ Results visualization:                 │                        │
+│ │ • Line chart with trajectories         │                        │
+│ │ • Option score lines as weights change │                        │
+│ │ • Identify crossing points             │                        │
+│ │                                        │                        │
+│ │ Critical factors highlighted:          │                        │
+│ │ • Which criteria swing rankings        │                        │
+│ │ • Threshold values                     │                        │
+│ │ • Decision stability assessment        │                        │
+│ └────────────────────────────────────────┘                        │
 │         │                                                         │
 │         ▼                                                         │
-│ User adjusts weights with sliders                                │
+│ User adjusts weights with sliders                                 │
 │         │                                                         │
 │         ▼                                                         │
 │ For each weight change:                                           │
-│  1. Update local weight state                                    │
-│  2. Recalculate all option scores                                │
-│  3. Re-rank options                                              │
-│  4. Update line chart                                            │
-│  5. Show new ranking                                             │
-│  6. Check if winner changed                                      │
+│  1. Update local weight state                                     │
+│  2. Recalculate all option scores                                 │
+│  3. Re-rank options                                               │
+│  4. Update line chart                                             │
+│  5. Show new ranking                                              │
+│  6. Check if winner changed                                       │
 │         │                                                         │
 │         ▼                                                         │
-│ User explores "what-if" scenarios:                               │
-│ "What if marketing is 50% not 25%?"                              │
-│ → Drag slider → See ranking change                               │
-│ → Find breakeven points                                          │
-│ → Gain confidence in decision                                    │
+│ User explores "what-if" scenarios:                                │
+│ "What if marketing is 50% not 25%?"                               │
+│ → Drag slider → See ranking change                                │
+│ → Find breakeven points                                           │
+│ → Gain confidence in decision                                     │
 │                                                                   │
 └───────────────────────────────────────────────────────────────────┘
 
@@ -675,7 +675,7 @@ array        report file       analysis tab    step
 │         │                                                         │
 │         ▼                                                         │
 │ Return to scoring matrix                                          │
-│ Can adjust scores and re-analyze                                 │
+│ Can adjust scores and re-analyze                                  │
 │         │                                                         │
 │         ▼                                                         │
 │ Click "Analyze Results" again                                     │
@@ -687,13 +687,13 @@ array        report file       analysis tab    step
 │         │                                                         │
 │         ▼                                                         │
 │ Reset state:                                                      │
-│ • decision = null                                                │
-│ • step = 'templates'                                             │
-│ • activeTab = 'analysis'                                         │
+│ • decision = null                                                 │
+│ • step = 'templates'                                              │
+│ • activeTab = 'analysis'                                          │
 │         │                                                         │
 │         ▼                                                         │
 │ Return to template selection                                      │
-│ Start a new decision                                             │
+│ Start a new decision                                              │
 │                                                                   │
 └───────────────────────────────────────────────────────────────────┘
 ```
@@ -800,8 +800,8 @@ VALIDATION ERROR SCENARIOS
 Missing    Weights  Too Few   Too Few      Empty
 Name       ≠ 100%   Criteria  Options      Criteria
 
-│         │         │         │          │
-└─────────┼─────────┼─────────┼──────────┘
+│         │         │         │             │
+└─────────┼─────────┼─────────┼─────────────┘
           │
           ▼
     ┌────────────────┐
@@ -829,7 +829,7 @@ Name       ≠ 100%   Criteria  Options      Criteria
 │ (ScoringMatrix)              │
 └──────────────────────────────┘
               │
-         ┌────┴────┐
+         ┌────┴─────┐
          │          │
          ▼          ▼
     Empty       Invalid
@@ -860,23 +860,21 @@ Name       ≠ 100%   Criteria  Options      Criteria
     └────────────────────────┘
 
 
-┌──────────────────────────────┐
+┌───────────────────────────────┐
 │ RISK DETECTION (Post-Analysis)│
-│ (RiskAssessment)             │
-└──────────────────────────────┘
+│ (RiskAssessment)              │
+└───────────────────────────────┘
               │
-    ┌─────────┼──────────┬──────────┐
-    │         │          │          │
-    ▼         ▼          ▼          ▼
-   High   Decision   Low          
-Variance  Clarity  Diversity
+    ┌─────────┼──────────┬
+    │         │          │         
+    ▼         ▼          ▼         
+   High   Decision     Low          
+Variance  Clarity    Diversity
            Issue
-
-
-│         │          │          │
-└─────────┼──────────┼──────────┘
-          │
-          ▼
+   │         │          │         
+   └─────────┼──────────┼
+             │
+             ▼
     ┌──────────────────────────┐
     │ Risk Assessment Tab      │
     │                          │
