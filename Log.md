@@ -351,6 +351,182 @@ case 'history':
 
 ---
 
+## Custom Decision Persistence Session (February 24, 2026)
+
+### Intent: Fix Lost Custom Templates Issue
+
+**User Issue:**
+```
+"when i created the custom made template, and check the result i clicked home or back,
+but i cant find tht custom maded in the home or anywhere"
+```
+
+**Problem Identification:**
+- Custom decisions saved correctly to decisionHistory state
+- TemplatesSelector component doesn't receive history prop
+- No display logic for custom decisions on home page
+- User confusion: work appears lost after navigation
+
+**Search Queries Used:**
+1. `decisionHistory state management` - Examined state in page.tsx
+2. `TemplatesSelector props interface` - Checked component signature
+3. `TEMPLATES structure` - Understood template identification
+4. `category filtering logic` - Analyzed how categories work
+
+**Code Exploration:**
+- **Primary Files:**
+  - `app/page.tsx` - Main state and decision history
+  - `components/templates-selector.tsx` - Template display and categories
+  - `lib/templates.ts` - Template definitions
+  - `lib/decision-engine.ts` - Decision interface
+
+### Solution Implementation
+
+#### 1. Add History to Template Selector
+```typescript
+// Updated interface
+interface TemplatesSelectorProps {
+  onSelectTemplate: (template: Decision) => void;
+  onCustomizeTemplate?: (template: Decision) => void;
+  onCreateCustom: () => void;
+  decisionHistory?: Decision[];      // New
+  onLoadDecision?: (decision: Decision) => void; // New
+}
+
+// Pass from parent
+<TemplatesSelector
+  decisionHistory={decisionHistory}
+  onLoadDecision={handleLoadDecision}
+  // ... other props
+/>
+```
+
+#### 2. Smart Custom Decision Filtering
+```typescript
+const getCustomDecisions = () => {
+  if (selectedCategory !== 'Other' && selectedCategory !== 'All') return [];
+  
+  const allTemplateIds = Object.keys(TEMPLATES);
+  return decisionHistory.filter(decision => {
+    const isTemplate = allTemplateIds.some(templateId => {
+      const template = TEMPLATES[templateId];
+      return template.name === decision.name;
+    });
+    return !isTemplate;
+  });
+};
+```
+
+#### 3. Multiple Discovery Points
+
+**A. Recent Decisions Section (Top of Page):**
+- Shows last 6 saved decisions
+- Quick access cards with name, description, date
+- Click to load and continue working
+- Only renders if history exists
+
+**B. Other Category:**
+- "Create Custom Decision" card at top
+- "Your Custom Decisions" section below
+- Shows all custom decisions
+- Displays criteria/options count
+
+**C. All Category:**
+- Pre-built templates first
+- "Your Custom Decisions" section after templates
+- Comprehensive view of everything
+
+### User Feedback Iterations
+
+**Iteration 1:**
+User: `"it should also be there in all right?"`
+
+**Fix Applied:**
+```typescript
+// Updated filter to include 'All' category
+if (selectedCategory !== 'Other' && selectedCategory !== 'All') return [];
+```
+
+**Iteration 2:**
+User: `"theres already create custom option there in other so why multiple like that, remove the create custom option near the help button only in others option"`
+
+**Fix Applied:**
+```typescript
+<div className={`grid gap-4 mt-12 ${
+  selectedCategory === 'Other' ? 'grid-cols-1' : 'md:grid-cols-2'
+}`}>
+  {selectedCategory !== 'Other' && (
+    <Button onClick={onCreateCustom}>
+      Create Custom Decision
+    </Button>
+  )}
+  <Dialog>
+    <Button>Need Help? View Guide</Button>
+  </Dialog>
+</div>
+```
+
+### Technical Decisions
+
+**Why Smart Filtering vs. Adding Flags?**
+- No data structure modification needed
+- Name comparison sufficient for identification
+- Simpler implementation
+- No migration needed for existing saved decisions
+
+**Why Three Discovery Points?**
+- Different users have different mental models
+- Recent: for active work ("where's what I just created?")
+- Other: categorical browsing ("where are custom templates?")
+- All: comprehensive view ("show me everything")
+
+**Why Conditional Button Display?**
+- Eliminates UI duplication
+- Context-aware interface
+- "Other" category already has inline create button
+- Other categories benefit from quick access button
+
+### Testing Coverage
+
+**User Flows Tested:**
+1. Create custom → Save → Home → Find in recent section ✅
+2. Create custom → Save → Click "Other" → See in custom list ✅
+3. Create custom → Save → Click "All" → See after templates ✅
+4. Load custom decision → Returns to scoring ✅
+5. Empty history → Sections don't render ✅
+6. Mixed template and custom saves → Filters correctly ✅
+
+**UI Validation:**
+1. "Other" category selected → One create button (in card) ✅
+2. Other categories selected → Two buttons (create + help) ✅
+3. Mobile responsive → Grid adapts properly ✅
+4. Card styling → Consistent across sections ✅
+
+### Results
+
+**User Experience Improvements:**
+- ✅ **Immediate Discovery**: Custom decisions visible on home page
+- ✅ **Multiple Access Paths**: Recent section + category browsing
+- ✅ **No Duplication**: Conditional UI prevents redundant buttons
+- ✅ **Seamless Workflow**: Create → Save → Find → Load → Continue
+- ✅ **Clear Organization**: Custom decisions properly categorized
+
+**Technical Benefits:**
+- ✅ **No Breaking Changes**: Existing decisions still work
+- ✅ **Smart Filtering**: No metadata required
+- ✅ **Reusable Components**: Card components shared across sections
+- ✅ **Type Safety**: Proper TypeScript interfaces
+- ✅ **Responsive Design**: Mobile-friendly layouts
+
+**Code Quality:**
+- Clean component props interfaces
+- Logical filtering without mutations
+- Conditional rendering for context-aware UI
+- DRY principles (reused card components)
+- Proper TypeScript types throughout
+
+---
+
 ## Previous Queries
 
 **Note**: Previous log entries were minimal. This is the first comprehensive documentation of search queries and development patterns used in the Decision Companion project.

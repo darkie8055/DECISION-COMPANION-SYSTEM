@@ -1082,6 +1082,246 @@ Report exports now work seamlessly on mobile, tablet, and desktop with consisten
 
 ---
 
+## Session 5: Custom Decision Persistence & Discoverability (February 24, 2026)
+
+### Problem: Lost Custom Templates
+
+**User Report:**
+> "when i created the custom made template, and check the result i clicked home or back, but i cant find that custom made in the home or anywhere"
+
+**Issue Analysis:**
+- User creates custom decision framework
+- Completes scoring and views results  
+- Clicks "Save Decision" to preserve work
+- Navigates back to home (templates page)
+- **Problem**: Cannot find their saved custom template anywhere
+
+**Root Cause Investigation:**
+1. **Save Function Works**: handleSaveDecision correctly adds to decisionHistory
+2. **History Component Works**: DecisionHistory shows saved decisions
+3. **Missing Link**: TemplatesSelector doesn't receive or display decisionHistory
+4. **Navigation Issue**: Only path to saved decisions is through dedicated History button
+5. **Discovery Problem**: Custom templates hidden from main template browsing
+
+### Solution Design
+
+**Requirements Gathered:**
+1. Custom decisions should be visible from home/template page
+2. Should appear in "Other" category (for custom frameworks)
+3. Should also appear in "All" category (comprehensive view)
+4. Should be distinguishable from pre-built templates
+5. Should be easily loadable for continued work
+
+**Architecture Decisions:**
+
+1. **Pass History to Template Selector**:
+   ```typescript
+   // app/page.tsx
+   <TemplatesSelector
+     decisionHistory={decisionHistory}
+     onLoadDecision={handleLoadDecision}
+   />
+   ```
+
+2. **Filter Custom from Template-Based**:
+   - Don't add metadata to decisions
+   - Smart filtering: compare decision name with template names
+   - Custom = any saved decision not matching template names
+   
+3. **Three Discovery Points**:
+   - **Top Section**: "My Recent Decisions" (last 6, quick access)
+   - **Other Category**: All custom decisions + create button
+   - **All Category**: Templates then custom decisions section
+
+### Implementation Process
+
+**Step 1: Update Component Interface**
+```typescript
+interface TemplatesSelectorProps {
+  onSelectTemplate: (template: Decision) => void;
+  onCustomizeTemplate?: (template: Decision) => void;
+  onCreateCustom: () => void;
+  decisionHistory?: Decision[];      // New
+  onLoadDecision?: (decision: Decision) => void; // New
+}
+```
+
+**Step 2: Implement Smart Filtering**
+```typescript
+const getCustomDecisions = () => {
+  if (selectedCategory !== 'Other' && selectedCategory !== 'All') return [];
+  
+  const allTemplateIds = Object.keys(TEMPLATES);
+  return decisionHistory.filter(decision => {
+    const isTemplate = allTemplateIds.some(templateId => {
+      const template = TEMPLATES[templateId];
+      return template.name === decision.name;
+    });
+    return !isTemplate; // Custom if name doesn't match templates
+  });
+};
+```
+
+**Step 3: Add Recent Decisions Section**
+- Card grid showing 6 most recent decisions
+- Display: name, description, creation date
+- Click to load and continue working
+- Only shows if history exists
+
+**Step 4: Update Category Display Logic**
+- **Other category**: Create button + custom decisions list
+- **All category**: Pre-built templates + custom decisions section
+- **Other categories**: Pre-built templates only
+
+### User Feedback Iteration
+
+**Feedback 1:**
+> "it should also be there in all right?"
+
+**Response:**
+- Updated filter logic to show customs in both "All" and "Other"
+- "All" now truly means all: templates + customs
+
+**Feedback 2:**
+> "theres already create custom option there in other so why multiple like that, remove the create custom option near the help button only in others option"
+
+**Issue Identified:**
+- When "Other" category selected, two "Create Custom" buttons visible
+- One in category card, one at bottom near help
+- Confusing and redundant
+
+**Solution:**
+```typescript
+<div className={`grid gap-4 mt-12 ${
+  selectedCategory === 'Other' ? 'grid-cols-1' : 'md:grid-cols-2'
+}`}>
+  {selectedCategory !== 'Other' && (
+    <Button onClick={onCreateCustom}>
+      Create Custom Decision
+    </Button>
+  )}
+  <Dialog>
+    {/* Help button always visible */}
+  </Dialog>
+</div>
+```
+
+**Result:**
+- "Other" category: Single create button in category card
+- All other categories: Both create and help buttons at bottom
+- Clean, non-redundant UI
+
+### Testing Process
+
+**Happy Path:**
+1. Create custom decision with unique name ✅
+2. Complete scoring and view results ✅
+3. Save decision ✅
+4. Navigate home ✅
+5. See in "My Recent Decisions" section ✅
+6. See in "Other" category ✅
+7. See in "All" category ✅
+8. Click to load decision ✅
+9. Returns to scoring with all data ✅
+
+**Edge Cases:**
+1. Empty history → Sections don't render ✅
+2. Only template-based saves → No customs shown ✅
+3. Mix of customs and templates → Filtered correctly ✅
+4. Multiple customs → All displayed ✅
+5. Custom with template-like name → Still shown as custom ✅
+
+**UI Validation:**
+1. "Other" selected → One create button ✅
+2. "Career" selected → Two buttons (create + help) ✅
+3. "All" selected → Two buttons ✅
+4. Recent section → Grid responsive on mobile ✅
+5. Custom cards → Consistent styling ✅
+
+### Technical Decisions Made
+
+**Why Not Add "isCustom" Flag?**
+- Would require modifying Decision interface
+- Need to track flag through save/load cycles
+- Smart filtering achieves same result
+- No data structure changes needed
+
+**Why Three Discovery Points?**
+- **Recent Section**: Quick access for active work
+- **Other Category**: Categorical organization
+- **All Category**: Comprehensive browsing
+- Different users have different mental models
+
+**Why Limit Recent to 6?**
+- Prevents overwhelming the home page
+- Most users work on 1-3 decisions actively
+- Full history available in dedicated History view
+- Responsive grid works well with 6 cards
+
+**Why Conditional Button Logic?**
+- Avoids UI redundancy
+- Each category context determines needs
+- "Other" has inline create, others need separate button
+- Better UX than hiding help button
+
+### Impact Assessment
+
+**Before:**
+- ❌ Custom templates "disappeared" after creation
+- ❌ Only accessible through History button
+- ❌ No integration with template browsing
+- ❌ Confusing user experience
+- ❌ Lost work perception
+
+**After:**
+- ✅ Custom templates visible on home page
+- ✅ Integrated with category browsing
+- ✅ Three discovery points for different workflows
+- ✅ Clean UI without duplication
+- ✅ Seamless load and continue functionality
+
+**User Experience Improvement:**
+- **Discovery Time**: Instant vs. "where did it go?"
+- **Navigation Clicks**: 0-1 vs. 3-4
+- **Cognitive Load**: Clear categorization
+- **Confidence**: Work is visible and accessible
+- **Workflow**: Smooth create → save → continue cycle
+
+**Code Quality:**
+- ✅ Smart filtering without data structure changes
+- ✅ Reusable card components
+- ✅ Conditional rendering for context-aware UI
+- ✅ Proper TypeScript interfaces
+- ✅ Responsive design maintained
+
+### Lessons Learned
+
+**User Feedback is Critical:**
+- Engineers may not notice "obvious" navigation patterns
+- What seems complete may have major UX gaps
+- Users articulate problems clearly when they occur
+- Quick iteration builds trust
+
+**Discovery Matters:**
+- Saving data isn't enough - must be findable
+- Multiple access paths accommodate different mental models
+- Integration with existing UI better than separate sections
+- Visibility creates confidence
+
+**Avoid UI Duplication:**
+- Users notice redundant buttons immediately
+- Context-aware UI shows expertise
+- Conditional rendering keeps interfaces clean
+- Each element should serve clear purpose
+
+**Smart Filtering vs. Metadata:**
+- Sometimes logic better than data flags
+- Avoid expanding data structures unnecessarily
+- Name comparison sufficient for custom detection
+- Simpler data = easier debugging
+
+---
+
 ## Conclusion
 
 Building Decision Companion was a journey from initial concept to full-featured application. The iterative approach of build → test → refine → enhance allowed us to create something both functional and user-friendly.

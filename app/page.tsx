@@ -385,6 +385,8 @@ export default function Home() {
               onSelectTemplate={handleSelectTemplate}
               onCustomizeTemplate={handleCustomizeTemplate}
               onCreateCustom={handleCreateCustom}
+              decisionHistory={decisionHistory}
+              onLoadDecision={handleLoadDecision}
             />
           )}
 
