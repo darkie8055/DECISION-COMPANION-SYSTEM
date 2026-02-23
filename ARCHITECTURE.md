@@ -12,41 +12,41 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                      BROWSER LAYER                              │
 │                                                                 │
-│ ┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐  │
-│ │  User Interface │ │ React State Mgmt │ │ Client Routing  │  │
-│ │     (UI)        │ │     (STATE)      │ │     (ROUTE)     │  │
-│ └─────────────────┘ └──────────────────┘ └─────────────────┘  │
+│ ┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐    │
+│ │  User Interface │ │ React State Mgmt │ │ Client Routing  │    │
+│ │     (UI)        │ │     (STATE)      │ │     (ROUTE)     │    │
+│ └─────────────────┘ └──────────────────┘ └─────────────────┘    │
 └─────────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    COMPONENT LAYER                              │
 │                                                                 │
-│ ┌───────────┐ ┌─────────────┐ ┌────────────┐ ┌──────────────┐ │
-│ │Templates  │ │Decision     │ │Scoring     │ │Analysis      │ │
-│ │Selector   │ │Form         │ │Matrix      │ │Results       │ │
-│ └───────────┘ └─────────────┘ └────────────┘ └──────────────┘ │
+│ ┌───────────┐ ┌─────────────┐ ┌────────────┐ ┌──────────────┐   │
+│ │Templates  │ │Decision     │ │Scoring     │ │Analysis      │   │
+│ │Selector   │ │Form         │ │Matrix      │ │Results       │   │
+│ └───────────┘ └─────────────┘ └────────────┘ └──────────────┘   │
 │                                                                 │
-│ ┌───────────┐ ┌─────────────┐ ┌────────────┐                  │
-│ │Risk       │ │Sensitivity  │ │Decision    │                  │
-│ │Assessment │ │Analysis     │ │History     │                  │
-│ └───────────┘ └─────────────┘ └────────────┘                  │
+│ ┌───────────┐ ┌─────────────┐ ┌────────────┐                    │
+│ │Risk       │ │Sensitivity  │ │Decision    │                    │
+│ │Assessment │ │Analysis     │ │History     │                    │
+│ └───────────┘ └─────────────┘ └────────────┘                    │
 └─────────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                  BUSINESS LOGIC LAYER                          │
+│                  BUSINESS LOGIC LAYER                           │
 │                                                                 │
-│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌───────────┐ │
-│ │Decision     │ │Template     │ │Export       │ │Utility    │ │
-│ │Engine       │ │Library      │ │Utils        │ │Functions  │ │
-│ │             │ │(7 templates)│ │             │ │           │ │
-│ └─────────────┘ └─────────────┘ └─────────────┘ └───────────┘ │
+│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌───────────┐   │
+│ │Decision     │ │Template     │ │Export       │ │Utility    │   │
+│ │Engine       │ │Library      │ │Utils        │ │Functions  │   │
+│ │             │ │(7 templates)│ │             │ │           │   │
+│ └─────────────┘ └─────────────┘ └─────────────┘ └───────────┘   │
 └─────────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                       DATA LAYER                               │
+│                       DATA LAYER                                │
 │                                                                 │
 │ ┌─────────────────────────┐ ┌─────────────────────────────────┐ │
 │ │    In-Memory State      │ │     Session Storage             │ │
@@ -60,7 +60,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        INPUT STAGE                             │
+│                        INPUT STAGE                              │
 └─────────────────────────────────────────────────────────────────┘
               │                    │                    │
               ▼                    ▼                    ▼
@@ -77,46 +77,46 @@
                                                ▼
 
 ┌─────────────────────────────────────────────────────────────────┐
-│                     PROCESSING STAGE                           │
+│                     PROCESSING STAGE                            │
 └─────────────────────────────────────────────────────────────────┘
               │                    │                    │
               ▼                    ▼                    ▼
     ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
     │ Validate Inputs │  │Calculate Weighted│ │ Rank Options    │
-    │                 │  │     Scores       │  │                 │
+    │                 │  │     Scores       │ │                 │
     └─────────────────┘  └─────────────────┘  └─────────────────┘
               │                    │                    │
               ▼                    ▼                    ▼
     ┌─────────────────┐  ┌─────────────────┐
     │Calculate Risk   │  │ Generate        │
-    │    Metrics      │  │  Analysis      │
+    │    Metrics      │  │  Analysis       │
     └─────────────────┘  └─────────────────┘
                                                │
                                                ▼
 
 ┌─────────────────────────────────────────────────────────────────┐
-│                      OUTPUT STAGE                              │
+│                      OUTPUT STAGE                               │
 └─────────────────────────────────────────────────────────────────┘
          │           │           │           │           │
          ▼           ▼           ▼           ▼           ▼
-┌─────────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐ ┌──────────┐
-│Display      │ │Show Risk │ │Enable    │ │Export   │ │Save to   │
-│Rankings     │ │Assessment│ │Sensitivity│ │Report   │ │History   │
-│             │ │          │ │Testing   │ │         │ │          │
-└─────────────┘ └──────────┘ └──────────┘ └─────────┘ └──────────┘
+┌─────────────┐ ┌──────────┐ ┌────────────┐ ┌─────────┐ ┌──────────┐
+│Display      │ │Show Risk │ │Enable      │ │Export   │ │Save to   │
+│Rankings     │ │Assessment│ │Sensitivity │ │Report   │ │History   │
+│             │ │          │ │Testing     │ │         │ │          │
+└─────────────┘ └──────────┘ └────────────┘ └─────────┘ └──────────┘
 ```
 
 ### Component Interaction Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│              MAIN APPLICATION (page.tsx)                       │
-│                                                                 │
+┌──────────────────────────────────────────────────────────────────┐
+│              MAIN APPLICATION (page.tsx)                         │
+│                                                                  │
 │  ┌─────────────────────────┐ ┌─────────────────────────────────┐ │
 │  │ Main Orchestrator       │ │ State Management Layer          │ │
 │  │     Component           │ │                                 │ │
 │  └─────────────────────────┘ └─────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────────────────────┘
                                 │
                 ┌───────────────┼───────────────┐
                 ▼               ▼               ▼
@@ -138,23 +138,23 @@
                 ▼       ▼               ▼       ▼
 
 ┌─────────────────────────────────────────────────────────────────┐
-│                     ANALYSIS PHASE                             │
+│                     ANALYSIS PHASE                              │
 │                                                                 │
-│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐   │
-│ │  Tabbed         │ │ Analysis        │ │ Risk            │   │
-│ │  Interface      │ │ Results         │ │ Assessment      │   │
-│ └─────────────────┘ └─────────────────┘ └─────────────────┘   │
-│          │                                                     │
-│          ▼                                                     │
-│ ┌─────────────────┐                                           │
-│ │ Sensitivity     │                                           │
-│ │ Analysis        │                                           │
-│ └─────────────────┘                                           │
+│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐     │
+│ │  Tabbed         │ │ Analysis        │ │ Risk            │     │
+│ │  Interface      │ │ Results         │ │ Assessment      │     │
+│ └─────────────────┘ └─────────────────┘ └─────────────────┘     │
+│          │                                                      │
+│          ▼                                                      │
+│ ┌─────────────────┐                                             │
+│ │ Sensitivity     │                                             │
+│ │ Analysis        │                                             │
+│ └─────────────────┘                                             │
 └─────────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                     HISTORY PHASE                              │
+│                     HISTORY PHASE                               │
 │                                                                 │
 │ ┌─────────────────────────────────────────────────────────────┐ │
 │ │              Decision History                               │ │
@@ -181,20 +181,20 @@
                                     │              │
                ┌────────────────────┼───────────────────┐
                ▼                    ▼                   │
-    ┌─────────────────┐    ┌─────────────────┐         │
-    │ Select from     │    │ Create Custom   │         │
-    │ 7 Templates     │    │ Decision        │         │
-    └─────┬───────────┘    └─────┬───────────┘         │
-          │                      ▼                     │
-          │             ┌─────────────────┐            │
-          │             │ Define Criteria │            │
-          │             │ & Options       │            │
-          │             └─────┬───────────┘            │
-          │                   ▼                        │
-          │             ┌─────────────────┐            │
+    ┌─────────────────┐    ┌─────────────────┐          │
+    │ Select from     │    │ Create Custom   │          │
+    │ 7 Templates     │    │ Decision        │          │
+    └─────┬───────────┘    └─────┬───────────┘          │
+          │                      ▼                      │
+          │             ┌─────────────────┐             │
+          │             │ Define Criteria │             │
+          │             │ & Options       │             │
+          │             └─────┬───────────┘             │
+          │                   ▼                         │
+          │             ┌─────────────────┐             │
           │             │ Assign Weights   │            │
-          │             └─────┬───────────┘            │
-          └─────────────────────┼──────────────────────┘
+          │             └─────┬───────────┘             │
+          └─────────────────────┼───────────────────────┘
                                 ▼
                     ┌─────────────────────┐
                     │ Score Options on    │
@@ -202,8 +202,8 @@
                     └──────────┬──────────┘
                                ▼
                     ┌─────────────────────┐
-                    │ All Fields          │        ┌──No───┐
-                    │ Complete?           │────────►│      │
+                    │ All Fields          │        ┌──No──┐
+                    │ Complete?           │───────►│      │
                     └──────────┬──────────┘        │ Loop │
                                │ Yes               │ Back │
                                ▼                   └───┬──┘
@@ -230,10 +230,10 @@
     ▼                          ▼                         ▼
 ┌─────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │High Variance│    │  Low Diversity  │    │  Unclear Winner │
-│   WARN       │    │     WARN        │    │     WARN        │
+│   WARN      │    │     WARN        │    │     WARN        │
 └─────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
       │                      │                      │
-      └──────────────┬───────────────┬─────────────┘
+      └──────────────┬───────────────┬──────────────┘
                      │               │
                      ▼               ▼
               ┌─────────────┐ ┌─────────────────┐
@@ -279,84 +279,68 @@
               ┌─────────────┐
               │    START    │
               └─────────────┘
-```
-│  ├─ Table, Tabs, Dialog                                             │
-│  └─ Icons from Lucide                                               │
-│                                                                      │
-│  Styling                                                             │
-│  ├─ Tailwind CSS v4                                                 │
-│  ├─ CSS Design Tokens (--primary, --accent, etc.)                   │
-│  ├─ Light & Dark Mode Support                                       │
-│  └─ Responsive Design (mobile-first)                                │
-│                                                                      │
-│  Visualization                                                       │
-│  └─ Recharts                                                         │
-│     ├─ BarChart (score comparisons)                                 │
-│     ├─ RadarChart (decision profile)                                │
-│     └─ LineChart (sensitivity analysis)                             │
-└─────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────────┐
 │                      DATA LAYER                                      │
 │                                                                      │
 │  TypeScript Interfaces:                                              │
-│  ├─ Decision                                                        │
-│  │  ├─ id: string                                                  │
-│  │  ├─ name: string                                                │
-│  │  ├─ description: string                                         │
-│  │  ├─ criteria: Criterion[]                                       │
-│  │  ├─ options: Option[]                                           │
-│  │  ├─ scores: Score[]                                             │
-│  │  └─ createdAt: Date                                             │
-│  │                                                                  │
-│  ├─ Criterion                                                       │
-│  │  ├─ id: string                                                  │
-│  │  ├─ name: string                                                │
-│  │  └─ weight: number                                              │
-│  │                                                                  │
-│  ├─ Option                                                          │
-│  │  ├─ id: string                                                  │
-│  │  └─ name: string                                                │
-│  │                                                                  │
-│  ├─ Score                                                           │
-│  │  ├─ optionId: string                                            │
-│  │  ├─ criterionId: string                                         │
-│  │  └─ score: number (0-10)                                        │
-│  │                                                                  │
-│  └─ AnalysisResult                                                  │
-│     ├─ optionId: string                                            │
-│     ├─ optionName: string                                          │
-│     ├─ totalScore: number                                          │
-│     ├─ percentage: number                                          │
-│     ├─ rank: number                                                │
-│     └─ scores: { criterionName, score }[]                          │
+│  ├─ Decision                                                         │
+│  │  ├─ id: string                                                    │
+│  │  ├─ name: string                                                  │
+│  │  ├─ description: string                                           │
+│  │  ├─ criteria: Criterion[]                                         │
+│  │  ├─ options: Option[]                                             │
+│  │  ├─ scores: Score[]                                               │
+│  │  └─ createdAt: Date                                               │
+│  │                                                                   │
+│  ├─ Criterion                                                        │
+│  │  ├─ id: string                                                    │
+│  │  ├─ name: string                                                  │
+│  │  └─ weight: number                                                │
+│  │                                                                   │
+│  ├─ Option                                                           │
+│  │  ├─ id: string                                                    │
+│  │  └─ name: string                                                  │
+│  │                                                                   │
+│  ├─ Score                                                            │
+│  │  ├─ optionId: string                                              │
+│  │  ├─ criterionId: string                                           │
+│  │  └─ score: number (0-10)                                          │
+│  │                                                                   │
+│  └─ AnalysisResult                                                   │
+│     ├─ optionId: string                                              │
+│     ├─ optionName: string                                            │
+│     ├─ totalScore: number                                            │
+│     ├─ percentage: number                                            │
+│     ├─ rank: number                                                  │
+│     └─ scores: { criterionName, score }[]                            │
 │                                                                      │
 │  Storage:                                                            │
-│  ├─ React State (current decision, history)                        │
-│  └─ Session Memory (no persistence yet)                            │
-└─────────────────────────────────────────────────────────────────────┘
+│  ├─ React State (current decision, history)                          │
+│  └─ Session Memory (no persistence yet)                              │
+└──────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────────┐
 │                      DEPLOYMENT & RUNTIME                            │
 │                                                                      │
 │  Runtime Environment:                                                │
-│  ├─ Node.js 18+ (development & build)                              │
-│  ├─ Browser (Chrome, Safari, Firefox, Edge)                        │
-│  └─ Vercel Platform (recommended deployment)                        │
+│  ├─ Node.js 18+ (development & build)                                │
+│  ├─ Browser (Chrome, Safari, Firefox, Edge)                          │
+│  └─ Vercel Platform (recommended deployment)                         │
 │                                                                      │
 │  Build Process:                                                      │
-│  ├─ TypeScript Compilation                                          │
-│  ├─ Next.js Compilation (with Turbopack)                           │
-│  ├─ Tailwind CSS Processing                                         │
-│  ├─ Code Splitting & Tree Shaking                                   │
-│  └─ Production Optimizations                                        │
+│  ├─ TypeScript Compilation                                           │
+│  ├─ Next.js Compilation (with Turbopack)                             │
+│  ├─ Tailwind CSS Processing                                          │
+│  ├─ Code Splitting & Tree Shaking                                    │
+│  └─ Production Optimizations                                         │
 │                                                                      │
 │  Performance:                                                        │
-│  ├─ Bundle Size: ~150KB gzipped                                     │
-│  ├─ Time to Interactive: <1s (4G)                                   │
-│  ├─ Lighthouse Scores: 92-100                                       │
-│  └─ Zero Server Calls (client-side only)                            │
-└─────────────────────────────────────────────────────────────────────┘
+│  ├─ Bundle Size: ~150KB gzipped                                      │
+│  ├─ Time to Interactive: <1s (4G)                                    │ 
+│  ├─ Lighthouse Scores: 92-100                                        │
+│  └─ Zero Server Calls (client-side only)                             │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -609,72 +593,17 @@ PAGE STATE STRUCTURE (React.useState)
 │ └─ Reset when starting new decision         │
 │                                             │
 │ decisionHistory: Decision[]                 │
-│ ├─ Array of saved/completed decisions      │
+│ ├─ Array of saved/completed decisions       │
 │ ├─ Populated when user clicks "Save"        │
 │ └─ Used for comparison and history          │
 │                                             │
-│ activeTab: 'analysis' | 'risk' | 'history'│
+│ activeTab: 'analysis' | 'risk' | 'history'│ |
 │ ├─ Controls which results tab is shown      │
 │ ├─ Persists while on results page           │
 │ └─ Reset when returning to scoring          │
 │                                             │
 └─────────────────────────────────────────────┘
 
-DATA FLOW THROUGH COMPONENTS
-
-Input Data (decision):
-┌──────────────────────────────────────────┐
-│ {                                        │
-│   id: "12345",                           │
-│   name: "Choose Laptop",                 │
-│   description: "For work and personal",  │
-│   criteria: [                            │
-│     { id: "1", name: "Price", weight: 25},
-│     { id: "2", name: "Performance", w: 35},
-│     ...                                  │
-│   ],                                     │
-│   options: [                             │
-│     { id: "a", name: "MacBook Pro" },   │
-│     { id: "b", name: "Dell XPS" },      │
-│     ...                                  │
-│   ],                                     │
-│   scores: [                              │
-│     { optionId: "a", criterionId: "1", score: 6 },
-│     ...                                  │
-│   ]                                      │
-│ }                                        │
-└──────────────────────────────────────────┘
-
-Processing (decision-engine.ts):
-┌──────────────────────────────────────────┐
-│ analyzeDecision(decision)                │
-│ ├─ Calculate weighted scores             │
-│ ├─ Rank options                          │
-│ ├─ Calculate percentages                 │
-│ └─ Return AnalysisResult[]               │
-└──────────────────────────────────────────┘
-
-Output Data (analysis results):
-┌──────────────────────────────────────────┐
-│ [                                        │
-│   {                                      │
-│     optionId: "a",                       │
-│     optionName: "MacBook Pro",           │
-│     totalScore: 7.85,                    │
-│     percentage: 32.5,                    │
-│     rank: 1,                             │
-│     scores: [                            │
-│       { criterionName: "Price", score: 6},
-│       { criterionName: "Performance", s: 9},
-│       ...                                │
-│     ]                                    │
-│   },                                     │
-│   ...                                    │
-│ ]                                        │
-└──────────────────────────────────────────┘
-```
-
----
 
 ## Algorithm: Weighted Scoring Calculation
 
@@ -832,123 +761,40 @@ If Option Diversity is Low:
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
 │ RUNTIME & BUILD                                         │
-│ ├─ Node.js 18+ (LTS)                                   │
-│ │  Why: Stable, widely adopted, excellent tooling      │
-│ │                                                      │
-│ ├─ Next.js 16 (App Router)                             │
-│ │  Why: React framework with built-in optimization,    │
-│ │        latest React 19 support, Turbopack bundler    │
-│ │                                                      │
-│ └─ TypeScript 5                                        │
-│    Why: Type safety catches bugs, improves DX          │
+│ ├─ Node.js 18+ (LTS)                                    │
+│ │  Why: Stable, widely adopted, excellent tooling       │
+│ │                                                       │
+│ ├─ Next.js 16 (App Router)                              │
+│ │  Why: React framework with built-in optimization,     │
+│ │        latest React 19 support, Turbopack bundler     │
+│ │                                                       │
+│ └─ TypeScript 5                                         │
+│    Why: Type safety catches bugs, improves DX           │
 │                                                         │
 │ UI & STYLING                                            │
-│ ├─ React 19                                            │
-│ │  Why: Latest hooks, better performance               │
-│ │                                                      │
-│ ├─ Tailwind CSS v4                                     │
-│ │  Why: Utility-first, design tokens system,           │
-│ │        excellent dark mode support                   │
-│ │                                                      │
-│ ├─ shadcn/ui                                           │
-│ │  Why: Accessible, customizable, no dependencies      │
-│ │                                                      │
-│ └─ Lucide Icons                                        │
-│    Why: Modern, SVG-based, tree-shakeable              │
+│ ├─ React 19                                             │
+│ │  Why: Latest hooks, better performance                │
+│ │                                                       │
+│ ├─ Tailwind CSS v4                                      │
+│ │  Why: Utility-first, design tokens system,            │
+│ │        excellent dark mode support                    │
+│ │                                                       │
+│ ├─ shadcn/ui                                            │
+│ │  Why: Accessible, customizable, no dependencies       │
+│ │                                                       │
+│ └─ Lucide Icons                                         │
+│    Why: Modern, SVG-based, tree-shakeable               │
 │                                                         │
 │ VISUALIZATION                                           │
-│ └─ Recharts                                            │
-│    Why: Built on React, responsive, good docs          │
+│ └─ Recharts                                             │
+│    Why: Built on React, responsive, good docs           │
 │                                                         │
 │ PACKAGE MANAGER                                         │
-│ └─ pnpm                                                │
-│    Why: Faster, better disk space, monorepo support    │
+│ └─ pnpm                                                 │
+│    Why: Faster, better disk space, monorepo support     │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 
-WHY NO BACKEND?
-├─ MVP Requirement: Not needed for core functionality
-├─ Privacy: Data stays in user's browser
-├─ Cost: No server infrastructure
-├─ Speed: Faster initial development
-└─ Future: Easy to add when needed
-```
-
----
-
-## Scalability & Future Architecture
-
-```
-CURRENT ARCHITECTURE (MVP)
-
-Client-Side Only
-└─ Single Page App (SPA)
-   └─ Session-based state
-   └─ In-memory decisions
-
-↓ ↓ ↓ FUTURE PHASE 1 ↓ ↓ ↓
-
-ADD PERSISTENCE LAYER
-
-Client
-├─ localStorage / IndexedDB
-└─ Session storage
-
-↓ ↓ ↓ FUTURE PHASE 2 ↓ ↓ ↓
-
-ADD BACKEND SERVICES
-
-Client → API Gateway
-         ├─ Authentication Service
-         ├─ Decision Storage Service
-         ├─ User Profile Service
-         └─ Analytics Service
-         └─ Database (Supabase/Neon)
-
-↓ ↓ ↓ FUTURE PHASE 3 ↓ ↓ ↓
-
-ADD AI & ADVANCED FEATURES
-
-Client ← → Backend
-         ├─ OpenAI Integration
-         │  ├─ Score suggestions
-         │  ├─ Criterion extraction
-         │  └─ Insight generation
-         ├─ ML Models
-         │  ├─ Template recommendations
-         │  ├─ Outcome prediction
-         │  └─ Pattern detection
-         ├─ Analytics
-         │  ├─ User cohorts
-         │  ├─ Decision trends
-         │  └─ Quality metrics
-         └─ Integrations
-            ├─ Calendar
-            ├─ Finance apps
-            └─ Real estate APIs
-
-SCALABILITY CONSIDERATIONS
-
-Horizontal Scaling:
-├─ Separate frontend & backend deployments
-├─ CDN for static assets
-├─ API load balancing
-└─ Database read replicas
-
-Vertical Scaling:
-├─ Code splitting per route
-├─ Image optimization
-├─ Database indexing
-└─ Query optimization
-
-Data Management:
-├─ Archive old decisions
-├─ Paginate large lists
-├─ Compress decision exports
-└─ Cache frequent operations
-```
-
----
 
 ## Security Architecture
 
