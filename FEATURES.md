@@ -73,14 +73,34 @@
 - ✅ Aggregate statistics
 
 ### 8. Export & Reporting
-- ✅ Detailed text reports
-- ✅ Formatted output with visual separators
+
+**Note:** Text (.txt) export was removed due to mobile incompatibility issues. ASCII art formatting rendered as unreadable asterisks on mobile devices.
+
+**Current Export Formats:**
+- ✅ **PDF Report**: Professional formatted report with auto-print dialog for PDF save
+  - Mobile-responsive design
+  - Print-optimized CSS
+  - Professional styling with gradients
+  - Opens in new window ready for download
+- ✅ **JSON Data**: Structured format for programmatic use
+  - Complete decision data
+  - Analysis results included
+  - Version metadata
+- ✅ **CSV Data**: Spreadsheet-compatible format
+  - Raw scoring data
+  - Easy import to Excel/Sheets
+- ✅ **Excel Compatible**: Enhanced CSV with detailed breakdown
+  - Criteria weights table
+  - Detailed scoring matrix
+  - Ready for spreadsheet analysis
+
+**Export Features:**
 - ✅ Complete scoring matrix export
 - ✅ Weighted score breakdown
 - ✅ Recommendations in report
 - ✅ Timestamp and metadata
-- ✅ Download-ready format
-- ✅ Future: JSON export ready
+- ✅ Download-ready formats
+- ✅ Mobile-optimized outputs
 
 ### 9. **NEW: UI/UX Improvements**
 - ✅ **Consistent Template Layout**: All template cards have uniform height
@@ -99,8 +119,6 @@
 - ✅ **"Which factors matter most for the final ranking?"** → Weight impact analysis
 - ✅ **"How does this decision compare to past ones?"** → Historical comparison
 - ✅ **"What are the trade-offs between top options?"** → Detailed breakdown tables
-- ✅ Future: CSV export ready
-- ✅ Future: PDF reports
 
 ## 🎨 UI/UX Features
 
@@ -252,11 +270,15 @@
 - ✅ Trend analysis
 
 ### Export Options
-- ✅ Text report export
-- ✅ Decision history download
+- ✅ **PDF Report**: Professional printable format with auto-save dialog
+- ✅ **JSON Data**: Complete structured data export
+- ✅ **CSV/Excel**: Spreadsheet-compatible formats
+- ✅ **Mobile Optimized**: All formats work perfectly on mobile devices
 - ✅ Report formatting options
 - ✅ Timestamp inclusion
 - ✅ Complete data export
+
+**Recent Change:** Removed text (.txt) export due to ASCII art rendering issues on mobile devices (displayed as asterisks). Replaced with enhanced PDF export featuring mobile-responsive design and print-to-PDF functionality.
 
 ## 🔮 Future Enhancement Opportunities
 
@@ -335,7 +357,7 @@
 - **Core Analysis Functions**: 8
 - **UI Components**: 20+
 - **Decision Templates**: 7
-- **Export Formats**: 1 (Text) - Expandable
+- **Export Formats**: 4 (PDF, JSON, CSV, Excel) - Mobile optimized
 - **Risk Metrics**: 4+
 - **Responsive Breakpoints**: 3+
 - **Lines of Code**: 3000+

@@ -344,10 +344,7 @@ export default function Home() {
         {step === 'templates' && (
           <div className="mb-8">
             <div className="flex items-center gap-4">
-              <div>
-                <h2 className="text-2xl font-bold">Select Template</h2>
-                <p className="text-muted-foreground">Choose a template or create a custom decision</p>
-              </div>
+              
             </div>
           </div>
         )}

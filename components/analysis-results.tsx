@@ -11,6 +11,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import type { Decision, AnalysisResult } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
 import { exportDecision } from '@/lib/export-utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Download, Share2, TrendingUp, Award, Zap, ChevronDown, FileText, Database, Table as TableIcon, Globe, BarChart3 } from 'lucide-react';
 
 interface AnalysisResultsProps {
@@ -24,6 +25,7 @@ export function AnalysisResults({
   decision,
   onSensitivityAnalysis,
 }: AnalysisResultsProps) {
+  const isMobile = useIsMobile();
   const results = useMemo(() => analyzeDecision(decision), [decision]);
 
   // Prepare data for bar chart
@@ -250,36 +252,29 @@ export function AnalysisResults({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-56">
-            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'txt')} className="gap-2">
-              <FileText className="w-4 h-4" />
-              <div>
-                <div className="font-medium">Text Report</div>
-                <div className="text-xs text-muted-foreground">Detailed formatted report</div>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'pdf')} className="gap-2">
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'pdf', isMobile)} className="gap-2">
               <Globe className="w-4 h-4" />
               <div>
-                <div className="font-medium">PDF Ready (HTML)</div>
-                <div className="text-xs text-muted-foreground">Professional formatted report</div>
+                <div className="font-medium">PDF Report</div>
+                <div className="text-xs text-muted-foreground">Professional PDF download</div>
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'excel')} className="gap-2">
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'excel', isMobile)} className="gap-2">
               <BarChart3 className="w-4 h-4" />
               <div>
-                <div className="font-medium">Excel Format</div>
-                <div className="text-xs text-muted-foreground">Spreadsheet with multiple sheets</div>
+                <div className="font-medium">Excel Compatible</div>
+                <div className="text-xs text-muted-foreground">CSV format for spreadsheet analysis</div>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'csv')} className="gap-2">
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'csv', isMobile)} className="gap-2">
               <TableIcon className="w-4 h-4" />
               <div>
                 <div className="font-medium">CSV Data</div>
-                <div className="text-xs text-muted-foreground">Simple tabular format</div>
+                <div className="text-xs text-muted-foreground">Raw data for custom analysis</div>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'json')} className="gap-2">
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'json', isMobile)} className="gap-2">
               <Database className="w-4 h-4" />
               <div>
                 <div className="font-medium">JSON Data</div>

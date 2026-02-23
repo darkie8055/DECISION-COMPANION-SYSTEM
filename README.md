@@ -157,6 +157,10 @@ Structured weighted scoring that:
 - ✅ **Interactive Diagrams**: Created HTML file with exportable architecture diagrams
 - ✅ **Common Use Cases**: Documented popular decision queries and real-world applications
 - ✅ **Better Examples**: Added concrete calculations with actual numbers in documentation
+- ✅ **Export Format Fix**: Removed text (.txt) export due to mobile compatibility issues
+  - **Problem**: ASCII art formatting rendered as unreadable asterisks on mobile devices
+  - **Solution**: Enhanced PDF export with mobile-responsive design and auto-print dialog
+  - **Available Formats**: PDF (printable), JSON, CSV, Excel - all mobile-optimized
 
 ```
 Decision Companion

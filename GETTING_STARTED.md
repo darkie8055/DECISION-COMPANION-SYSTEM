@@ -77,7 +77,15 @@ Test "What-if" scenarios:
 
 ## 📥 Exporting Results
 
-Click "Export Report" to download:
+Click "Export Report" dropdown to choose format:
+
+**Available Export Formats:**
+- **PDF Report**: Professional printable format (opens with auto-print dialog)
+- **JSON Data**: Complete structured data for programmatic use
+- **CSV Data**: Spreadsheet-compatible format for Excel/Sheets
+- **Excel Compatible**: Enhanced CSV with detailed breakdown tables
+
+**Note:** Text (.txt) export removed due to mobile incompatibility issues.
 
 ## 🔍 Common Use Cases & Queries
 
@@ -142,19 +150,6 @@ Click "Export Report" to download:
 - **Binary yes/no choices**: "Should I quit my job?" (use different frameworks)
 - **Highly emotional decisions**: "Should I marry this person?" (rely on feelings + other guidance)
 - **Urgent emergency decisions**: "Which route to avoid traffic?" (use real-time tools)
-
-## 📥 Exporting Results
-
-Click "Export Report" to download:
-- **Text Report**: Formatted with all details, readable in any text editor
-- Contains: criteria, options, complete scoring matrix, rankings, recommendations
-
-Currently exports as text. Report includes:
-- Decision framework overview
-- Complete scoring matrix
-- Weighted scores and rankings
-- Analysis summary and recommendations
-- Timestamp for record-keeping
 
 ## 💡 Pro Tips
 

@@ -281,7 +281,7 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
         <CardContent>
           <div className="space-y-4">
             {[
-              { num: 1, text: 'Choose a template or create a custom decision framework', gradient: 'from-blue-500 to-cyan-500' },
+              { num: 1, text: 'Select a pre-built template or create a custom framework', gradient: 'from-blue-500 to-cyan-500' },
               { num: 2, text: 'Define your criteria and assign importance weights', gradient: 'from-purple-500 to-blue-500' },
               { num: 3, text: 'Rate each option on a 0-10 scale for every criterion', gradient: 'from-green-500 to-cyan-500' },
               { num: 4, text: 'Get automatic weighted scoring and rankings', gradient: 'from-orange-500 to-pink-500' },
