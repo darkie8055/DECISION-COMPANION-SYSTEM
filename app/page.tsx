@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TemplatesSelector } from '@/components/templates-selector';
 import { TemplateCustomizer } from '@/components/template-customizer';
 import { DecisionForm } from '@/components/decision-form';
@@ -27,6 +27,34 @@ export default function Home() {
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
   const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'shared'>('idle');
   const [previousStep, setPreviousStep] = useState<Step | null>(null);
+
+  // Load decision history from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('decisionHistory');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Convert date strings back to Date objects
+        const restored = parsed.map((d: any) => ({
+          ...d,
+          createdAt: new Date(d.createdAt),
+          savedAt: d.savedAt ? new Date(d.savedAt) : undefined,
+        }));
+        setDecisionHistory(restored);
+      }
+    } catch (error) {
+      console.error('Failed to load decision history:', error);
+    }
+  }, []);
+
+  // Save decision history to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('decisionHistory', JSON.stringify(decisionHistory));
+    } catch (error) {
+      console.error('Failed to save decision history:', error);
+    }
+  }, [decisionHistory]);
 
   const handleSelectTemplate = (template: Decision) => {
     const newDecision = { ...template, id: Date.now().toString() };
