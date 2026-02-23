@@ -82,17 +82,15 @@
   - Print-optimized CSS
   - Professional styling with gradients
   - Opens in new window ready for download
+- ✅ **Excel/CSV Export**: Spreadsheet-compatible format
+  - Criteria weights table
+  - Detailed scoring matrix
+  - Import to Excel, Google Sheets, or any spreadsheet application
+  - Single unified format (no separate CSV)
 - ✅ **JSON Data**: Structured format for programmatic use
   - Complete decision data
   - Analysis results included
   - Version metadata
-- ✅ **CSV Data**: Spreadsheet-compatible format
-  - Raw scoring data
-  - Easy import to Excel/Sheets
-- ✅ **Excel Compatible**: Enhanced CSV with detailed breakdown
-  - Criteria weights table
-  - Detailed scoring matrix
-  - Ready for spreadsheet analysis
 
 **Export Features:**
 - ✅ Complete scoring matrix export
@@ -271,14 +269,16 @@
 
 ### Export Options
 - ✅ **PDF Report**: Professional printable format with auto-save dialog
+- ✅ **Excel/CSV Export**: Spreadsheet-compatible format for data analysis
 - ✅ **JSON Data**: Complete structured data export
-- ✅ **CSV/Excel**: Spreadsheet-compatible formats
 - ✅ **Mobile Optimized**: All formats work perfectly on mobile devices
 - ✅ Report formatting options
 - ✅ Timestamp inclusion
 - ✅ Complete data export
 
-**Recent Change:** Removed text (.txt) export due to ASCII art rendering issues on mobile devices (displayed as asterisks). Replaced with enhanced PDF export featuring mobile-responsive design and print-to-PDF functionality.
+**Recent Changes:** 
+- Removed text (.txt) export due to ASCII art rendering issues on mobile devices
+- Removed separate CSV option (Excel export provides same functionality)
 
 ## 🔮 Future Enhancement Opportunities
 
@@ -357,7 +357,7 @@
 - **Core Analysis Functions**: 8
 - **UI Components**: 20+
 - **Decision Templates**: 7
-- **Export Formats**: 4 (PDF, JSON, CSV, Excel) - Mobile optimized
+- **Export Formats**: 3 (PDF, Excel/CSV, JSON) - Mobile optimized
 - **Risk Metrics**: 4+
 - **Responsive Breakpoints**: 3+
 - **Lines of Code**: 3000+

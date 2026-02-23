@@ -552,7 +552,7 @@ export function generateExcelContent(decision: Decision, results: AnalysisResult
 }
 
 // Mobile-aware export function
-export function exportDecision(decision: Decision, results: AnalysisResult[], format: 'json' | 'csv' | 'pdf' | 'excel', isMobile: boolean = false) {
+export function exportDecision(decision: Decision, results: AnalysisResult[], format: 'json' | 'pdf' | 'excel', isMobile: boolean = false) {
   const timestamp = new Date().getTime();
   const baseName = decision.name.toLowerCase().replace(/\s+/g, '-');
   
@@ -560,11 +560,6 @@ export function exportDecision(decision: Decision, results: AnalysisResult[], fo
     case 'json':
       const jsonContent = exportAsJSON(decision, results);
       downloadFile(jsonContent, `decision-data-${baseName}-${timestamp}.json`, 'application/json');
-      break;
-      
-    case 'csv':
-      const csvContent = exportAsCSV(decision, results);
-      downloadFile(csvContent, `decision-data-${baseName}-${timestamp}.csv`, 'text/csv');
       break;
       
     case 'pdf':

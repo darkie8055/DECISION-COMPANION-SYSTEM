@@ -263,15 +263,8 @@ export function AnalysisResults({
             <DropdownMenuItem onClick={() => exportDecision(decision, results, 'excel', isMobile)} className="gap-2">
               <BarChart3 className="w-4 h-4" />
               <div>
-                <div className="font-medium">Excel Compatible</div>
-                <div className="text-xs text-muted-foreground">CSV format for spreadsheet analysis</div>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'csv', isMobile)} className="gap-2">
-              <TableIcon className="w-4 h-4" />
-              <div>
-                <div className="font-medium">CSV Data</div>
-                <div className="text-xs text-muted-foreground">Raw data for custom analysis</div>
+                <div className="font-medium">Excel/CSV Export</div>
+                <div className="text-xs text-muted-foreground">Spreadsheet-compatible format</div>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => exportDecision(decision, results, 'json', isMobile)} className="gap-2">

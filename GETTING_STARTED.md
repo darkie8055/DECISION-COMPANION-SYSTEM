@@ -81,11 +81,10 @@ Click "Export Report" dropdown to choose format:
 
 **Available Export Formats:**
 - **PDF Report**: Professional printable format (opens with auto-print dialog)
+- **Excel/CSV Export**: Spreadsheet-compatible format for Excel/Sheets
 - **JSON Data**: Complete structured data for programmatic use
-- **CSV Data**: Spreadsheet-compatible format for Excel/Sheets
-- **Excel Compatible**: Enhanced CSV with detailed breakdown tables
 
-**Note:** Text (.txt) export removed due to mobile incompatibility issues.
+**Note:** Text (.txt) and separate CSV formats removed due to redundancy and mobile incompatibility.
 
 ## 🔍 Common Use Cases & Queries
 

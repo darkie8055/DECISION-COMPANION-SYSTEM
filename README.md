@@ -160,7 +160,7 @@ Structured weighted scoring that:
 - ✅ **Export Format Fix**: Removed text (.txt) export due to mobile compatibility issues
   - **Problem**: ASCII art formatting rendered as unreadable asterisks on mobile devices
   - **Solution**: Enhanced PDF export with mobile-responsive design and auto-print dialog
-  - **Available Formats**: PDF (printable), JSON, CSV, Excel - all mobile-optimized
+  - **Available Formats**: PDF (printable), Excel/CSV (spreadsheet), JSON (data) - all mobile-optimized
 
 ```
 Decision Companion

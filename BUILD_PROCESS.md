@@ -1041,9 +1041,10 @@ Mobile view:
 
 **Available Export Formats After Change:**
 1. **PDF Report**: Professional, printable, universal compatibility
-2. **JSON Data**: Structured data for programmatic use
-3. **CSV Data**: Spreadsheet-compatible raw data
-4. **Excel Compatible**: Enhanced CSV with detailed breakdowns
+2. **Excel/CSV Export**: Spreadsheet-compatible format (consolidated from separate CSV and Excel options)
+3. **JSON Data**: Structured data for programmatic use
+
+**Update:** CSV format was later removed as a separate option since Excel export provides identical functionality (both generate CSV files). This simplified the export menu and reduced user confusion about which format to choose.
 
 ### Key Learnings
 
