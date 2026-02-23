@@ -63,6 +63,31 @@ Pre-built templates for common decisions:
 - Contextual help and placeholders
 - Clear error states and success indicators
 
+### 9. **UI/UX Improvements**
+- Consistent template card layout with aligned action buttons
+- Uniform card heights for professional appearance
+- Responsive grid layout adapting to screen sizes
+- Visual polish with improved spacing and typography
+- Seamless user experience across all components
+
+## 📋 What Users Get
+
+1. **Clear Use Cases**: Real examples of how to use each template for specific decision scenarios
+2. **Expected Results**: Sample calculations with actual numbers showing decision outcomes
+3. **Decision Queries**: Direct answers to common decision questions with practical guidance
+4. **Visual Improvements**: Polished UI that feels professional and consistent throughout
+5. **Architecture Clarity**: Multiple documentation formats serving different learning styles
+6. **Concrete Examples**: Real-world decision scenarios with complete mathematical breakdowns
+
+### Common Decision Queries Supported:
+1. "Which laptop should I buy?" → Technology Purchase template
+2. "Should I take this job?" → Career Move template
+3. "Is this investment worth it?" → Investment Decision template
+4. "Which vendor should we choose?" → Vendor Selection template
+5. "Should we relocate?" → Life Decision template
+6. "How do we prioritize features?" → Business Strategy template
+7. "Which option has the best risk-reward?" → Risk Assessment template
+
 ## 🏗️ Architecture
 
 ### Frontend Stack

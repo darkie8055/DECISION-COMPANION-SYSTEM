@@ -4,6 +4,17 @@
 
 This document explains how Decision Companion calculates scores, risk assessments, and analysis results. All algorithms are transparent and mathematically sound.
 
+## 🚀 Quick Reference
+
+**Main Formula**: `Total Score = Σ(Weight × Score) / 100`
+
+**Common Queries Solved**:
+- "Which option has the highest weighted score?"
+- "How sensitive is my decision to weight changes?"
+- "What's the confidence level of my top choice?"
+- "Are there any risky aspects to this decision?"
+- "Which criteria matter most in my final ranking?"
+
 ---
 
 ## 🧮 Core Scoring Algorithm
@@ -43,8 +54,6 @@ Total Score = (35×8 + 25×9 + 20×7 + 15×8 + 5×6) / 100
 Percentage = (Total Score / 10) × 100
            = (7.95 / 10) × 100
            = 79.5%
-```
-
 ---
 
 ## ⚠️ Risk Assessment Algorithms

@@ -98,6 +98,26 @@ This project includes comprehensive documentation organized by audience and purp
 - Plan scalability improvements
 - Evaluate technology choices
 
+---
+
+### [ALGORITHMS_EXPLAINED.md](./ALGORITHMS_EXPLAINED.md) - **Mathematical Deep Dive**
+**For:** Data scientists, algorithm developers, technical evaluators
+**Time to read:** 15-20 minutes
+**Contains:**
+- Detailed mathematical formulas and calculations
+- Step-by-step scoring algorithm breakdown
+- Real-world calculation examples with actual numbers
+- Risk assessment mathematical models
+- Sensitivity analysis computation methods
+- Quick reference section for key concepts
+
+**Read this if you want to:**
+- Understand the mathematical foundations
+- See concrete calculation examples
+- Verify algorithm correctness
+- Learn how scoring and risk assessment work
+- Implement similar systems
+
 **Key Diagrams:**
 - System Architecture Overview
 - Data Flow Diagram

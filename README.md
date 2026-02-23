@@ -26,10 +26,13 @@
 
 ### 🗺️ "I need more detailed documentation"
 - **Architecture**: [ARCHITECTURE.md](./ARCHITECTURE.md) (comprehensive technical details)
+- **Simple Architecture**: [ARCHITECTURE_SIMPLE.md](./ARCHITECTURE_SIMPLE.md) ⭐ (clean diagrams + PNG export)
+- **Interactive Diagrams**: [architecture-diagrams.html](./architecture-diagrams.html) (visual architecture)
 - **User Flows**: [FLOWCHART.md](./FLOWCHART.md) (process diagrams)
 - **Development Journey**: [BUILD_PROCESS.md](./BUILD_PROCESS.md)
 - **AI Usage**: [RESEARCH_LOG.md](./RESEARCH_LOG.md)
 - **Features**: [FEATURES.md](./FEATURES.md)
+- **Algorithms**: [ALGORITHMS_EXPLAINED.md](./ALGORITHMS_EXPLAINED.md)
 - **Navigation**: [DOCUMENTATION_INDEX.md](./DOCUMENTATION_INDEX.md)
 
 ---
@@ -146,6 +149,14 @@ Structured weighted scoring that:
 **Trade-off:** Additional complexity, but educational value justifies it
 
 ## Architecture Overview
+
+### **Recent Improvements (Latest Update)**
+- ✅ **Template Card Alignment**: Fixed inconsistent button positioning across all template cards
+- ✅ **Uniform Card Heights**: All template cards now have consistent height for better visual appeal
+- ✅ **Enhanced Documentation**: Added simplified architecture diagrams with PNG export capability
+- ✅ **Interactive Diagrams**: Created HTML file with exportable architecture diagrams
+- ✅ **Common Use Cases**: Documented popular decision queries and real-world applications
+- ✅ **Better Examples**: Added concrete calculations with actual numbers in documentation
 
 ```
 Decision Companion

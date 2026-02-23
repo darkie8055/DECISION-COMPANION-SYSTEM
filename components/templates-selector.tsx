@@ -95,7 +95,7 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
               return (
                 <Card
                   key={templateId}
-                  className="glass-card hover-lift group border border-white/20 dark:border-gray-700/20 transition-all duration-300 hover:scale-[1.02]"
+                  className="glass-card hover-lift group border border-white/20 dark:border-gray-700/20 transition-all duration-300 hover:scale-[1.02] flex flex-col h-full"
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between mb-2">
@@ -108,8 +108,8 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
                     </div>
                     <CardDescription className="text-sm leading-relaxed">{template.description}</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
+                  <CardContent className="flex-grow flex flex-col">
+                    <div className="space-y-4 flex-grow">
                       <div className="text-sm">
                         <p className="font-semibold text-foreground mb-2 text-xs uppercase tracking-wide flex items-center gap-1">
                           <PlayCircle className="w-3 h-3" />
@@ -148,33 +148,35 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
                           {template.name === 'Vendor/Supplier Selection' && 'Choose the best business partner'}
                         </span>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 mt-2">
+                    </div>
+                    
+                    {/* Buttons fixed at bottom */}
+                    <div className="grid grid-cols-2 gap-2 mt-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectTemplate(template);
+                        }}
+                        className="group/btn"
+                      >
+                        Use Now
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                      {onCustomizeTemplate && (
                         <Button
-                          variant="outline"
                           size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
-                            onSelectTemplate(template);
+                            onCustomizeTemplate(template);
                           }}
-                          className="group/btn"
+                          className="group/btn gap-1"
                         >
-                          Use Now
-                          <ChevronRight className="w-4 h-4 ml-1" />
+                          <Settings className="w-4 h-4" />
+                          Customize
                         </Button>
-                        {onCustomizeTemplate && (
-                          <Button
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onCustomizeTemplate(template);
-                            }}
-                            className="group/btn gap-1"
-                          >
-                            <Settings className="w-4 h-4" />
-                            Customize
-                          </Button>
-                        )}
-                      </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

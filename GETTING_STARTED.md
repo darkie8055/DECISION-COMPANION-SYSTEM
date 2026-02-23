@@ -78,6 +78,74 @@ Test "What-if" scenarios:
 ## 📥 Exporting Results
 
 Click "Export Report" to download:
+
+## 🔍 Common Use Cases & Queries
+
+### Popular Template Applications
+
+**Job Offer Evaluation**
+- Compare multiple job offers objectively
+- Weight factors: Salary (30-40%), Growth (20-30%), Work-Life Balance (15-25%)
+- Common options: 2-4 different companies
+- Typical time: 10-15 minutes
+- *Query*: "Which job offer gives me the best overall package?"
+
+**Laptop Purchase Decision**
+- Find the best laptop for your needs and budget
+- Weight factors: Performance (25-40%), Price (20-35%), Battery Life (15-25%)
+- Common options: 3-5 different models
+- Typical time: 5-10 minutes
+- *Query*: "What's the best laptop under $1500 for programming?"
+
+**Vacation Destination**
+- Choose your next travel destination
+- Weight factors: Cost (20-30%), Weather (15-25%), Activities (20-30%), Distance (10-20%)
+- Common options: 3-6 destinations
+- Typical time: 8-12 minutes
+- *Query*: "Where should we go for our 2-week vacation in summer?"
+
+**Real Estate Purchase**
+- Evaluate properties systematically
+- Weight factors: Price (25-35%), Location (20-30%), Size (15-25%), Condition (10-20%)
+- Common options: 3-8 properties
+- Typical time: 15-25 minutes
+- *Query*: "Which house offers the best value in our target area?"
+
+### Advanced Decision Examples
+
+**Business Investment**
+- Evaluate investment opportunities
+- Weight factors: ROI Potential (30-40%), Risk Level (20-30%), Time Commitment (15-25%)
+- *Query*: "Which investment strategy aligns with our risk tolerance?"
+
+**College/University Selection**
+- Choose the right educational path
+- Weight factors: Academic Reputation (25-35%), Cost (20-30%), Location (15-25%)
+- *Query*: "Which university offers the best Computer Science program for my budget?"
+
+**Vendor/Supplier Selection**
+- Choose business partners objectively
+- Weight factors: Price Competitiveness (25-35%), Service Quality (20-30%), Reliability (20-30%)
+- *Query*: "Which vendor provides the best value for our software development needs?"
+
+### Tips for Better Decisions
+
+1. **Use Specific Criteria**: Instead of "Quality", use "Build Quality" or "Software Quality"
+2. **Test Sensitivity**: Adjust weights ±10% to see if winner changes
+3. **Consider Time Factors**: Weight current vs. future benefits appropriately
+4. **Document Assumptions**: Note why you scored options the way you did
+5. **Review Past Decisions**: Learn from your decision-making patterns
+
+### When NOT to Use This Tool
+
+- **Single-criterion decisions**: "What's the cheapest option?" (just sort by price)
+- **Binary yes/no choices**: "Should I quit my job?" (use different frameworks)
+- **Highly emotional decisions**: "Should I marry this person?" (rely on feelings + other guidance)
+- **Urgent emergency decisions**: "Which route to avoid traffic?" (use real-time tools)
+
+## 📥 Exporting Results
+
+Click "Export Report" to download:
 - **Text Report**: Formatted with all details, readable in any text editor
 - Contains: criteria, options, complete scoring matrix, rankings, recommendations
 

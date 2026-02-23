@@ -10,6 +10,9 @@
 - ✅ Progress tracking during setup
 - ✅ Detailed descriptions and context capture
 - ✅ Validation error states with actionable feedback
+- ✅ **NEW**: Consistent template card layout with aligned buttons
+- ✅ **NEW**: Uniform card heights for better visual alignment
+- ✅ Category-based template organization with visual icons
 
 ### 2. Weighted Scoring System
 - ✅ 0-10 scale for all scores
@@ -78,6 +81,24 @@
 - ✅ Timestamp and metadata
 - ✅ Download-ready format
 - ✅ Future: JSON export ready
+
+### 9. **NEW: UI/UX Improvements**
+- ✅ **Consistent Template Layout**: All template cards have uniform height
+- ✅ **Aligned Action Buttons**: "Use Now" and "Customize" buttons align perfectly
+- ✅ **Responsive Grid Layout**: Cards adapt to screen size automatically
+- ✅ **Visual Category Icons**: Clear iconography for each decision category
+- ✅ **Improved Card Spacing**: Better visual hierarchy and breathing room
+- ✅ **Consistent Typography**: Standardized font sizes and weights
+- ✅ **Enhanced Button States**: Better hover and active states
+
+### 10. Common Decision Queries Supported
+- ✅ **"Which option gives the best overall value?"** → Highest weighted score
+- ✅ **"How confident should I be in this choice?"** → Risk assessment analysis
+- ✅ **"What if I adjust my priorities?"** → Sensitivity analysis testing
+- ✅ **"Are any criteria causing decision uncertainty?"** → High variance identification
+- ✅ **"Which factors matter most for the final ranking?"** → Weight impact analysis
+- ✅ **"How does this decision compare to past ones?"** → Historical comparison
+- ✅ **"What are the trade-offs between top options?"** → Detailed breakdown tables
 - ✅ Future: CSV export ready
 - ✅ Future: PDF reports
 
