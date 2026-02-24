@@ -5,6 +5,7 @@ export const TEMPLATES: Record<string, Decision> = {
     id: 'job-offer',
     name: 'Job Offer Evaluation',
     description: 'Compare multiple job offers using key criteria',
+    category: 'career',
     criteria: [
       { id: '1', name: 'Salary & Benefits', weight: 25 },
       { id: '2', name: 'Work-Life Balance', weight: 20 },
@@ -25,6 +26,7 @@ export const TEMPLATES: Record<string, Decision> = {
     id: 'laptop-purchase',
     name: 'Laptop Purchase Decision',
     description: 'Evaluate laptops for your specific needs',
+    category: 'technology',
     criteria: [
       { id: '1', name: 'Performance', weight: 25 },
       { id: '2', name: 'Price', weight: 20 },
@@ -45,6 +47,7 @@ export const TEMPLATES: Record<string, Decision> = {
     id: 'travel-destination',
     name: 'Vacation Destination',
     description: 'Choose your next travel destination',
+    category: 'travel',
     criteria: [
       { id: '1', name: 'Cost', weight: 20 },
       { id: '2', name: 'Weather', weight: 15 },
@@ -61,111 +64,75 @@ export const TEMPLATES: Record<string, Decision> = {
     scores: [],
     createdAt: new Date(),
   },
-  'business-investment': {
-    id: 'business-investment',
-    name: 'Business Investment',
-    description: 'Evaluate investment opportunities',
+  'purchase-decision': {
+    id: 'purchase-decision',
+    name: 'Purchase Decision',
+    description: 'Evaluate any major purchase or investment',
+    category: 'general',
     criteria: [
-      { id: '1', name: 'ROI Potential', weight: 30 },
-      { id: '2', name: 'Risk Level', weight: 20 },
-      { id: '3', name: 'Market Size', weight: 15 },
-      { id: '4', name: 'Management Team', weight: 15 },
-      { id: '5', name: 'Scalability', weight: 20 },
+      { id: '1', name: 'Price & Value', weight: 25 },
+      { id: '2', name: 'Quality & Durability', weight: 20 },
+      { id: '3', name: 'Features & Functionality', weight: 20 },
+      { id: '4', name: 'Brand Reputation', weight: 15 },
+      { id: '5', name: 'Warranty & Support', weight: 10 },
+      { id: '6', name: 'Personal Preference', weight: 10 },
     ],
     options: [
-      { id: 'a', name: 'Opportunity A' },
-      { id: 'b', name: 'Opportunity B' },
-      { id: 'c', name: 'Opportunity C' },
+      { id: 'a', name: 'Option A' },
+      { id: 'b', name: 'Option B' },
+      { id: 'c', name: 'Option C' },
     ],
     scores: [],
     createdAt: new Date(),
   },
 };
-
-export const TEMPLATES_DATA: Record<string, Decision> = {
-  'home-purchase': {
-    id: 'home-purchase',
-    name: 'Real Estate Purchase',
-    description: 'Evaluate properties based on location, price, and features',
-    criteria: [
-      { id: '1', name: 'Price & Affordability', weight: 25 },
-      { id: '2', name: 'Location Quality', weight: 20 },
-      { id: '3', name: 'Property Condition', weight: 20 },
-      { id: '4', name: 'Neighborhood Safety', weight: 15 },
-      { id: '5', name: 'Schools & Amenities', weight: 10 },
-      { id: '6', name: 'Investment Potential', weight: 10 },
-    ],
-    options: [
-      { id: 'a', name: 'Property A' },
-      { id: 'b', name: 'Property B' },
-      { id: 'c', name: 'Property C' },
-    ],
-    scores: [],
-    createdAt: new Date(),
-  },
-  'college-choice': {
-    id: 'college-choice',
-    name: 'College/University Selection',
-    description: 'Compare universities for your academic future',
-    criteria: [
-      { id: '1', name: 'Academic Reputation', weight: 22 },
-      { id: '2', name: 'Tuition & Financial Aid', weight: 20 },
-      { id: '3', name: 'Location & Campus', weight: 15 },
-      { id: '4', name: 'Program Quality', weight: 18 },
-      { id: '5', name: 'Student Life', weight: 10 },
-      { id: '6', name: 'Career Services', weight: 15 },
-    ],
-    options: [
-      { id: 'a', name: 'University A' },
-      { id: 'b', name: 'University B' },
-      { id: 'c', name: 'University C' },
-    ],
-    scores: [],
-    createdAt: new Date(),
-  },
-  'vendor-selection': {
-    id: 'vendor-selection',
-    name: 'Vendor/Supplier Selection',
-    description: 'Choose the best vendor for your business needs',
-    criteria: [
-      { id: '1', name: 'Price Competitiveness', weight: 20 },
-      { id: '2', name: 'Quality Standards', weight: 25 },
-      { id: '3', name: 'Delivery Reliability', weight: 20 },
-      { id: '4', name: 'Customer Support', weight: 15 },
-      { id: '5', name: 'Financial Stability', weight: 10 },
-      { id: '6', name: 'Scalability', weight: 10 },
-    ],
-    options: [
-      { id: 'a', name: 'Vendor A' },
-      { id: 'b', name: 'Vendor B' },
-      { id: 'c', name: 'Vendor C' },
-    ],
-    scores: [],
-    createdAt: new Date(),
-  },
-};
-
-Object.assign(TEMPLATES, TEMPLATES_DATA);
 
 export const TEMPLATE_CATEGORIES = [
   {
     name: 'Career',
+    icon: 'briefcase',
     templates: ['job-offer'],
+    description: 'Job opportunities and career decisions'
   },
   {
     name: 'Technology',
+    icon: 'laptop',
     templates: ['laptop-purchase'],
+    description: 'Technology purchases and selections'
   },
   {
     name: 'Travel',
+    icon: 'map-pin',
     templates: ['travel-destination'],
+    description: 'Travel planning and destination choices'
   },
   {
-    name: 'Business',
-    templates: ['business-investment', 'home-purchase', 'vendor-selection'],
-  },
-  {
-    name: 'Education',
-    templates: ['college-choice'],
+    name: 'General',
+    icon: 'shopping-cart',
+    templates: ['purchase-decision'],
+    description: 'General purchases and investments'
   },
 ];
+
+// Helper function to get templates by category
+export function getTemplatesByCategory(category: string): Decision[] {
+  const categoryData = TEMPLATE_CATEGORIES.find(cat => cat.name.toLowerCase() === category.toLowerCase());
+  if (!categoryData) return [];
+  
+  return categoryData.templates.map(templateId => TEMPLATES[templateId]).filter(Boolean);
+}
+
+// Helper function to get all templates as array
+export function getAllTemplates(): Decision[] {
+  return Object.values(TEMPLATES);
+}
+
+// Helper function to search templates
+export function searchTemplates(query: string): Decision[] {
+  const searchTerm = query.toLowerCase();
+  return getAllTemplates().filter(template => 
+    template.name.toLowerCase().includes(searchTerm) ||
+    template.description.toLowerCase().includes(searchTerm) ||
+    template.category?.toLowerCase().includes(searchTerm)
+  );
+}

@@ -21,7 +21,9 @@ import {
   PlayCircle,
   Clock,
   Grid3x3,
-  PlusCircle
+  PlusCircle,
+  Sparkles,
+  Trash2
 } from 'lucide-react';
 
 interface TemplatesSelectorProps {
@@ -30,6 +32,7 @@ interface TemplatesSelectorProps {
   onCreateCustom: () => void;
   decisionHistory?: Decision[];
   onLoadDecision?: (decision: Decision) => void;
+  onDeleteDecision?: (decisionId: string) => void;
 }
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -42,7 +45,7 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   Other: <PlusCircle className="w-5 h-5" />,
 };
 
-export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCreateCustom, decisionHistory = [], onLoadDecision }: TemplatesSelectorProps) {
+export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCreateCustom, decisionHistory = [], onLoadDecision, onDeleteDecision }: TemplatesSelectorProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   // Get filtered templates based on selected category
@@ -136,18 +139,43 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
               {decisionHistory.slice(0, 6).map((decision) => (
                 <Card 
                   key={decision.id} 
-                  className="group cursor-pointer hover:shadow-lg transition-all duration-200 border-2 hover:border-green-400 dark:hover:border-green-600"
-                  onClick={() => onLoadDecision?.(decision)}
+                  className="group relative hover:shadow-lg transition-all duration-200 border-2 hover:border-green-400 dark:hover:border-green-600"
                 >
                   <CardContent className="p-4">
                     <div className="space-y-2">
-                      <h3 className="font-semibold text-base line-clamp-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                        {decision.name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 
+                          className="font-semibold text-base line-clamp-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors cursor-pointer flex-1"
+                          onClick={() => onLoadDecision?.(decision)}
+                        >
+                          {decision.name}
+                        </h3>
+                        {onDeleteDecision && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (confirm(`Delete "${decision.name}"?`)) {
+                                onDeleteDecision(decision.id);
+                              }
+                            }}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                      <p 
+                        className="text-sm text-muted-foreground line-clamp-2 cursor-pointer"
+                        onClick={() => onLoadDecision?.(decision)}
+                      >
                         {decision.description}
                       </p>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t">
+                      <div 
+                        className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t cursor-pointer"
+                        onClick={() => onLoadDecision?.(decision)}
+                      >
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {new Date(decision.createdAt).toLocaleDateString()}

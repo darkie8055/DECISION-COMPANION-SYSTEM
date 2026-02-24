@@ -23,6 +23,12 @@ export interface Decision {
   options: Option[];
   scores: Score[];
   createdAt: Date;
+  updatedAt?: Date;
+  category?: string;
+  tags?: string[];
+  confidence?: number; // User's confidence in the decision
+  completionTime?: number; // Time taken to complete (milliseconds)
+  savedAt?: Date;
 }
 
 export interface AnalysisResult {

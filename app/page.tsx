@@ -10,10 +10,12 @@ import { SensitivityAnalysis } from '@/components/sensitivity-analysis';
 import { DecisionHistory } from '@/components/decision-history';
 import { RiskAssessment } from '@/components/risk-assessment';
 import { OnboardingTour } from '@/components/onboarding-tour';
+import { DecisionComparison } from '@/components/decision-comparison';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { storageManager } from '@/lib/storage';
 import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
-import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle, Check, Loader2 } from 'lucide-react';
+import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle, Check, Loader2, Layers, Trash2 } from 'lucide-react';
 
 type Step = 'templates' | 'customize' | 'setup' | 'scoring' | 'results' | 'sensitivity' | 'risk' | 'history';
 
@@ -22,39 +24,54 @@ export default function Home() {
   const [decision, setDecision] = useState<Decision | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<Decision | null>(null);
   const [decisionHistory, setDecisionHistory] = useState<Decision[]>([]);
-  const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history'>('analysis');
+  const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history' | 'comparison'>('analysis');
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
   const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'shared'>('idle');
   const [previousStep, setPreviousStep] = useState<Step | null>(null);
 
-  // Load decision history from localStorage on mount
+  // Load decision history from storage manager on mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('decisionHistory');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Convert date strings back to Date objects
-        const restored = parsed.map((d: any) => ({
-          ...d,
-          createdAt: new Date(d.createdAt),
-          savedAt: d.savedAt ? new Date(d.savedAt) : undefined,
-        }));
-        setDecisionHistory(restored);
+      // Try to load from new storage manager first
+      let decisions = storageManager.loadDecisions();
+      
+      // If no decisions found, try to migrate from old localStorage format
+      if (decisions.length === 0) {
+        const oldDecisions = localStorage.getItem('decisionHistory');
+        if (oldDecisions) {
+          try {
+            const parsed = JSON.parse(oldDecisions);
+            const migrated = parsed.map((d: any) => ({
+              ...d,
+              createdAt: new Date(d.createdAt),
+              updatedAt: d.updatedAt ? new Date(d.updatedAt) : new Date(d.createdAt),
+              savedAt: d.savedAt ? new Date(d.savedAt) : undefined,
+            }));
+            
+            // Save migrated decisions to new storage
+            migrated.forEach((decision: Decision) => {
+              storageManager.saveDecision(decision);
+            });
+            
+            // Remove old storage after successful migration
+            localStorage.removeItem('decisionHistory');
+            decisions = migrated;
+            console.log(`Migrated ${migrated.length} decisions from old storage format`);
+          } catch (migrationError) {
+            console.warn('Failed to migrate old decisions:', migrationError);
+          }
+        }
       }
+      
+      setDecisionHistory(decisions);
     } catch (error) {
       console.error('Failed to load decision history:', error);
     }
   }, []);
 
-  // Save decision history to localStorage whenever it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem('decisionHistory', JSON.stringify(decisionHistory));
-    } catch (error) {
-      console.error('Failed to save decision history:', error);
-    }
-  }, [decisionHistory]);
+  // Note: Decisions are now saved individually through storage manager
+  // No need for bulk sync as each decision is saved when created/updated
 
   const handleSelectTemplate = (template: Decision) => {
     const newDecision = { ...template, id: Date.now().toString() };
@@ -129,12 +146,24 @@ export default function Home() {
         const savedDecision = {
           ...decision,
           id: `${decision.id}-saved-${Date.now()}`, // Unique ID for saved version
+          createdAt: now,
+          updatedAt: now,
           savedAt: now,
           displayName: `${decision.name} (${now.toLocaleDateString()} ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})})`,
         };
         
-        setDecisionHistory([...decisionHistory, savedDecision]);
-        setSaveStatus('saved');
+        // Save to storage manager
+        const success = storageManager.saveDecision(savedDecision);
+        if (success) {
+          // Update local state
+          const updatedHistory = [...decisionHistory, savedDecision];
+          setDecisionHistory(updatedHistory);
+          setSaveStatus('saved');
+        } else {
+          setSaveStatus('idle');
+          console.error('Failed to save decision');
+          return;
+        }
         
         // Reset status after 2 seconds
         setTimeout(() => setSaveStatus('idle'), 2000);
@@ -224,10 +253,19 @@ export default function Home() {
     setStep('scoring');
   };
 
-  const handleCompareDecisions = () => {
-    if (decisionHistory.length > 0) {
-      setPreviousStep(step); // Save current step before going to history
-      setStep('history');
+  const handleDeleteDecision = (decisionId: string) => {
+    try {
+      storageManager.deleteDecision(decisionId);
+      const updatedDecisions = decisionHistory.filter(d => d.id !== decisionId);
+      setDecisionHistory(updatedDecisions);
+      
+      // If the deleted decision is the current one, clear it
+      if (decision?.id === decisionId) {
+        setDecision(null);
+        setStep('templates');
+      }
+    } catch (error) {
+      console.error('Failed to delete decision:', error);
     }
   };
 
@@ -344,15 +382,6 @@ export default function Home() {
                       {getSaveButtonContent()}
                     </Button>
                     <Button
-                      onClick={handleCompareDecisions}
-                      variant="outline"
-                      size="sm"
-                      className="gap-2"
-                      disabled={decisionHistory.length === 0}
-                    >
-                      Compare
-                    </Button>
-                    <Button
                       onClick={handleShareDecision}
                       variant="outline"
                       size="sm"
@@ -415,6 +444,7 @@ export default function Home() {
               onCreateCustom={handleCreateCustom}
               decisionHistory={decisionHistory}
               onLoadDecision={handleLoadDecision}
+              onDeleteDecision={handleDeleteDecision}
             />
           )}
 
@@ -461,18 +491,22 @@ export default function Home() {
               
               <div className="glass-card rounded-2xl overflow-hidden">
                 <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-                  <TabsList className="grid w-full grid-cols-3 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+                  <TabsList className="grid w-full grid-cols-4 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
                     <TabsTrigger value="analysis" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
                       <BarChart3 className="w-4 h-4" />
                       Analysis
                     </TabsTrigger>
                     <TabsTrigger value="risk" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
                       <AlertTriangle className="w-4 h-4" />
-                      Risk Assessment
+                      Risk
                     </TabsTrigger>
                     <TabsTrigger value="history" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
                       <History className="w-4 h-4" />
                       Sensitivity
+                    </TabsTrigger>
+                    <TabsTrigger value="comparison" className="gap-2 data-[state=active]:bg-white/80 dark:data-[state=active]:bg-gray-800/80">
+                      <Layers className="w-4 h-4" />
+                      Compare
                     </TabsTrigger>
                   </TabsList>
 
@@ -493,6 +527,13 @@ export default function Home() {
                     <TabsContent value="history" className="space-y-4">
                       <SensitivityAnalysis decision={decision} />
                     </TabsContent>
+
+                    <TabsContent value="comparison" className="space-y-4">
+                      <DecisionComparison 
+                        decisions={decisionHistory}
+                        selectedDecisions={[decision.id]}
+                      />
+                    </TabsContent>
                   </div>
                 </Tabs>
               </div>
@@ -504,6 +545,7 @@ export default function Home() {
               <DecisionHistory
                 decisions={decisionHistory}
                 onSelectDecision={handleLoadDecision}
+                onDeleteDecision={handleDeleteDecision}
               />
             </div>
           )}

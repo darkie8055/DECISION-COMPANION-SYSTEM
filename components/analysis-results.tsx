@@ -12,7 +12,7 @@ import type { Decision, AnalysisResult } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
 import { exportDecision } from '@/lib/export-utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Download, Share2, TrendingUp, Award, Zap, ChevronDown, FileText, Database, Table as TableIcon, Globe, BarChart3 } from 'lucide-react';
+import { Download, Share2, TrendingUp, Award, Zap, ChevronDown, FileText, Database, Table as TableIcon, Globe, BarChart3, Presentation } from 'lucide-react';
 
 interface AnalysisResultsProps {
   decision: Decision;
@@ -257,6 +257,13 @@ export function AnalysisResults({
               <div>
                 <div className="font-medium">PDF Report</div>
                 <div className="text-xs text-muted-foreground">Professional PDF download</div>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportDecision(decision, results, 'ppt', isMobile)} className="gap-2">
+              <Presentation className="w-4 h-4" />
+              <div>
+                <div className="font-medium">PowerPoint</div>
+                <div className="text-xs text-muted-foreground">Presentation slides</div>
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

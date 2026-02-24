@@ -551,8 +551,199 @@ export function generateExcelContent(decision: Decision, results: AnalysisResult
   return excel;
 }
 
+// Generate PowerPoint-ready HTML content
+function generatePowerPointContent(decision: Decision, results: AnalysisResult[]): string {
+  const timestamp = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+  let html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${decision.name} - Decision Analysis</title>
+  <style>
+    @page { size: 10in 7.5in landscape; margin: 0.5in; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .slide { background: white; padding: 40px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); page-break-after: always; }
+    h1 { color: #667eea; font-size: 36px; margin: 0 0 10px 0; }
+    h2 { color: #764ba2; font-size: 28px; margin: 30px 0 15px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+    h3 { color: #555; font-size: 22px; margin: 20px 0 10px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px; text-align: left; }
+    td { padding: 10px; border-bottom: 1px solid #eee; }
+    tr:hover { background: #f8f9ff; }
+    .ranking { font-size: 48px; font-weight: bold; color: #667eea; text-align: center; }
+    .score { font-size: 36px; font-weight: bold; color: #764ba2; }
+    .winner { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .criteria-bar { height: 24px; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 4px; margin: 5px 0; }
+    .footer { text-align: center; color: #999; font-size: 12px; margin-top: 30px; }
+    .medal { font-size: 40px; }
+    .chart-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+    .chart-item { text-align: center; padding: 15px; background: #f8f9ff; border-radius: 8px; }
+    @media print { body { background: none; } .slide { box-shadow: none; page-break-after: always; } }
+  </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide">
+  <h1>📊 ${decision.name}</h1>
+  <p style="font-size: 18px; color: #666; margin-top: 10px;">${decision.description || ''}</p>
+  <div style="margin-top: 50px; padding: 20px; background: #f8f9ff; border-radius: 8px;">
+    <h3>Decision Analysis Report</h3>
+    <p><strong>Generated:</strong> ${timestamp}</p>
+    <p><strong>Options Evaluated:</strong> ${decision.options.length}</p>
+    <p><strong>Criteria Assessed:</strong> ${decision.criteria.length}</p>
+  </div>
+  <div class="footer">Decision Companion System • ${new Date().getFullYear()}</div>
+</div>
+
+<!-- Slide 2: Winner -->
+<div class="slide">
+  <h2>🏆 Recommended Choice</h2>
+  <div class="winner">
+    <div class="medal" style="text-align: center; margin-bottom: 15px;">🥇</div>
+    <h1 style="color: white; text-align: center; margin: 0;">${results[0].optionName}</h1>
+    <div class="score" style="text-align: center; color: white; margin-top: 15px;">
+      ${results[0].totalScore.toFixed(2)} / 10.00
+    </div>
+    <p style="text-align: center; font-size: 18px; margin-top: 10px;">
+      ${results[0].percentage.toFixed(1)}% confidence score
+    </p>
+  </div>
+  ${results[1] ? `
+  <div style="padding: 15px; background: #f8f9ff; border-radius: 8px; margin-top: 20px;">
+    <h3 style="margin: 0 0 10px 0;">🥈 Runner-up: ${results[1].optionName}</h3>
+    <p style="margin: 0;">Score: <strong>${results[1].totalScore.toFixed(2)}</strong> / 10.00 (${results[1].percentage.toFixed(1)}%)</p>
+    <p style="margin: 5px 0 0 0; color: #666;">Gap: ${(results[0].totalScore - results[1].totalScore).toFixed(2)} points</p>
+  </div>` : ''}
+</div>
+
+<!-- Slide 3: Rankings -->
+<div class="slide">
+  <h2>📋 Complete Rankings</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 60px; text-align: center;">Rank</th>
+        <th>Option</th>
+        <th style="width: 120px; text-align: center;">Score</th>
+        <th style="width: 120px; text-align: center;">Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${results.map((result, idx) => `
+        <tr style="${idx === 0 ? 'font-weight: bold; background: #f6d365;' : ''}">
+          <td style="text-align: center; font-size: 24px;">
+            ${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : result.rank}
+          </td>
+          <td>${result.optionName}</td>
+          <td style="text-align: center; font-size: 20px; font-weight: bold; color: #764ba2;">
+            ${result.totalScore.toFixed(2)}
+          </td>
+          <td style="text-align: center;">${result.percentage.toFixed(1)}%</td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>
+</div>
+
+<!-- Slide 4: Criteria Weights -->
+<div class="slide">
+  <h2>⚖️ Decision Criteria & Weights</h2>
+  <div style="margin-top: 30px;">
+    ${decision.criteria.map(criterion => `
+      <div style="margin-bottom: 25px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+          <strong style="font-size: 18px;">${criterion.name}</strong>
+          <span style="font-size: 18px; color: #667eea; font-weight: bold;">${criterion.weight}%</span>
+        </div>
+        <div style="background: #eee; border-radius: 4px; height: 24px; overflow: hidden;">
+          <div class="criteria-bar" style="width: ${criterion.weight}%;"></div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+</div>
+
+<!-- Slide 5: Detailed Breakdown -->
+<div class="slide">
+  <h2>🔍 Detailed Scoring Matrix</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        ${decision.criteria.map(c => `<th style="text-align: center;">${c.name}</th>`).join('')}
+        <th style="text-align: center; background: #764ba2;">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${results.map((result, idx) => `
+        <tr style="${idx === 0 ? 'background: #f6d365; font-weight: bold;' : ''}">
+          <td><strong>${result.optionName}</strong></td>
+          ${result.scores.map(score => `
+            <td style="text-align: center;">${score.score.toFixed(1)}</td>
+          `).join('')}
+          <td style="text-align: center; font-size: 18px; font-weight: bold; color: #764ba2;">
+            ${result.totalScore.toFixed(2)}
+          </td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>
+</div>
+
+<!-- Slide 6: Summary -->
+<div class="slide">
+  <h2>💡 Key Insights</h2>
+  <div class="chart-container">
+    <div class="chart-item">
+      <div style="font-size: 48px; color: #667eea;">🏆</div>
+      <h3 style="margin: 10px 0 5px 0;">Winner</h3>
+      <p style="margin: 0; font-weight: bold;">${results[0].optionName}</p>
+      <p style="margin: 5px 0 0 0; color: #666;">${results[0].totalScore.toFixed(2)}/10</p>
+    </div>
+    <div class="chart-item">
+      <div style="font-size: 48px; color: #fda085;">📊</div>
+      <h3 style="margin: 10px 0 5px 0;">Avg Score</h3>
+      <p style="margin: 0; font-weight: bold;">
+        ${(results.reduce((sum, r) => sum + r.totalScore, 0) / results.length).toFixed(2)}
+      </p>
+      <p style="margin: 5px 0 0 0; color: #666;">across ${results.length} options</p>
+    </div>
+    <div class="chart-item">
+      <div style="font-size: 48px; color: #764ba2;">📏</div>
+      <h3 style="margin: 10px 0 5px 0;">Score Range</h3>
+      <p style="margin: 0; font-weight: bold;">
+        ${Math.min(...results.map(r => r.totalScore)).toFixed(1)} - ${Math.max(...results.map(r => r.totalScore)).toFixed(1)}
+      </p>
+      <p style="margin: 5px 0 0 0; color: #666;">spread: ${(Math.max(...results.map(r => r.totalScore)) - Math.min(...results.map(r => r.totalScore))).toFixed(2)}</p>
+    </div>
+  </div>
+  <div style="margin-top: 40px; padding: 20px; background: #f8f9ff; border-radius: 8px; border-left: 4px solid #667eea;">
+    <h3 style="margin-top: 0;">📝 Recommendation Summary</h3>
+    <p style="line-height: 1.6;">
+      Based on your weighted criteria analysis, <strong>${results[0].optionName}</strong> scored highest with 
+      <strong>${results[0].totalScore.toFixed(2)}/10</strong>, earning a ${results[0].percentage.toFixed(1)}% confidence rating. 
+      This option best aligns with your defined priorities and requirements.
+    </p>
+  </div>
+  <div class="footer" style="margin-top: 40px;">Generated by Decision Companion • ${timestamp}</div>
+</div>
+
+</body>
+</html>`;
+
+  return html;
+}
+
 // Mobile-aware export function
-export function exportDecision(decision: Decision, results: AnalysisResult[], format: 'json' | 'pdf' | 'excel', isMobile: boolean = false) {
+export function exportDecision(decision: Decision, results: AnalysisResult[], format: 'json' | 'pdf' | 'excel' | 'ppt', isMobile: boolean = false) {
   const timestamp = new Date().getTime();
   const baseName = decision.name.toLowerCase().replace(/\s+/g, '-');
   
@@ -579,6 +770,115 @@ export function exportDecision(decision: Decision, results: AnalysisResult[], fo
     case 'excel':
       const excelContent = generateExcelContent(decision, results);
       downloadFile(excelContent, `decision-analysis-${baseName}-${timestamp}.csv`, 'text/csv');
+      break;
+      
+    case 'ppt':
+      // Generate PowerPoint-ready HTML
+      const pptContent = generatePowerPointContent(decision, results);
+      const pptWindow = window.open();
+      if (pptWindow) {
+        pptWindow.document.write(pptContent);
+        pptWindow.document.close();
+        // Auto-trigger print dialog for PDF/PPT save
+        setTimeout(() => {
+          pptWindow.print();
+        }, 500);
+      }
+      break;
+  }
+}
+
+// Export comparison data in multiple formats
+export function exportComparison(
+  decisions: any[],
+  format: 'json' | 'pdf' | 'excel' | 'ppt'
+) {
+  const timestamp = new Date().getTime();
+  const date = new Date().toISOString().slice(0, 10);
+  
+  switch (format) {
+    case 'json':
+      const jsonData = {
+        timestamp: new Date().toISOString(),
+        decisions: decisions
+      };
+      downloadFile(
+        JSON.stringify(jsonData, null, 2),
+        `decision-comparison-${date}.json`,
+        'application/json'
+      );
+      break;
+      
+    case 'excel':
+      let csv = 'Decision Name,Description,Top Choice,Top Score,Options Count,Criteria Count\n';
+      decisions.forEach(d => {
+        csv += `"${d.name}","${d.description}","${d.topChoice?.optionName || 'N/A'}",${d.topChoice?.totalScore?.toFixed(2) || 0},${d.optionCount},${d.criteriaCount}\n`;
+      });
+      downloadFile(csv, `decision-comparison-${date}.csv`, 'text/csv');
+      break;
+      
+    case 'pdf':
+    case 'ppt':
+      const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Decision Comparison Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; background: #f5f5f5; }
+    .header { text-align: center; margin-bottom: 40px; }
+    h1 { color: #2563eb; }
+    .decision-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .decision-title { font-size: 24px; font-weight: bold; color: #1e40af; margin-bottom: 10px; }
+    .decision-desc { color: #666; margin-bottom: 15px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; }
+    .stat { text-align: center; padding: 10px; background: #f8f9ff; border-radius: 4px; }
+    .stat-label { font-size: 12px; color: #666; }
+    .stat-value { font-size: 20px; font-weight: bold; color: #2563eb; }
+    .winner { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: white; padding: 15px; border-radius: 8px; margin-top: 10px; }
+    @media print { body { background: none; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📊 Decision Comparison Report</h1>
+    <p>Generated on ${new Date().toLocaleDateString()}</p>
+  </div>
+  ${decisions.map((d, idx) => `
+    <div class="decision-card">
+      <div class="decision-title">${idx + 1}. ${d.name}</div>
+      <div class="decision-desc">${d.description || 'No description'}</div>
+      ${d.topChoice ? `
+        <div class="winner">
+          <strong>🏆 Top Choice:</strong> ${d.topChoice.optionName} 
+          (Score: ${d.topChoice.totalScore?.toFixed(2)}/10)
+        </div>
+      ` : ''}
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Options</div>
+          <div class="stat-value">${d.optionCount || 0}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Criteria</div>
+          <div class="stat-value">${d.criteriaCount || 0}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Top Score</div>
+          <div class="stat-value">${d.topChoice?.totalScore?.toFixed(1) || '0'}</div>
+        </div>
+      </div>
+    </div>
+  `).join('')}
+</body>
+</html>`;
+      
+      const newWindow = window.open();
+      if (newWindow) {
+        newWindow.document.write(html);
+        newWindow.document.close();
+        setTimeout(() => newWindow.print(), 500);
+      }
       break;
   }
 }

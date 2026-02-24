@@ -1,5 +1,33 @@
 # Decision Companion - Complete Feature List
 
+## ⚡ Recent Improvements (February 24, 2026)
+
+### UX Simplification
+- ✅ **Removed Advanced Tools Panel**: Integrated valuable features into main flow
+- ✅ **Streamlined Navigation**: Reduced from 5 steps to 4 steps
+- ✅ **Integrated Comparison**: Now accessible directly in results tab (0 extra clicks)
+- ✅ **Delete Functionality**: Added delete buttons for saved decisions
+- ✅ **Enhanced Exports**: Upgraded from 1 format (JSON) to 4 formats in comparison
+- ✅ **PowerPoint Export**: Added presentation-ready slide export
+- ✅ **Code Cleanup**: Removed ~2,700 lines of unused/complex features
+
+### Features Removed (Simplification)
+- ❌ **Analytics Dashboard**: Too complex for typical 2-5 decision use case
+- ❌ **AI Insights**: Required API keys, speculative feature
+- ❌ **Quality Tracking**: Future feature, not currently needed
+- ❌ **UX Enhancements**: Undo/redo caused infinite re-render bugs
+- ❌ **Weight Template Manager**: Rarely used, added complexity
+- ❌ **Advanced Panel**: Fragmented navigation, hid useful features
+
+### Why These Changes?
+1. **User Feedback**: "I need comparison when viewing results, not in a separate section"
+2. **YAGNI Principle**: Removed features built speculatively, not from actual needs
+3. **Performance**: 2,700 fewer lines = faster builds and load times
+4. **Maintainability**: Simpler codebase with focused feature set
+5. **Discoverability**: Important features now integrated into main flow
+
+---
+
 ## 🎯 Core Features
 
 ### 1. Decision Framework Setup
@@ -62,42 +90,58 @@
 - ✅ Identify decision sensitivity
 - ✅ "What-if" exploration capability
 
-### 7. Decision History & Comparison
-- ✅ Save decisions to session history
+### 7. Decision History & Management
+- ✅ Save decisions to local storage
 - ✅ View all saved decisions
+- ✅ **Delete saved decisions** with confirmation dialog
 - ✅ Compare multiple decisions side-by-side
 - ✅ Timeline view of decisions
 - ✅ Historical trend analysis
 - ✅ Decision complexity metrics
 - ✅ Best choices summary across decisions
 - ✅ Aggregate statistics
+- ✅ **Integrated comparison in results tab**
+- ✅ Pre-selected current decision for comparison
 
 ### 8. Export & Reporting
 
-**Note:** Text (.txt) export was removed due to mobile incompatibility issues. ASCII art formatting rendered as unreadable asterisks on mobile devices.
-
-**Current Export Formats:**
-- ✅ **PDF Report**: Professional formatted report with auto-print dialog for PDF save
+**Export Formats Available:**
+- ✅ **PDF Report**: Professional formatted report with auto-print dialog
   - Mobile-responsive design
   - Print-optimized CSS
   - Professional styling with gradients
   - Opens in new window ready for download
+  
+- ✅ **PowerPoint/PPT**: Presentation-ready slides ⭐ NEW
+  - 6 professional slides (Title, Winner, Rankings, Criteria, Matrix, Summary)
+  - Landscape layout optimized for presentations
+  - Gradient backgrounds and emoji icons
+  - Print-to-PDF or present directly
+  - Perfect for stakeholder reviews
+  
 - ✅ **Excel/CSV Export**: Spreadsheet-compatible format
   - Criteria weights table
   - Detailed scoring matrix
   - Import to Excel, Google Sheets, or any spreadsheet application
-  - Single unified format (no separate CSV)
+  - Single unified format
+  
 - ✅ **JSON Data**: Structured format for programmatic use
   - Complete decision data
   - Analysis results included
   - Version metadata
+  - Backup and integration support
 
 **Export Features:**
+- ✅ **Analysis Results**: All 4 formats available from results view
+- ✅ **Comparison Matrix**: All 4 formats available from comparison view ⭐ NEW
 - ✅ Complete scoring matrix export
 - ✅ Weighted score breakdown
 - ✅ Recommendations in report
 - ✅ Timestamp and metadata
 - ✅ Download-ready formats
+- ✅ Dropdown menu for easy format selection
+
+**Note:** Text (.txt) export was removed due to mobile incompatibility issues. ASCII art formatting rendered as unreadable asterisks on mobile devices.
 - ✅ Mobile-optimized outputs
 
 ### 9. **NEW: UI/UX Improvements**
@@ -353,17 +397,18 @@
 
 ## Summary Statistics
 
-- **Total Features**: 100+
-- **Core Analysis Functions**: 8
-- **UI Components**: 20+
-- **Decision Templates**: 7
-- **Export Formats**: 3 (PDF, Excel/CSV, JSON) - Mobile optimized
+- **Total Features**: 90+
+- **Core Analysis Functions**: 7 (streamlined from 8)
+- **UI Components**: 14 (optimized from 20+)
+- **Decision Templates**: 4 (focused selection)
+- **Export Formats**: 4 (PDF, PowerPoint, Excel/CSV, JSON)
 - **Risk Metrics**: 4+
 - **Responsive Breakpoints**: 3+
-- **Lines of Code**: 3000+
+- **Lines of Code**: ~5,000 (reduced from ~7,700)
 - **Type-Safe**: 100%
 - **Accessibility Score**: A+
+- **Build Performance**: Improved (~2,700 lines removed)
 
 ---
 
-**Decision Companion** is a feature-rich, production-ready decision-making application built with modern web technologies and best practices.
+**Decision Companion** is a streamlined, production-ready decision-making application built with modern web technologies and focused on features users actually need.

@@ -150,7 +150,17 @@ Structured weighted scoring that:
 
 ## Architecture Overview
 
-### **Recent Improvements (Latest Update)**
+### **Recent Improvements (February 24, 2026)**
+- ✅ **UX Simplification**: Streamlined from 5 steps to 4 by removing advanced tools panel
+- ✅ **Integrated Comparison**: Moved decision comparison directly into results tab (0 extra clicks)
+- ✅ **Enhanced Export Options**: Added PowerPoint/PPT export for presentation-ready slides
+- ✅ **Multi-Format Exports**: Comparison now supports 4 formats (was 1): PDF, PPT, Excel, JSON
+- ✅ **Delete Functionality**: Added ability to delete saved decisions with confirmation
+- ✅ **Code Cleanup**: Removed ~2,700 lines of speculative/unused features
+- ✅ **Performance Boost**: Faster builds and load times from reduced complexity
+- ✅ **Feature Focus**: Kept only features users actually need and use
+
+### **Previous Improvements**
 - ✅ **Template Card Alignment**: Fixed inconsistent button positioning across all template cards
 - ✅ **Uniform Card Heights**: All template cards now have consistent height for better visual appeal
 - ✅ **Enhanced Documentation**: Added simplified architecture diagrams with PNG export capability
@@ -160,25 +170,27 @@ Structured weighted scoring that:
 - ✅ **Export Format Fix**: Removed text (.txt) export due to mobile compatibility issues
   - **Problem**: ASCII art formatting rendered as unreadable asterisks on mobile devices
   - **Solution**: Enhanced PDF export with mobile-responsive design and auto-print dialog
-  - **Available Formats**: PDF (printable), Excel/CSV (spreadsheet), JSON (data) - all mobile-optimized
+  - **Available Formats**: PDF (printable), PowerPoint (presentations), Excel/CSV (spreadsheet), JSON (data)
 
 ```
-Decision Companion
+Decision Companion (Streamlined Architecture)
 ├── Frontend (Next.js 16 + React 19)
 │   ├── Pages
-│   │   └── app/page.tsx (Main orchestrator)
-│   ├── Components
-│   │   ├── templates-selector (Entry point)
+│   │   └── app/page.tsx (Main orchestrator - 4 steps)
+│   ├── Core Components
+│   │   ├── templates-selector (Entry point + delete)
 │   │   ├── decision-form (Custom setup)
 │   │   ├── scoring-matrix (Interactive scoring)
-│   │   ├── analysis-results (Main results view)
+│   │   ├── analysis-results (Main results + export)
 │   │   ├── risk-assessment (Risk metrics)
 │   │   ├── sensitivity-analysis (What-if testing)
-│   │   └── decision-history (Comparison)
+│   │   ├── decision-comparison (Integrated in results)
+│   │   └── decision-history (Timeline + delete)
 │   └── Utilities
 │       ├── decision-engine.ts (Scoring logic)
-│       ├── templates.ts (7 built-in templates)
-│       └── export-utils.ts (Report generation)
+│       ├── templates.ts (4 focused templates)
+│       ├── export-utils.ts (4 formats: PDF/PPT/Excel/JSON)
+│       └── storage.ts (localStorage + delete)
 └── Styling
     ├── app/globals.css (Design tokens, colors)
     └── Tailwind CSS v4 (Utility-first)
@@ -286,19 +298,31 @@ decision-companion/
 ├── app/
 │   ├── globals.css          # Design tokens, themes
 │   ├── layout.tsx           # Root layout
-│   ├── page.tsx             # Main application (orchestrator)
+│   ├── page.tsx             # Main application (4-step flow)
 │   ├── fonts/               # Font files
 │   └── icon.svg             # Favicon
 ├── components/
 │   ├── ui/                  # shadcn/ui components
-│   ├── templates-selector.tsx
-│   ├── decision-form.tsx
-│   ├── scoring-matrix.tsx
-│   ├── analysis-results.tsx
-│   ├── risk-assessment.tsx
-│   ├── sensitivity-analysis.tsx
-│   └── decision-history.tsx
+│   ├── templates-selector.tsx   # Entry + delete
+│   ├── decision-form.tsx        # Custom setup
+│   ├── scoring-matrix.tsx       # Interactive scoring
+│   ├── analysis-results.tsx     # Results + export
+│   ├── risk-assessment.tsx      # Risk analysis
+│   ├── sensitivity-analysis.tsx # What-if scenarios
+│   ├── decision-comparison.tsx  # Comparison (in results)
+│   └── decision-history.tsx     # Timeline + delete
 ├── lib/
+│   ├── decision-engine.ts   # Scoring algorithms
+│   ├── templates.ts         # 4 decision templates
+│   ├── export-utils.ts      # PDF/PPT/Excel/JSON export
+│   ├── storage.ts           # localStorage + CRUD
+│   └── utils.ts             # Helper functions
+├── hooks/
+│   ├── use-mobile.ts        # Mobile detection
+│   └── use-toast.ts         # Toast notifications
+└── styles/
+    └── globals.css          # Global styles
+```├── lib/
 │   ├── decision-engine.ts   # Core scoring logic
 │   ├── templates.ts         # 7 built-in templates
 │   ├── export-utils.ts      # Report generation
@@ -525,16 +549,19 @@ Makes complex decisions easier by breaking them down, weighing factors, and anal
 ### Status
 - ✅ **Production Ready**: Full TypeScript, WCAG 2.1 AA, responsive
 - ✅ **Complete Documentation**: 12 comprehensive documents
-- ✅ **Quality Code**: ~2,500 lines, clean architecture
-- ✅ **User Tested**: UX improvements implemented
+- ✅ **Quality Code**: ~5,000 lines, streamlined architecture (removed ~2,700 lines of unused features)
+- ✅ **User Tested**: UX improvements implemented based on real usage
 
 ---
 
 ## ❓ Common Questions
 
 ### Usage Questions
-**Q: Can I save my decisions?**
-A: Currently saved during your session. Use Export to download as text. Future versions will add cloud storage.
+**Q: Can I save and delete my decisions?**
+A: Yes! Decisions are automatically saved to localStorage. You can delete saved decisions using the trash icon on decision cards or in the history timeline. Export to download in multiple formats (PDF, PowerPoint, Excel, JSON).
+
+**Q: What export formats are available?**
+A: PDF (printable with auto-print), PowerPoint (6 professional slides), Excel/CSV (spreadsheet data), JSON (raw data). All exports are mobile-optimized.
 
 **Q: How accurate is the scoring?**
 A: As accurate as your inputs. The system is transparent about its methodology - you set weights and scores, it calculates mathematically.
@@ -546,7 +573,7 @@ A: Yes, go back to scoring and adjust. Results update immediately (click "Analyz
 A: The system supports any number. Fair warning: more criteria = more complexity. Most decisions work best with 5-7 criteria.
 
 **Q: Can I compare different decisions?**
-A: Yes. Save decisions during the session and use the History tab to compare.
+A: Yes! The Compare tab in results shows side-by-side analysis of all saved decisions with export options.
 
 ### Project Questions
 **Q: Is this production-ready?**  

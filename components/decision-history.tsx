@@ -8,14 +8,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, ComposedChart } from 'recharts';
 import type { Decision } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
-import { Clock, TrendingUp, Zap, ArrowRight } from 'lucide-react';
+import { Clock, TrendingUp, Zap, ArrowRight, Trash2 } from 'lucide-react';
 
 interface DecisionHistoryProps {
   decisions: Decision[];
   onSelectDecision: (decision: Decision) => void;
+  onDeleteDecision?: (decisionId: string) => void;
 }
 
-export function DecisionHistory({ decisions, onSelectDecision }: DecisionHistoryProps) {
+export function DecisionHistory({ decisions, onSelectDecision, onDeleteDecision }: DecisionHistoryProps) {
   if (decisions.length === 0) {
     return (
       <Card>
@@ -242,16 +243,33 @@ export function DecisionHistory({ decisions, onSelectDecision }: DecisionHistory
                         <div className="absolute left-1.5 top-5 bottom-0 w-0.5 bg-border" />
                       )}
                       <div className="space-y-2">
-                        <div className="flex items-start justify-between">
-                          <div>
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1">
                             <p className="font-semibold">{data.decision.name}</p>
                             <p className="text-sm text-muted-foreground">
                               Chose: <span className="font-medium text-foreground">{topResult?.optionName}</span>
                             </p>
                           </div>
-                          <Badge variant="outline">
-                            {topResult?.totalScore.toFixed(1)}/10
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline">
+                              {topResult?.totalScore.toFixed(1)}/10
+                            </Badge>
+                            {onDeleteDecision && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 w-7 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (confirm(`Delete "${data.decision.name}"?`)) {
+                                    onDeleteDecision(data.decision.id);
+                                  }
+                                }}
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </Button>
+                            )}
+                          </div>
                         </div>
                         <Progress value={(topResult?.totalScore || 0) / 10 * 100} className="h-2" />
                       </div>
