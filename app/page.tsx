@@ -122,7 +122,20 @@ export default function Home() {
 
   const handleScoresChange = (scores: Score[]) => {
     if (decision) {
-      setDecision({ ...decision, scores });
+      const updatedDecision = { ...decision, scores, updatedAt: new Date() };
+      setDecision(updatedDecision);
+      
+      // If this is a saved decision, update it in storage and state
+      const savedDecisionIndex = decisionHistory.findIndex(d => d.id === decision.id);
+      if (savedDecisionIndex !== -1) {
+        // Update in storage
+        storageManager.saveDecision(updatedDecision);
+        
+        // Update in local state
+        const updatedHistory = [...decisionHistory];
+        updatedHistory[savedDecisionIndex] = updatedDecision;
+        setDecisionHistory(updatedHistory);
+      }
     }
   };
 
