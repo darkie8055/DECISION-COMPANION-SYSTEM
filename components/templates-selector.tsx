@@ -89,13 +89,6 @@ export function TemplatesSelector({ onSelectTemplate, onCustomizeTemplate, onCre
 
   return (
     <div className="space-y-8">
-      <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold">Decision Companion</h1>
-        <p className="text-lg text-muted-foreground">
-          Make better decisions with weighted scoring and data-driven analysis
-        </p>
-      </div>
-
       {/* Help Banner */}
       <Card className="glass-card border-blue-200/30 dark:border-blue-800/30 hover-lift">
         <CardHeader className="pb-3">
