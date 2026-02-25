@@ -15,7 +15,7 @@ All requested deliverables have been completed and verified. This document provi
 - Full TypeScript with strict typing
 - 7 major UI components
 - Core decision engine algorithm
-- 7 built-in templates
+- 4 built-in templates
 - PDF export utilities
 - 95%+ test coverage capability
 - WCAG 2.1 AA accessibility
@@ -23,7 +23,7 @@ All requested deliverables have been completed and verified. This document provi
 **Key Files:**
 - `app/page.tsx` - Main orchestrator (223 lines)
 - `lib/decision-engine.ts` - Core algorithm (109 lines)
-- `lib/templates.ts` - 7 templates (103 lines)
+- `lib/templates.ts` - 4 templates (103 lines)
 - `components/*.tsx` - 7 major components (~1,200 lines)
 - `lib/export-utils.ts` - PDF generation (183 lines)
 

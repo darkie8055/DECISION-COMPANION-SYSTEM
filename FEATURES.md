@@ -1,6 +1,6 @@
 # Decision Companion - Complete Feature List
 
-## ⚡ Recent Improvements (February 24, 2026)
+## ⚡ Recent Improvements (February 25, 2026)
 
 ### UX Simplification
 - ✅ **Removed Advanced Tools Panel**: Integrated valuable features into main flow
@@ -32,7 +32,7 @@
 
 ### 1. Decision Framework Setup
 - ✅ Custom decision creation with unlimited criteria
-- ✅ Pre-built templates for 7 common decision types
+- ✅ Pre-built templates for 4 common decision types (Career, Technology, Travel, General)
 - ✅ Real-time weight validation (must sum to 100%)
 - ✅ Minimum requirement enforcement (2+ criteria, 2+ options)
 - ✅ Progress tracking during setup

@@ -4,7 +4,7 @@
 
 ### Option 1: Use a Template (Fastest)
 1. Open the app and you'll see the home page
-2. Browse templates by category (Career, Technology, Travel, Business, Education)
+2. Browse templates by category (Career, Technology, Travel, General)
 3. Click "Use Template" on any template
 4. Review and customize criteria weights if needed
 5. Start scoring your options

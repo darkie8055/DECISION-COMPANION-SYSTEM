@@ -282,7 +282,7 @@ decision-companion/
 │
 ├── 📁 lib/
 │   ├── decision-engine.ts          # Core scoring logic
-│   ├── templates.ts                # 7 built-in templates
+│   ├── templates.ts                # 4 built-in templates
 │   ├── export-utils.ts             # Report generation
 │   └── utils.ts                    # Utility functions
 │

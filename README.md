@@ -150,7 +150,7 @@ Structured weighted scoring that:
 
 ## Architecture Overview
 
-### **Recent Improvements (February 24, 2026)**
+### **Recent Improvements (February 25, 2026)**
 - ✅ **UX Simplification**: Streamlined from 5 steps to 4 by removing advanced tools panel
 - ✅ **Integrated Comparison**: Moved decision comparison directly into results tab (0 extra clicks)
 - ✅ **Enhanced Export Options**: Added PowerPoint/PPT export for presentation-ready slides
@@ -324,7 +324,7 @@ decision-companion/
     └── globals.css          # Global styles
 ```├── lib/
 │   ├── decision-engine.ts   # Core scoring logic
-│   ├── templates.ts         # 7 built-in templates
+│   ├── templates.ts         # 4 built-in templates
 │   ├── export-utils.ts      # Report generation
 │   └── utils.ts             # Utility functions (cn)
 ├── public/
@@ -350,14 +350,11 @@ Implements the formula: `Total Score = Σ(Criterion_Weight × Option_Score) / 10
 - Transparent calculation shown to users
 
 ### Templates System
-7 pre-configured templates:
-1. Job Offer Evaluation - Salary, growth, work-life balance
-2. Laptop Purchase - Price, performance, battery life
-3. Vacation Planning - Cost, activities, comfort
-4. Business Investment - ROI, risk, market size
-5. Real Estate Purchase - Price, location, condition
-6. University Selection - Reputation, cost, programs
-7. Vendor Selection - Price, quality, support
+4 pre-configured templates:
+1. **Job Offer Evaluation** - Salary & benefits, work-life balance, career growth, company culture, location, team
+2. **Laptop Purchase Decision** - Performance, price, battery life, display quality, build quality, warranty
+3. **Vacation Destination** - Cost, weather, attractions, food & dining, safety, accessibility
+4. **Purchase Decision** - Price & value, quality & durability, features, brand reputation, warranty, personal preference
 
 ### Risk Assessment
 Identifies three types of risk:

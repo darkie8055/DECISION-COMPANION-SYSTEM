@@ -17,8 +17,7 @@ Pre-built templates for common decisions:
 - **Career**: Job Offer Evaluation
 - **Technology**: Laptop Purchase Decision
 - **Travel**: Vacation Destination Selection
-- **Business**: Investment Opportunities, Real Estate, Vendor Selection
-- **Education**: College/University Selection
+- **General**: Purchase Decision (for any major purchase or investment)
 
 ### 3. **Advanced Risk Assessment**
 - Variance analysis for decision clarity
@@ -80,13 +79,13 @@ Pre-built templates for common decisions:
 6. **Concrete Examples**: Real-world decision scenarios with complete mathematical breakdowns
 
 ### Common Decision Queries Supported:
-1. "Which laptop should I buy?" → Technology Purchase template
-2. "Should I take this job?" → Career Move template
-3. "Is this investment worth it?" → Investment Decision template
-4. "Which vendor should we choose?" → Vendor Selection template
-5. "Should we relocate?" → Life Decision template
-6. "How do we prioritize features?" → Business Strategy template
-7. "Which option has the best risk-reward?" → Risk Assessment template
+1. "Which laptop should I buy?" → Laptop Purchase Decision template
+2. "Should I take this job?" → Job Offer Evaluation template
+3. "Where should we vacation?" → Vacation Destination template
+4. "What should I buy?" → Purchase Decision template (general)
+5. "Should we relocate?" → Custom decision or Purchase Decision template
+6. "Which vendor should we choose?" → Custom decision setup
+7. "Which option has the best risk-reward?" → Use Risk Assessment feature with any template
 
 ## 🏗️ Architecture
 
