@@ -1,6 +1,6 @@
 # User Flow & Decision Process Flowcharts
 
-## Main Application Flow
+## 1. Main Application Flow
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -15,6 +15,17 @@
                     │ ├─ decision = null       │
                     │ ├─ history = []          │
                     │ └─ activeTab = 'analysis'│
+                    │                          │
+                    │ Steps: 'templates',      │
+                    │   'customize', 'setup',  │
+                    │   'scoring', 'results',  │
+                    │   'sensitivity', 'risk', │
+                    │   'history'              │
+                    │                          │
+                    │ ActiveTabs (in results): │
+                    │   'analysis', 'risk',    │
+                    │   'history' (=Sensitivity│
+                    │   'comparison'           │
                     └──────────────────────────┘
                                   │
                                   ▼
@@ -36,7 +47,7 @@
          │ • Investment        │    │                      │
          │ • Real Estate       │    └──────────────────────┘
          │ • College           │
-         │ • Vendor            │
+         │            │
          │                     │
          │ → Decision loaded   │
          │ → step = 'scoring'  │
@@ -127,6 +138,7 @@
     │                                      │
     │ ┌────────────────────────────────┐   │
     │ │ ANALYSIS TAB (default)         │   │
+    │ │ (activeTab = 'analysis')       │   │
     │ │                                │   │
     │ │ Display:                       │   │
     │ │ • Summary cards                │   │
@@ -144,6 +156,7 @@
     │                                      │
     │ ┌────────────────────────────────┐   │
     │ │ RISK ASSESSMENT TAB            │   │
+    │ │ (activeTab = 'risk')           │   │
     │ │                                │   │
     │ │ Display:                       │   │
     │ │ • Risk level (RED/YELLOW/GREEN)│   │
@@ -156,6 +169,9 @@
     │                                      │
     │ ┌─────────────────────────────────┐  │
     │ │ SENSITIVITY ANALYSIS TAB        │  │
+    │ │ (activeTab = 'history')         │  │
+    │ │ Note: Tab value is 'history'    │  │
+    │ │ but shows Sensitivity content   │  │
     │ │                                 │  │
     │ │ User can:                       │  │
     │ │ • Adjust criterion weights      │  │
@@ -167,6 +183,18 @@
     │ │ • Interactive weight sliders    │  │
     │ │ • Score trajectory lines        │  │
     │ │ • Critical factors highlighted  │  │
+    │ └─────────────────────────────────┘  │
+    │                                      │
+    │ ┌─────────────────────────────────┐  │
+    │ │ COMPARISON TAB                  │  │
+    │ │ (activeTab = 'comparison')      │  │
+    │ │                                 │  │
+    │ │ Display:                        │  │
+    │ │ • Compare current decision      │  │
+    │ │   with saved decisions          │  │
+    │ │ • Side-by-side metrics          │  │
+    │ │ • Score comparisons             │  │
+    │ │ • Pattern identification        │  │
     │ └─────────────────────────────────┘  │
     └──────────────────────────────────────┘
                     │
@@ -214,7 +242,7 @@
 
 ---
 
-## Decision Setup Flow (Custom Decision)
+## 2. Decision Setup Flow (Custom Decision)
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -319,7 +347,7 @@
 
 ---
 
-## Scoring & Analysis Flow
+## 3. Scoring & Analysis Flow
 
 ```
 ┌────────────────────────────────────────┐
@@ -512,14 +540,18 @@
 
 ---
 
-## Post-Analysis User Paths
+## 4. Post-Analysis User Paths
 
 ```
 FROM RESULTS PAGE - FOUR MAIN PATHS
 
-┌────────────────────┬─────────────────┬──────────────┬
-│                    │                 │              │              
-▼                    ▼                 ▼              ▼              
+┌────────────┬─────────────────┬──────────────┬──────────────┐
+│     PATH 1 │     PATH 2      │    PATH 3    │    PATH 4    │
+│     SAVE   │     EXPORT      │  SENSITIVITY │  BACK/HOME   │
+│   DECISION │     REPORT      │   ANALYSIS   │              │
+└──────┬─────┴────────┬────────┴──────┬───────┴──────┬───────┘
+       │              │               │              │
+       ▼              ▼               ▼              ▼
 
 PATH 1:          PATH 2:           PATH 3:          PATH 4:
 SAVE             EXPORT            SENSITIVITY      BACK/HOME
@@ -620,10 +652,11 @@ array        report file       analysis tab    step
 │         │                                                         │
 │         ▼                                                         │
 │ Switch activeTab = 'history'                                      │
-│ (Sensitivity Analysis tab)                                        │
+│ (Note: Tab value is 'history' but displays as "Sensitivity")      │
 │         │                                                         │
 │         ▼                                                         │
 │ Sensitivity Analysis Component Rendered                           │
+│ (Within results step, tab switched)                               │
 │ ┌────────────────────────────────────────┐                        │
 │ │ For each criterion:                    │                        │
 │ │ • Slider to adjust weight (0-100%)     │                        │
@@ -696,203 +729,3 @@ array        report file       analysis tab    step
 │ Start a new decision                                              │
 │                                                                   │
 └───────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Decision History & Comparison Flow
-
-```
-┌──────────────────────────────────────────┐
-│ USER HAS SAVED MULTIPLE DECISIONS        │
-│ (decisionHistory contains 2+ items)      │
-└──────────────────────────────────────────┘
-          │
-          ▼
-┌──────────────────────────────────────────┐
-│ "COMPARE" BUTTON ENABLED IN RESULTS      │
-│                                          │
-│ Only appears when:                       │
-│ • User is in results view                │
-│ • decisionHistory.length > 0             │
-│ • Step = 'results'                       │
-└──────────────────────────────────────────┘
-          │
-          ▼
-┌──────────────────────────────────────────┐
-│ USER CLICKS "COMPARE"                    │
-│                                          │
-│ Triggers:                                │
-│ step = 'history'                         │
-└──────────────────────────────────────────┘
-          │
-          ▼
-┌──────────────────────────────────────────┐
-│ DECISION HISTORY VIEW                    │
-│ (DecisionHistory component)              │
-│                                          │
-│ Displays:                                │
-│                                          │
-│ For each saved decision:                 │
-│ ┌────────────────────────────┐           │
-│ │ Decision 1: Choose Laptop  │           │
-│ │ • Decision made: Feb 20    │           │
-│ │ • Winner: MacBook (8.5/10) │           │
-│ │ • Risk Level: STABLE       │           │
-│ │ • Load | Delete            │           │
-│ ├────────────────────────────┤           │
-│ │ Decision 2: Buy Laptop     │           │
-│ │ • Decision made: Feb 18    │           │
-│ │ • Winner: Dell XPS (7.8/10)│           │
-│ │ • Risk Level: UNCERTAIN    │           │
-│ │ • Load | Delete            │           │
-│ └────────────────────────────┘           │
-│                                          │
-│ Comparison Summary:                      │
-│ ┌────────────────────────────┐           │
-│ │ Total Decisions: 2         │           │
-│ │ Avg. Confidence: 31%       │           │
-│ │ Trends:                    │           │
-│ │ • 50% had stable decisions │           │
-│ │ • Price was important in:  │           │
-│ │   100% of decisions        │           │
-│ │ • Most agreed on: MacBook  │           │
-│ └────────────────────────────┘           │
-└──────────────────────────────────────────┘
-          │
-          ▼
-┌──────────────────────────────────────────┐
-│ USER ACTIONS FROM HISTORY                │
-│                                          │
-│ Load Decision:                           │
-│ • Click "Load" button                    │
-│ • Decision becomes current               │
-│ • step = 'scoring'                       │
-│ • Can modify scores & re-analyze         │
-│                                          │
-│ Delete Decision:                         │
-│ • Click "Delete" button                  │
-│ • Remove from history array              │
-│ • Refresh comparison view                │
-│                                          │
-│ Back to Results:                         │
-│ • Click "Back" button                    │
-│ • Return to current results              │
-│ • step = 'results'                       │
-└──────────────────────────────────────────┘
-```
-
----
-
-## Error Handling Flow
-
-```
-VALIDATION ERROR SCENARIOS
-
-┌──────────────────────────────┐
-│ FORM VALIDATION ERRORS       │
-│ (DecisionForm)               │
-└──────────────────────────────┘
-              │
-    ┌─────────┼─────────┬─────────┬──────────┐
-    │         │         │         │          │
-    ▼         ▼         ▼         ▼          ▼
-Missing    Weights  Too Few   Too Few      Empty
-Name       ≠ 100%   Criteria  Options      Criteria
-
-│         │         │         │             │
-└─────────┼─────────┼─────────┼─────────────┘
-          │
-          ▼
-    ┌────────────────┐
-    │ Show alert to  │
-    │ user explaining│
-    │ what's wrong   │
-    │ & how to fix   │
-    └────────────────┘
-          │
-          ▼
-    ┌────────────────┐
-    │ Disable submit │
-    │ button         │
-    └────────────────┘
-          │
-          ▼
-    ┌────────────────┐
-    │ User corrects  │
-    │ the issue      │
-    └────────────────┘
-
-
-┌──────────────────────────────┐
-│ SCORING VALIDATION ERRORS    │
-│ (ScoringMatrix)              │
-└──────────────────────────────┘
-              │
-         ┌────┴─────┐
-         │          │
-         ▼          ▼
-    Empty       Invalid
-    Scores      Range
-    (< 0-10)
-    │              │
-    └──────┬───────┘
-           │
-           ▼
-    ┌────────────────────────┐
-    │ Real-time feedback:    │
-    │ • Progress bar shows   │
-    │   incomplete           │
-    │ • Button disabled      │
-    │ • Color coding shows   │
-    │   unfilled cells       │
-    │ • Tooltip on button:   │
-    │   "Complete scoring    │
-    │   to analyze"          │
-    └────────────────────────┘
-           │
-           ▼
-    ┌────────────────────────┐
-    │ User fills all cells   │
-    │ • Progress → 100%      │
-    │ • Button enabled       │
-    │ • Ready to analyze     │
-    └────────────────────────┘
-
-
-┌───────────────────────────────┐
-│ RISK DETECTION (Post-Analysis)│
-│ (RiskAssessment)              │
-└───────────────────────────────┘
-              │
-    ┌─────────┼──────────┬
-    │         │          │         
-    ▼         ▼          ▼         
-   High   Decision     Low          
-Variance  Clarity    Diversity
-           Issue
-   │         │          │         
-   └─────────┼──────────┼
-             │
-             ▼
-    ┌──────────────────────────┐
-    │ Risk Assessment Tab      │
-    │                          │
-    │ Shows:                   │
-    │ • Risk level badge       │
-    │   (RED/YELLOW/GREEN)     │
-    │ • Specific issues        │
-    │ • Actionable guidance:   │
-    │   - "Adjust weights"     │
-    │   - "Add more options"   │
-    │   - "Clarify scores"     │
-    │                          │
-    │ User can:                │
-    │ • Go back to scoring     │
-    │ • Use sensitivity to     │
-    │   test adjustments       │
-    │ • Gather more info       │
-    └──────────────────────────┘
-```
-
-This comprehensive flowchart documentation provides complete visibility into all user flows, decision paths, validation logic, and error handling scenarios within the Decision Companion application.

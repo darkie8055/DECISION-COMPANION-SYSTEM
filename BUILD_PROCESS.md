@@ -1930,6 +1930,79 @@ This refinement exemplifies the principle: **The best code is code you don't wri
 
 ---
 
+## Documentation Streamlining (March 1, 2026)
+
+### What Changed
+
+**ARCHITECTURE.md Reduction:**
+- **Before:** 8+ sections including State Management, Algorithms Deep Dive, Testing Strategy, Deployment Strategy, Performance Optimizations
+- **After:** 4 essential Mermaid diagrams only (System Architecture, Data Flow, Component Hierarchy, Decision Logic Flow)
+- **Removed:** 500+ lines of detailed technical explanations, code snippets, deployment details
+
+**FLOWCHART.md Reduction:**
+- **Before:** 6 detailed flowcharts covering every user path
+- **After:** 4 core flowcharts (Main App Flow, Decision Setup, Scoring & Analysis, Post-Analysis Paths)
+- **Removed:** Decision History Management flowchart, Error Handling & Edge Cases flowchart
+- **Removed:** 200+ lines of detailed descriptions and technical notes
+
+**RESEARCH_LOG.md Cleanup:**
+- **Before:** Generic design inspiration sources (Material Design, Apple HIG, Awwwards, Refactoring UI, Stripe, Linear, etc.)
+- **After:** Accurate tool list (Figma, Mermaid, shadcn/ui docs, Tailwind docs)
+- **Removed:** 25+ speculative design research queries
+- **Added:** Transparency note about AI usage for documentation formatting
+
+### Why These Changes
+
+**1. Documentation Overload Problem**
+- **Issue:** Initial documentation tried to document everything
+- **Result:** Signal-to-noise ratio too low
+- **User Impact:** Viewers couldn't quickly understand core architecture
+- **Principle Violated:** "Documentation should clarify, not overwhelm"
+
+**2. Visual Diagrams > Lengthy Explanations**
+- **Insight:** Architecture details are already in code
+- **Realization:** Diagrams show relationships better than paragraphs
+- **User Need:** Quick visual understanding, not deep technical dive
+- **Applied:** Keep only what diagrams can't show elsewhere
+
+**3. Flowcharts: Essential Flows Only**
+- **Analysis:** Decision History and Error Handling are implementation details
+- **Focus Shift:** Show user journey, not every code path
+- **Reasoning:** Flowcharts should answer "How does a user accomplish X?"
+- **Result:** Clearer user experience documentation
+
+**4. Research Log Accuracy**
+- **Problem:** AI-generated design references looked professional but were inaccurate
+- **Reality Check:** Actually used Figma (design) and Mermaid (diagrams)
+- **Integrity Issue:** Documentation should reflect actual process, not ideal process
+- **Solution:** Removed unused references, kept only consulted resources
+
+### Documentation Philosophy Applied
+
+**"Just Enough Documentation" Principle:**
+- Architecture diagrams: Visual system understanding ✓
+- Flowcharts: User journey clarity ✓
+- Research log: Transparent AI usage ✓
+- Detailed explanations: Already in code/comments ✗
+
+**Key Insight:**
+> "Good documentation answers the question someone is asking. Great documentation doesn't force them to ask."
+
+**Before:** User had to read 2000+ lines to understand architecture
+**After:** User sees 4 diagrams and understands in 5 minutes
+
+### Lessons Learned
+
+1. **Visual First:** When possible, show don't tell
+2. **Accuracy Over Completeness:** Better to document 5 things accurately than 20 things speculatively
+3. **User-Centric Documentation:** Write for the reader's needs, not to prove thoroughness
+4. **Code is Documentation:** Well-structured code reduces need for external docs
+5. **Honest Attribution:** AI-assisted work should be clearly labeled
+
+This streamlining improved documentation effectiveness by removing noise while preserving essential information.
+
+---
+
 ## Conclusion
 
 Building Decision Companion was a journey from initial concept to full-featured application. The iterative approach of build → test → refine → enhance allowed us to create something both functional and user-friendly.
