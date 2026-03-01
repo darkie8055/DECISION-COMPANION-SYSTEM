@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -35,9 +36,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className="font-sans antialiased">
-        <div className="relative min-h-screen">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <div className="relative min-h-screen">
           {/* Enhanced background with animated gradients */}
           <div className="fixed inset-0 -z-50">
             <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/50 dark:to-purple-950/30" />
@@ -48,15 +55,16 @@ export default function RootLayout({
             </div>
           </div>
           
-          {children}
-        </div>
-        
-        {/* Ambient lighting effects */}
-        <div className="fixed inset-0 pointer-events-none -z-40">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-gradient-to-b from-blue-500/5 to-transparent blur-3xl" />
-        </div>
-        
-        <Analytics />
+            {children}
+          </div>
+          
+          {/* Ambient lighting effects */}
+          <div className="fixed inset-0 pointer-events-none -z-40">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px] bg-gradient-to-b from-blue-500/5 to-transparent blur-3xl" />
+          </div>
+          
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )

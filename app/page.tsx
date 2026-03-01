@@ -13,6 +13,7 @@ import { OnboardingTour } from '@/components/onboarding-tour';
 import { DecisionComparison } from '@/components/decision-comparison';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { storageManager } from '@/lib/storage';
 import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
 import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle, Check, Loader2, Layers, Trash2 } from 'lucide-react';
@@ -377,6 +378,7 @@ export default function Home() {
                     <HomeIcon className="w-4 h-4" />
                     Home
                   </Button>
+                  <ThemeToggle />
                 </div>
                 
                 {decision && step === 'results' && (
@@ -422,6 +424,9 @@ export default function Home() {
         {/* Home Header */}
         {step === 'templates' && (
           <div className="mb-12 text-center">
+            <div className="absolute top-8 right-8">
+              <ThemeToggle />
+            </div>
             <div className="relative">
               {/* Background glow */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 blur-3xl rounded-full" />
