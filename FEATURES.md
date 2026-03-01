@@ -1,6 +1,24 @@
 # Decision Companion - Complete Feature List
 
-## ⚡ Recent Improvements (February 25, 2026)
+## ⚡ Recent Improvements (March 2, 2026)
+
+### Dark Mode Toggle (NEW)
+- ✅ **Theme Toggle Component**: Elegant dropdown menu with sun/moon icons
+- ✅ **Two Theme Options**: Light and Dark modes (System removed for simplicity)
+- ✅ **Default Dark Mode**: App loads in dark mode on first visit
+- ✅ **Persistent Theme**: Your choice saved across sessions
+- ✅ **Hydration-Safe**: No flash of wrong theme on page load
+- ✅ **Accessible**: Full keyboard and screen reader support
+- ✅ **Strategic Placement**: Available in home header and navigation bar
+- ✅ **Smooth Transitions**: Animated icon changes between themes
+
+### Documentation Simplification (March 2, 2026)
+- ✅ **README Streamlined**: Reduced from 664 lines to 96 lines (85% reduction)
+- ✅ **Personal AI Attribution**: Transparent note about AI assistance at top
+- ✅ **Scannable Format**: Quick start, essential features, FAQ structure
+- ✅ **Better Navigation**: Clear links to detailed documentation
+
+## ⚡ Previous Improvements (February 25, 2026)
 
 ### UX Simplification
 - ✅ **Removed Advanced Tools Panel**: Integrated valuable features into main flow

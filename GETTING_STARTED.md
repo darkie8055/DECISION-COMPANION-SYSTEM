@@ -1,5 +1,14 @@
 # Getting Started with Decision Companion
 
+## 🌓 Customizing Your Experience
+
+### Theme Toggle
+- **Default**: App loads in dark mode for comfortable viewing
+- **Toggle Location**: Top-right corner of the home page and navigation bar
+- **Options**: Switch between Light and Dark themes
+- **Persistent**: Your theme preference is saved automatically
+- **How to Change**: Click the sun/moon icon and select your preferred theme
+
 ## 🚀 Quick Start
 
 ### Option 1: Use a Template (Fastest)
