@@ -815,29 +815,167 @@ This enhancement sprint elevated the application from "functional" to "productio
 
 ## Future Development Roadmap
 
-### Immediate (Next Sprint)
-- [ ] Persistent storage (localStorage)
-- [ ] Email export
-- [ ] Dark mode toggle
-- [ ] Keyboard shortcuts
+### Phase 1: Core Stability (Next 2 Weeks)
+**Goal:** Make MVP production-ready with data persistence
 
-### Short Term (1 Month)
-- [ ] Supabase integration
-- [ ] User accounts
-- [ ] Decision sharing
-- [ ] Collaborative scoring
+- [x] Dark mode toggle (✅ Completed March 2, 2026)
+- [ ] **Auto-save to localStorage** - Prevent data loss on refresh
+  - Auto-save every 30 seconds while editing
+  - Restore in-progress decisions on page reload
+  - "Save Draft" indicator in UI
+- [ ] **Enhanced Error Handling** - Graceful degradation
+  - Try-catch blocks around localStorage operations
+  - User-friendly error messages
+  - Fallback to session-only mode if storage fails
+- [ ] **Performance Audit** - Optimize bundle size
+  - Code splitting for analysis components
+  - Lazy load charts library
+  - Target: <100KB initial bundle
 
-### Medium Term (3 Months)
-- [ ] AI-powered insights
-- [ ] Mobile app
-- [ ] Integration APIs
-- [ ] Historical outcome tracking
+### Phase 2: User Experience (1 Month)
+**Goal:** Make app more intuitive and powerful
 
-### Long Term (6+ Months)
-- [ ] Organizational dashboards
-- [ ] Team collaboration
-- [ ] Advanced analytics
-- [ ] Mobile apps (iOS/Android)
+- [ ] **Keyboard Shortcuts** - Power-user features
+  - `Ctrl+S` to save decision
+  - `Ctrl+E` to export
+  - `Ctrl+N` for new decision
+  - `?` to show shortcuts help
+- [ ] **Decision Wizard** - Guided onboarding
+  - Step-by-step first-time user experience
+  - Tooltips and contextual help
+  - Skip option for returning users
+- [ ] **Undo/Redo** - Non-destructive editing
+  - History stack for all changes
+  - Keyboard shortcuts (Ctrl+Z, Ctrl+Y)
+  - Visual indicator of undo availability
+- [ ] **Template Customization** - Save custom templates
+  - "Save as Template" button
+  - Personal template library
+  - Template sharing via export/import
+
+### Phase 3: Collaboration (3 Months)
+**Goal:** Enable team decision-making
+
+- [ ] **Backend Infrastructure** - Supabase setup
+  - PostgreSQL database for decisions
+  - Row-level security policies
+  - Real-time subscriptions
+- [ ] **User Authentication** - OAuth integration
+  - Google Sign-In
+  - Microsoft/GitHub as alternatives
+  - Anonymous mode preserved
+- [ ] **Decision Sharing** - Shareable links
+  - Generate unique URLs for decisions
+  - View-only vs edit permissions
+  - Expiration dates for links
+- [ ] **Real-Time Collaboration** - Live co-editing
+  - WebSocket connections
+  - Presence indicators (who's online)
+  - Conflict resolution for concurrent edits
+  - Comment threads on options/criteria
+
+### Phase 4: Analytics & Intelligence (6 Months)
+**Goal:** Learn from historical decisions
+
+- [ ] **Outcome Tracking** - Post-decision validation
+  - "How did this decision turn out?" follow-up
+  - Actual vs predicted comparison
+  - Retrospective analysis dashboard
+- [ ] **Pattern Recognition** - Historical insights
+  - "You tend to over-weight criteria X"
+  - Successful decision patterns
+  - Risk tolerance profiling
+- [ ] **AI-Powered Suggestions** - Smart assistance
+  - OpenAI integration for criteria suggestions
+  - Weight recommendations based on similar decisions
+  - Risk identification from natural language descriptions
+  - Option generation from context
+- [ ] **Monte Carlo Simulation** - Uncertainty modeling
+  - Probability distributions for weights
+  - Confidence intervals for final scores
+  - Sensitivity to weight uncertainty
+  - "Robustness score" metric
+
+### Phase 5: Enterprise & Platform (12 Months)
+**Goal:** Scale to organizations and multi-platform
+
+- [ ] **Team Workspaces** - Organizational features
+  - Shared decision repositories
+  - Role-based access control (Admin/Editor/Viewer)
+  - Team templates and best practices
+  - Usage analytics for admins
+- [ ] **Audit & Compliance** - Enterprise requirements
+  - Immutable decision logs
+  - Change history tracking
+  - Export for compliance reporting
+  - GDPR/SOC2 compliance
+- [ ] **API & Integrations** - Ecosystem expansion
+  - RESTful API for programmatic access
+  - Webhooks for decision events
+  - Slack/Teams bots
+  - Zapier integration
+  - Excel/Google Sheets add-ins
+- [ ] **Native Mobile Apps** - iOS and Android
+  - React Native or Flutter
+  - Offline-first architecture
+  - Push notifications for collaboration
+  - Camera integration for capturing options
+
+### Why This Order?
+
+**1. Stability First (Phase 1)**
+- Can't build collaboration on broken foundation
+- Data loss = immediate user churn
+- Performance issues hurt all features
+
+**2. UX Before Features (Phase 2)**
+- Better to have 5 polished features than 20 rough ones
+- Keyboard shortcuts = 10x faster for power users
+- Undo = safety net that encourages exploration
+
+**3. Collaboration Needs Backend (Phase 3)**
+- Largest architectural change
+- Must be stable before adding intelligence
+- Real-time features are foundation for advanced features
+
+**4. Intelligence Needs Data (Phase 4)**
+- AI suggestions require historical patterns
+- Can't track outcomes without collaboration infrastructure
+- Analytics only valuable with sufficient data volume
+
+**5. Enterprise Last (Phase 5)**
+- Smallest user segment initially
+- Most complex requirements
+- Can validate product-market fit with earlier phases
+
+### Decision Points
+
+**After Phase 2:**
+Decide: Self-hosted only vs cloud service?
+- If users want cloud → Proceed to Phase 3
+- If self-hosted sufficient → Focus on Phase 4 analytics
+
+**After Phase 3:**
+Decide: Free tier strategy?
+- Freemium model: Free for individuals, paid for teams
+- Open core: Self-hosted free, cloud paid
+- Fully OSS with optional hosting service
+
+**After Phase 4:**
+Decide: AI pricing model?
+- Include in premium tier
+- Separate AI add-on
+- Token-based pricing
+
+### Maintenance & Operations
+
+**Ongoing Throughout:**
+- **Security Updates** - Dependency bumps, CVE patches
+- **Bug Fixes** - User-reported issues
+- **Documentation** - Keep docs in sync with features
+- **Performance Monitoring** - Core Web Vitals tracking
+- **User Feedback** - Regular user interviews
+- **A/B Testing** - Data-driven UX improvements
 
 ---
 

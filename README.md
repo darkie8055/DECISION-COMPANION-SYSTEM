@@ -118,14 +118,57 @@ Yes! Choose "Custom Decision" and define your own criteria.
 **How was AI used in development?**  
 Fully documented in [RESEARCH_LOG.md](./RESEARCH_LOG.md) - all AI suggestions were human-reviewed.
 
-## 📈 What's Next?
+## 📈 Future Enhancement Opportunities
 
-Check [ARCHITECTURE.md](./ARCHITECTURE.md#future-enhancements) for planned improvements:
-- localStorage auto-save (prevent data loss on refresh)
-- Collaborative decision-making
-- Mobile app
-- AI-powered criteria suggestions
-- Enterprise features (SSO, audit trails)
+### Immediate Priorities
+- **Auto-save to localStorage**: Prevent data loss on browser refresh
+- **Enhanced Export Formats**: PowerPoint presentation slides, Excel workbooks
+- **Decision Templates Library**: Expand to 10+ industry-specific templates
+- **Mobile-Optimized UI**: Responsive improvements for smartphone usage
+
+### User Experience Enhancements
+- **Guided Decision Wizard**: Step-by-step onboarding for new users
+- **AI-Powered Criteria Suggestions**: Smart recommendations based on decision type
+- **Template Customization**: Save and share custom templates
+- **Keyboard Shortcuts**: Power-user features for faster navigation
+- **Undo/Redo Functionality**: Non-destructive editing workflow
+
+### Collaboration & Sharing
+- **Multi-User Collaboration**: Real-time co-editing of decisions
+- **Decision Sharing Links**: Shareable URLs for team review
+- **Commenting System**: Discuss options and criteria with stakeholders
+- **Version History**: Track decision evolution over time
+- **Team Workspaces**: Organizational decision repositories
+
+### Advanced Analytics
+- **Outcome Tracking**: Record actual results vs predicted outcomes
+- **Pattern Recognition**: Learn from historical decisions
+- **Confidence Intervals**: Statistical uncertainty in scores
+- **Monte Carlo Simulation**: Probability distributions for uncertain weights
+- **Decision Quality Metrics**: Measure effectiveness over time
+
+### Enterprise Features
+- **User Authentication**: Secure accounts with SSO (Google, Microsoft)
+- **Cloud Synchronization**: Access decisions across devices
+- **Audit Trails**: Compliance-friendly decision logging
+- **API Access**: Programmatic decision creation and retrieval
+- **Custom Branding**: White-label for organizational deployments
+- **Role-Based Access**: Manager/contributor/viewer permissions
+
+### Platform Expansion
+- **Native Mobile Apps**: iOS and Android applications
+- **Browser Extensions**: Quick decision capture in any tab
+- **Slack/Teams Integration**: Decision-making within communication tools
+- **Excel Add-In**: Import/export directly from spreadsheets
+
+### Technical Improvements
+- **Backend Infrastructure**: Supabase/Firebase for persistence
+- **Performance Optimization**: Lazy loading, code splitting
+- **Progressive Web App**: Offline functionality, install prompts
+- **Internationalization**: Multi-language support (i18n)
+- **Accessibility Audit**: WCAG 2.1 AAA compliance
+
+See [BUILD_PROCESS.md](./BUILD_PROCESS.md#future-development-roadmap) for detailed roadmap and [ARCHITECTURE.md](./ARCHITECTURE.md#future-enhancements) for technical planning.
 
 ## 📄 License
 
