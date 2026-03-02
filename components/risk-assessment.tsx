@@ -3,9 +3,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, TrendingDown, Zap, Shield } from 'lucide-react';
+import { AlertTriangle, TrendingDown, Zap, Shield, Info } from 'lucide-react';
 import type { Decision } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface RiskAssessmentProps {
   decision: Decision;
@@ -118,15 +119,30 @@ export function RiskAssessment({ decision }: RiskAssessmentProps) {
 
   return (
     <div className="space-y-6">
+      {/* Simple Explanation */}
+      <Alert className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800">
+        <Info className="h-5 w-5 text-blue-600" />
+        <AlertTitle className="text-base font-bold mb-2">🛡️ What is Risk Assessment?</AlertTitle>
+        <AlertDescription className="text-sm space-y-2">
+          <p>
+            This section helps you understand potential problems or uncertainties with your choice. 
+            Think of it as a "safety check" before you make your final decision.
+          </p>
+          <p className="font-semibold">
+            Lower risk = More confident in the decision | Higher risk = Need to be more careful
+          </p>
+        </AlertDescription>
+      </Alert>
+
       {/* Overall Risk Summary */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="w-5 h-5" />
-            Overall Risk Profile
+            🎯 Your Decision Safety Score
           </CardTitle>
           <CardDescription>
-            Analysis of potential risks and uncertainties in your decision
+            How confident should you feel about this decision?
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -190,10 +206,10 @@ export function RiskAssessment({ decision }: RiskAssessmentProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Zap className="w-5 h-5" />
-              High Variance Criteria
+              ⚡ Where Options Differ Most
             </CardTitle>
             <CardDescription>
-              These criteria show the most inconsistency across options
+              These criteria have the biggest differences between your options - they're important decision factors
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -219,8 +235,9 @@ export function RiskAssessment({ decision }: RiskAssessmentProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingDown className="w-5 h-5" />
-            Recommendations
+            💡 Tips to Reduce Risk
           </CardTitle>
+          <CardDescription>Actions you can take to make a more confident decision</CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3 text-sm">

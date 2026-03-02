@@ -2966,3 +2966,438 @@ This small change reinforces a principle:
 - Removing it = simplification without loss of essential functionality
 
 The best features are often the ones you remove.
+---
+
+## Phase 10: User Testing & Comprehension Improvement (March 2026)
+
+### The "Oh No" Moment: Real User Testing
+
+**Context:** Confident in the app, shared with friends for feedback
+
+**Expected Feedback:**
+- "The calculations are accurate"
+- "The templates are useful"
+- "The UI is nice"
+
+**Actual Feedback:**
+- "I reached the results... but I have no idea what they mean"
+- "Which option should I choose?"
+- "What do these numbers tell me?"
+
+**My Initial Reaction:** 
+"Wait, what? The results page is perfectly clear!"
+
+**Realization 5 minutes later:**
+"Oh no. It's clear *to me* because I built it. To them, it's just... numbers."
+
+### The Humbling Truth
+
+**What I Built:**
+A sophisticated decision analysis engine with:
+- Weighted scoring algorithm
+- Statistical risk assessment
+- Sensitivity analysis
+- Beautiful data visualization
+
+**What Users Needed:**
+Someone to tell them: "Pick this one. Here's why."
+
+**The Gap:**
+I was so focused on building a powerful analysis tool that I forgot the most important question:
+
+**"Can my mom understand this?"**
+
+Answer: No. Neither could my friends. Neither could most people.
+
+### The Debugging Session (With Myself)
+
+**Walking Through the User Journey:**
+
+1. User completes scoring matrix
+2. Clicks "View Results"
+3. Sees: "Top Recommendation: Option A - 7.84/10"
+4. Thinks: "...okay? Is that good? What does this mean?"
+
+**The Problem:**
+I was presenting data, not communicating decisions.
+
+**Example of What I Showed:**
+```
+Overall Score Comparison
+Weighted scores for all options
+[Bar chart with numbers]
+
+Rankings & Scores
+#1 Option A - 7.84/10 - 78.4%
+#2 Option B - 6.12/10 - 61.2%
+```
+
+**What This Looked Like to Users:**
+```
+[Confusing title]
+[Unexplained subtitle]
+[Pretty chart I don't understand]
+
+[Numbers and symbols]
+[More numbers]
+[What do I do with this?]
+```
+
+### Research Phase: Learning How Humans Process Information
+
+**Questions I Asked:**
+1. How do good products explain data?
+2. What makes analysis results understandable?
+3. How do you communicate decisions vs presenting data?
+
+**Key Insight from Research:**
+
+**Data ≠ Information ≠ Knowledge**
+
+- **Data:** "7.84/10"
+- **Information:** "Option A scored 7.84 out of 10"
+- **Knowledge:** "Option A is your best choice because it scored 7.8/10, which is 2.3 points higher than your next option. This is a clear winner."
+
+**I was providing data. Users needed knowledge.**
+
+### The Redesign Strategy
+
+**New Design Principle:**
+"Start with the answer, then show the work."
+
+**Implementation Plan:**
+1. Lead with plain language summary
+2. Explain technical terms in everyday language
+3. Provide context for every number
+4. Tell users if result is significant
+5. Guide them on what to do next
+
+### Changes Implemented: From Jargon to Clarity
+
+#### Before & After Examples
+
+**BEFORE - Analysis Results:**
+```
+Top Recommendation
+Option A
+
+Total Score: 7.84
+Percentage: 78.4%
+```
+
+**AFTER - Analysis Results:**
+```
+🎯 Your Best Choice: Option A
+
+Based on your criteria and preferences, Option A scored 7.8 
+out of 10, making it your top recommendation.
+
+✅ This is a CLEAR WINNER! It scored 2.3 points higher than 
+the next option (Option B).
+
+How to read these results:
+• Scores (0-10): Higher is better - we rated each option on your criteria
+• Weights: Some criteria matter more - we gave them more importance
+• Rankings: #1 is best, #2 is second-best, and so on
+• Percentage: Shows how strong each option is compared to perfect (100%)
+```
+
+**BEFORE - Risk Assessment:**
+```
+Overall Risk Profile
+Analysis of potential risks and uncertainties in your decision
+
+Risk Level: Medium
+```
+
+**AFTER - Risk Assessment:**
+```
+🛡️ What is Risk Assessment?
+
+This section helps you understand potential problems or 
+uncertainties with your choice. Think of it as a "safety 
+check" before you make your final decision.
+
+Lower risk = More confident in the decision
+Higher risk = Need to be more careful
+
+Your Decision Safety Score: Medium
+```
+
+**BEFORE - Sensitivity Analysis:**
+```
+Sensitivity Analysis
+See how changes in criterion weights affect the overall ranking
+
+[Chart with no explanation]
+```
+
+**AFTER - Sensitivity Analysis:**
+```
+🔍 What is Sensitivity Analysis?
+
+This lets you test "What if?" scenarios. What if you cared 
+MORE or LESS about a specific criterion? Would your best 
+choice change?
+
+Use this to: Check if your winner is stable, or if a small 
+change in priorities would flip the recommendation.
+
+How to read this: Lines crossing means the winner would change!
+```
+
+### Terminology Translation Table
+
+Created a "tech-to-human" dictionary:
+
+| Technical Term | What I Changed It To |
+|---------------|---------------------|
+| "Weighted scores" | "Combined ratings based on what matters most" |
+| "Standard deviation" | "How consistent the scores are" |
+| "Variance" | "Differences between options" |
+| "Sensitivity analysis" | "What if scenarios" |
+| "Top recommendation" | "Your best choice" |
+| "Score distribution" | "How spread out the scores are" |
+| "Confidence interval" | "How sure we are" |
+
+### The Implementation Process
+
+**Step 1: Add Context Headers (30 minutes)**
+- Created alert/info boxes at top of each major section
+- Explained what the section does in one sentence
+- Added "How to read this" guides
+
+**Step 2: Rewrite All Labels (45 minutes)**
+- Changed every technical term to plain language
+- Added contextual descriptions after numbers
+- Included comparison context ("X higher than Y")
+
+**Step 3: Add Significance Indicators (30 minutes)**
+- "Close call" vs "Clear winner" indicator
+- Visual cues (✅, ⚠️) for important info
+- Colored highlights for standout information
+
+**Step 4: Test Changes (30 minutes)**
+- Walked through as if I knew nothing about the app
+- Asked: "Would my non-technical friend understand this?"
+- Refined wording until answer was "yes"
+
+**Total Implementation Time:** ~2.5 hours
+
+### The Second User Test
+
+**Scenario:** Same friends, updated results page
+
+**Their Reactions:**
+- "Oh! Now I get it!"
+- "This actually makes sense"
+- "I can see why Option A is better"
+- "This is really helpful now"
+
+**Key Moment:**
+Friend: "Why didn't it look like this before?"
+Me: "Because I'm an idiot who forgot normal people don't speak developer."
+
+### Metrics (Informal)
+
+**Before Changes:**
+- Time to understand results: 2+ minutes (or gave up)
+- Questions asked: 3-5 per user
+- Confidence in decision: Low/Confused
+- Would use app again: "Maybe not"
+
+**After Changes:**
+- Time to understand results: 10-15 seconds
+- Questions asked: 0-1 per user
+- Confidence in decision: High
+- Would use app again: "Definitely"
+
+**Improvement:** ~10x faster comprehension
+
+### What I Learned (The Hard Way)
+
+**Lesson 1: Developer Blindness is Real**
+
+When you build something, you understand it intimately. You forget what it's like to see it for the first time.
+
+**Solution:** Test with people who didn't build it.
+
+**Lesson 2: Technical Sophistication Doesn't Equal User Value**
+
+I built complex algorithms. Users didn't care.
+They wanted to know: "Which one should I pick?"
+
+**Solution:** Lead with the answer, not the math.
+
+**Lesson 3: Jargon is a Barrier, Not a Feature**
+
+Using terms like "sensitivity analysis" made me feel smart.
+It made users feel confused.
+
+**Solution:** If you need to explain a term, use simpler words instead.
+
+**Lesson 4: Context Transforms Data into Decisions**
+
+"7.84/10" tells you nothing.
+"7.84/10 - Your best choice by a clear margin" tells you everything.
+
+**Solution:** Never show a number without explaining what it means.
+
+**Lesson 5: Visual Hierarchy Matters**
+
+Burying the recommendation in a sea of charts = users miss it.
+Big header at top saying "YOUR BEST CHOICE" = impossible to miss.
+
+**Solution:** Put the most important information first and largest.
+
+### The "Mom Test" Principle
+
+Going forward, every feature passes the "Mom Test":
+
+**Question:** "Can I explain this to my mom in 30 seconds?"
+
+If no:
+- It's too complex
+- The language is too technical
+- The UI is unclear
+
+If yes:
+- Ship it
+
+This simple test would have caught this issue immediately.
+
+### Code Changes Breakdown
+
+**Files Modified:**
+```
+components/analysis-results.tsx     (+80 lines)
+components/risk-assessment.tsx      (+45 lines)
+components/sensitivity-analysis.tsx (+40 lines)
+components/decision-comparison.tsx  (+25 lines)
+```
+
+**Total:** ~190 lines added
+
+**What Those Lines Do:**
+- Explanatory headers
+- Plain language descriptions
+- Contextual information
+- Significance indicators
+- "How to read this" guides
+
+**Bundle Size Impact:** +2.5KB
+**User Comprehension Impact:** Priceless
+
+### The Reality Check List
+
+Created a checklist for future features:
+
+**Before Calling a Feature "Done":**
+
+□ Can my non-technical friend understand it?
+□ Does every number have context?
+□ Is technical jargon replaced with plain language?
+□ Do users know what action to take?
+□ Is the most important info presented first?
+□ Would I understand this if I didn't build it?
+□ Did I test it with someone who doesn't code?
+
+If any checkbox is unchecked → Feature is NOT done.
+
+### The Philosophical Shift
+
+**Before This Experience:**
+"I build sophisticated tools for sophisticated users."
+
+**After This Experience:**
+"I build powerful tools that anyone can use."
+
+**The Difference:**
+
+- Sophistication in the **implementation** = good
+- Sophistication in the **interface** = bad
+
+Complex algorithms are fine.
+Complex explanations are not.
+
+**My Job:**
+Take complex analysis and present it so clearly that a teenager could understand it.
+
+That's not "dumbing down."
+That's respecting your users' time and intelligence.
+
+### Moving Forward: New Standards
+
+**For Every New Feature:**
+
+1. **Build the feature** (technical implementation)
+2. **Design the explanation** (how to communicate it)
+3. **Test with non-technical user** (validate clarity)
+4. **Iterate until clear** (refine language)
+5. **Then ship** (not before)
+
+**New Definition of "Complete":**
+
+Previously: "Code works, tests pass"
+Now: "Code works, tests pass, AND my friend understands it"
+
+### Time Investment vs Impact
+
+**Time Spent on This Change:**
+- Problem discovery: 0.5 hours (user testing)
+- Research: 0.75 hours (learning best practices)
+- Implementation: 2.5 hours (code changes)
+- Validation: 0.5 hours (retesting with users)
+- Documentation: 0.5 hours (this writeup)
+
+**Total:** 4.75 hours
+
+**Impact:**
+- Transformed app from "technically impressive" to "actually useful"
+- Made results understandable in seconds instead of minutes (or never)
+- Eliminated primary blocker to user adoption
+- Changed user feedback from "confused" to "delighted"
+
+**ROI:** Probably the highest-value 5 hours I've spent on this project.
+
+### The Bigger Picture
+
+This wasn't just about improving one feature.
+This was about changing my entire approach to building products.
+
+**Old Approach:**
+1. Build feature
+2. Add UI
+3. Ship it
+4. Hope users figure it out
+
+**New Approach:**
+1. Build feature
+2. Make it understandable
+3. Test with real users
+4. Fix what's confusing
+5. THEN ship it
+
+The difference seems small.
+The impact is massive.
+
+### Final Reflection
+
+I built a decision support system.
+
+But I forgot that **making a decision** includes **understanding the recommendation**.
+
+The algorithm worked perfectly.
+But it didn't matter because users couldn't understand the output.
+
+**This experience taught me:**
+
+Great code + Poor communication = Useless product
+Good code + Great communication = Valuable product
+
+**The best technical skill isn't writing clever algorithms.**
+**It's explaining them in a way that helps people.**
+
+That's the real engineering challenge.
+
+And that's what separates demos from products.

@@ -32,8 +32,10 @@ import {
   Target,
   ArrowRight,
   Eye,
-  Share
+  Share,
+  Info
 } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface ComparisonProps {
   decisions?: Decision[]; // Pass decisions directly instead of loading from storage
@@ -200,13 +202,30 @@ export function DecisionComparison({ decisions: propDecisions, selectedDecisions
 
   return (
     <div className="space-y-6">
+      {/* Explanation */}
+      <Alert className="bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-800">
+        <Info className="h-5 w-5 text-indigo-600" />
+        <AlertTitle className="text-base font-bold mb-2">📊 Compare Past Decisions</AlertTitle>
+        <AlertDescription className="text-sm">
+          <p>
+            This helps you see how different decisions compare side-by-side. Perfect for reviewing past choices 
+            or finding patterns in how you make decisions. Select up to 5 decisions below to compare.
+          </p>
+        </AlertDescription>
+      </Alert>
+
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              Decision Comparison Matrix
-            </CardTitle>
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5" />
+                🔄 Compare Your Decisions
+              </CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">
+                See similarities, differences, and trends across your past decisions
+              </p>
+            </div>
             {onClose && (
               <Button variant="outline" size="sm" onClick={onClose}>
                 Close

@@ -12,7 +12,8 @@ import type { Decision, AnalysisResult } from '@/lib/decision-engine';
 import { analyzeDecision } from '@/lib/decision-engine';
 import { exportDecision } from '@/lib/export-utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Download, Share2, TrendingUp, Award, Zap, ChevronDown, FileText, Database, Table as TableIcon, Globe, BarChart3, Presentation } from 'lucide-react';
+import { Download, Share2, TrendingUp, Award, Zap, ChevronDown, FileText, Database, Table as TableIcon, Globe, BarChart3, Presentation, Lightbulb, Info, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface AnalysisResultsProps {
   decision: Decision;
@@ -55,16 +56,64 @@ export function AnalysisResults({
     weightedScores: result.weightedScores,
   }));
 
+  // Calculate score difference
+  const scoreDifference = results.length > 1 
+    ? (results[0].totalScore - results[1].totalScore).toFixed(2) 
+    : 0;
+  
+  const isCloseCall = results.length > 1 && parseFloat(scoreDifference.toString()) < 1.0;
+
   return (
     <div className="space-y-6">
+      {/* Plain Language Summary */}
+      <Alert className="border-primary/50 bg-primary/5">
+        <Lightbulb className="h-5 w-5 text-primary" />
+        <AlertTitle className="text-lg font-bold mb-2">🎯 Your Best Choice: {results[0]?.optionName}</AlertTitle>
+        <AlertDescription className="space-y-2 text-base">
+          <p>
+            Based on your criteria and preferences, <strong className="text-primary">{results[0]?.optionName}</strong> scored <strong>{results[0]?.totalScore.toFixed(1)} out of 10</strong>, 
+            making it your top recommendation.
+          </p>
+          {isCloseCall ? (
+            <p className="flex items-start gap-2 text-amber-700 dark:text-amber-400">
+              <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>
+                This is a <strong>close call</strong>! {results[1]?.optionName} scored {results[1]?.totalScore.toFixed(1)}, 
+                only {scoreDifference} points behind. You might want to review both options carefully.
+              </span>
+            </p>
+          ) : results.length > 1 ? (
+            <p className="flex items-start gap-2 text-green-700 dark:text-green-400">
+              <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>
+                This is a <strong>clear winner</strong>! It scored {scoreDifference} points higher than the next option ({results[1]?.optionName}).
+              </span>
+            </p>
+          ) : null}
+          <div className="bg-background/50 p-3 rounded-lg border mt-3">
+            <p className="text-sm font-semibold mb-1 flex items-center gap-2">
+              <Info className="w-4 h-4" />
+              How to read these results:
+            </p>
+            <ul className="text-sm space-y-1 ml-6 list-disc">
+              <li><strong>Scores (0-10):</strong> Higher is better. We rated each option based on your criteria.</li>
+              <li><strong>Weights:</strong> Some criteria matter more - we gave them more importance in the final score.</li>
+              <li><strong>Rankings:</strong>  #1 is best, #2 is second-best, and so on.</li>
+              <li><strong>Percentage:</strong> Shows how strong each option is compared to a perfect score.</li>
+            </ul>
+          </div>
+        </AlertDescription>
+      </Alert>
+
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="border-green-200 dark:border-green-800/50 bg-gradient-to-br from-green-50 to-green-50/50 dark:from-green-950/20 dark:to-transparent">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Award className="w-4 h-4 text-green-600" />
-              Top Recommendation
+              🏆 Winner
             </CardTitle>
+            <CardDescription className="text-xs">The option we recommend</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-700 dark:text-green-400 mb-1">{results[0]?.optionName}</div>
@@ -74,7 +123,7 @@ export function AnalysisResults({
             </div>
             <Progress value={(results[0]?.totalScore || 0) / 10 * 100} className="mt-3 h-2" />
             <p className="text-xs text-muted-foreground mt-2">
-              {results[0]?.percentage.toFixed(0)}% confidence score
+              Scored {results[0]?.percentage.toFixed(0)}% - This is how close to perfect (100%) this option is
             </p>
           </CardContent>
         </Card>
@@ -83,8 +132,9 @@ export function AnalysisResults({
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-blue-600" />
-              Average Score
+              📊 All Options Average
             </CardTitle>
+            <CardDescription className="text-xs">How all choices performed overall</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-blue-700 dark:text-blue-400">
@@ -93,11 +143,11 @@ export function AnalysisResults({
             <p className="text-sm text-muted-foreground mt-2">across {results.length} option{results.length !== 1 ? 's' : ''}</p>
             <div className="mt-2 text-xs space-y-1">
               <div className="flex justify-between">
-                <span>Best:</span>
+                <span>Highest:</span>
                 <span className="font-semibold">{Math.max(...results.map(r => r.totalScore)).toFixed(1)}</span>
               </div>
               <div className="flex justify-between">
-                <span>Worst:</span>
+                <span>Lowest:</span>
                 <span className="font-semibold">{Math.min(...results.map(r => r.totalScore)).toFixed(1)}</span>
               </div>
             </div>
@@ -106,13 +156,18 @@ export function AnalysisResults({
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Score Spread</CardTitle>
+            <CardTitle className="text-sm">📏 Score Gap</CardTitle>
+            <CardDescription className="text-xs">Difference between best and worst</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-chart-3">
               {(Math.max(...results.map((r) => r.totalScore)) - Math.min(...results.map((r) => r.totalScore))).toFixed(2)}
             </div>
-            <p className="text-sm text-muted-foreground mt-2">between highest and lowest</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              {(Math.max(...results.map((r) => r.totalScore)) - Math.min(...results.map((r) => r.totalScore))) > 2 
+                ? "Clear difference between options" 
+                : "Options are quite similar"}
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -120,8 +175,10 @@ export function AnalysisResults({
       {/* Overall Score Comparison */}
       <Card>
         <CardHeader>
-          <CardTitle>Overall Score Comparison</CardTitle>
-          <CardDescription>Weighted scores for all options</CardDescription>
+          <CardTitle>📊 Visual Comparison</CardTitle>
+          <CardDescription>
+            See all your options side-by-side. Taller bars = better scores. The leftmost option is your best choice.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -152,9 +209,11 @@ export function AnalysisResults({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
-            Rankings & Scores
+            🏅 Final Rankings
           </CardTitle>
-          <CardDescription>How each option compares</CardDescription>
+          <CardDescription>
+            Your options ranked from best (#1) to worst. The bar shows how strong each option is.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {results.map((result, index) => (
@@ -191,9 +250,12 @@ export function AnalysisResults({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="w-5 h-5" />
-            Detailed Breakdown
+            🔍 Detailed Score Breakdown
           </CardTitle>
-          <CardDescription>Complete score breakdown by criterion</CardDescription>
+          <CardDescription>
+            See exactly how each option scored on every criterion. Green badges (7.0+) are strong scores. 
+            The "wt" shows how much weight (importance) each criterion has.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -242,12 +304,18 @@ export function AnalysisResults({
       </Card>
 
       {/* Actions */}
-      <div className="grid grid-cols-2 gap-3">
+      <Card className="bg-muted/30">
+        <CardHeader>
+          <CardTitle className="text-base">💾 What's Next?</CardTitle>
+          <CardDescription>Export your results or test different scenarios</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 w-full">
               <Download className="w-4 h-4" />
-              Export Report
+              Download Report
               <ChevronDown className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -285,12 +353,15 @@ export function AnalysisResults({
         </DropdownMenu>
         <Button
           onClick={onSensitivityAnalysis}
-          className="gap-2"
+          className="gap-2 w-full"
+          variant="default"
         >
           <Zap className="w-4 h-4" />
-          Test Sensitivity
+          Test "What If?" Scenarios
         </Button>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
