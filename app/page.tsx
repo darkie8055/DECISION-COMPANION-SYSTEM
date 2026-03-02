@@ -9,14 +9,15 @@ import { AnalysisResults } from '@/components/analysis-results';
 import { SensitivityAnalysis } from '@/components/sensitivity-analysis';
 import { DecisionHistory } from '@/components/decision-history';
 import { RiskAssessment } from '@/components/risk-assessment';
-import { OnboardingTour } from '@/components/onboarding-tour';
+import { InteractiveTutorial } from '@/components/interactive-tutorial';
+import { VideoTutorial } from '@/components/video-tutorial';
 import { DecisionComparison } from '@/components/decision-comparison';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { storageManager } from '@/lib/storage';
 import type { Decision, Score, AnalysisResult } from '@/lib/decision-engine';
-import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle, Check, Loader2, Layers, Trash2 } from 'lucide-react';
+import { ChevronLeft, Home as HomeIcon, History, Activity, Share2, BarChart3, AlertTriangle, Check, Loader2, Layers, Trash2, PlayCircle } from 'lucide-react';
 
 type Step = 'templates' | 'customize' | 'setup' | 'scoring' | 'results' | 'sensitivity' | 'risk' | 'history';
 
@@ -27,6 +28,7 @@ export default function Home() {
   const [decisionHistory, setDecisionHistory] = useState<Decision[]>([]);
   const [activeTab, setActiveTab] = useState<'analysis' | 'risk' | 'history' | 'comparison'>('analysis');
   const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showVideoTutorial, setShowVideoTutorial] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
   const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'shared'>('idle');
   const [previousStep, setPreviousStep] = useState<Step | null>(null);
@@ -346,12 +348,17 @@ export default function Home() {
       </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-6 md:py-10">
-        {/* Onboarding Tour */}
+        {/* Interactive Tutorial */}
         {showOnboarding && (
-          <OnboardingTour
+          <InteractiveTutorial
             onComplete={handleCompleteOnboarding}
             onSkip={handleSkipOnboarding}
           />
+        )}
+
+        {/* Video Tutorial */}
+        {showVideoTutorial && (
+          <VideoTutorial onClose={() => setShowVideoTutorial(false)} />
         )}
 
         {/* Global Header Navigation */}
@@ -424,7 +431,16 @@ export default function Home() {
         {/* Home Header */}
         {step === 'templates' && (
           <div className="mb-12 text-center">
-            <div className="absolute top-8 right-8">
+            <div className="absolute top-8 right-8 flex gap-2">
+              <Button
+                onClick={() => setShowVideoTutorial(true)}
+                variant="outline"
+                size="sm"
+                className="gap-2"
+              >
+                <PlayCircle className="w-4 h-4" />
+                Watch Tutorial
+              </Button>
               <ThemeToggle />
             </div>
             <div className="relative">
