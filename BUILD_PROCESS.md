@@ -567,10 +567,10 @@ Enhanced:
 ## Phase 8: Documentation (Hours 10-11)
 
 ### Created
-1. **PROJECT_OVERVIEW.md** - Technical architecture
+1. **ARCHITECTURE.md** - Technical architecture
 2. **GETTING_STARTED.md** - User guide with tips
 3. **FEATURES.md** - Comprehensive feature list
-4. **APP_PREVIEW.jpg** - Visual representation
+4. **Design Diagrams.pdf** - Visual representation
 5. **README.md** - This comprehensive guide
 
 ### Documentation Strategy

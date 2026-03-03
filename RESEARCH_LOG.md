@@ -3246,7 +3246,7 @@ Result: 80% faster interaction, simpler code, maintained accessibility
 ### Related Updates Needed
 - RESEARCH_LOG.md - This documentation
 - BUILD_PROCESS.md - Add to development narrative
-- README.md, PROJECT_OVERVIEW.md - Update "Dark Mode" feature description if present
+- README.md, FEATURES.md - Update "Dark Mode" feature description if present
 
 ---
 

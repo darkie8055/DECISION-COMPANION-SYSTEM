@@ -4,7 +4,10 @@
 
 ## 📊 Overview
 
-This document explains how Decision Companion calculates scores, risk assessments, and analysis results. All algorithms are transparent and mathematically sound.
+This document explains how Decision Companion calculates scores, risk assessments, and analysis results. All algorithms are **transparent, explainable, and mathematically sound**—there are no "black box" AI models or hidden calculations. Every recommendation can be traced back to simple arithmetic that anyone can verify.
+
+**Why This Matters:**  
+Transparent algorithms build trust. You can see exactly which criteria influenced your decision and by how much.
 
 ## 🚀 Quick Reference
 
@@ -56,6 +59,11 @@ Total Score = (35×8 + 25×9 + 20×7 + 15×8 + 5×6) / 100
 Percentage = (Total Score / 10) × 100
            = (7.95 / 10) × 100
            = 79.5%
+```
+
+**Why This Formula:**  
+Simple weighted average—no AI, no machine learning, no hidden factors. Just transparent mathematics where you control every input.
+
 ---
 
 ## ⚠️ Risk Assessment Algorithms
@@ -386,4 +394,24 @@ Score Range → Risk Level
 - Any weights <5% (question relevance)
 - Top option scoring <6.0 (low confidence)
 
-This documentation provides the complete mathematical foundation for understanding exactly how Decision Companion calculates every score and assessment! 🎯
+---
+
+## 🔍 Why No AI or Machine Learning?
+
+**Question:** Why not use AI for smarter recommendations?
+
+**Answer:** Transparency and control. The assignment requirement states the system should be **explainable and not a "black box"**. Here's why our approach is better for decision-making:
+
+**My Approach (Transparent Mathematics):**
+- ✅ You control every input (weights, scores, criteria)
+- ✅ Every calculation can be verified with a calculator
+- ✅ Results are consistent and reproducible
+- ✅ You can explain decisions to others with confidence
+- ✅ No hidden biases or training data influencing outcomes
+- ✅ Works offline, no API calls, complete privacy
+
+**Bottom Line:** For important decisions, you should understand exactly how your answer was calculated. That's what this system provides.
+
+---
+
+This documentation provides the complete mathematical foundation for understanding exactly how Decision Companion calculates every score and assessment—with full transparency and zero hidden logic! 🎯

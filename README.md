@@ -67,12 +67,15 @@ A web application that helps you make complex decisions using structured weighte
 
 **The Problem:** People make suboptimal decisions when overwhelmed by multiple options and criteria. Traditional pros/cons lists fail for complex scenarios.
 
-**The Solution:** Break down decisions systematically:
+**The Solution:** Break down decisions systematically using **transparent, explainable mathematics**—no AI black boxes, just clear weighted scoring:
 - Define what matters (criteria)
 - Weight importance (must sum to 100%)
 - Score each option (0-10 scale)
-- Get transparent mathematical rankings
+- Get transparent mathematical rankings (Formula: Σ(weight × score) / 100)
 - Analyze risks and sensitivities
+- Every calculation is verifiable and explainable
+
+**Why Transparent Algorithms?** Unlike AI-driven systems, you can see exactly how every recommendation is made. No hidden factors, no black-box magic—just math you can trust and verify.
 
 ## ✨ Key Features
 
@@ -83,8 +86,9 @@ A web application that helps you make complex decisions using structured weighte
 - **Sensitivity Analysis**: Test "what-if" scenarios by adjusting weights
 - **Decision Comparison**: Side-by-side analysis of multiple saved decisions
 - **Multi-Format Export**: PDF (printable), PowerPoint (presentations), Excel, JSON
-- **Dark Mode**: Full dark theme support
+- **Dark Mode**: Full dark theme support with manual toggle
 - **Privacy First**: All data stays in your browser (no server required)
+- **100% Transparent**: Every calculation is explainable—no AI, no black boxes, just math
 
 ## 🏗️ Tech Stack
 
@@ -215,35 +219,32 @@ netlify deploy --prod
 Yes! Auto-saved to localStorage. Delete anytime via trash icon.
 
 **What export formats?**  
-PDF, PowerPoint, Excel/CSV, JSON - all mobile-optimized.
+PDF (printable), PowerPoint (presentations), Excel/CSV, JSON - all mobile-optimized and ready to use.
 
 **Is my data private?**  
 Yes! Everything runs in your browser. No server involved.
 
 **Can I customize templates?**  
-Yes! Choose "Custom Decision" to build from scratch, or start with any template and modify it. You can:
+Yes! Choose "Custom Decision" to build from scratch, or start with any template and modify it. The custom template builder supports:
 - Add/remove criteria
 - Adjust weight distributions
 - Rename options and criteria
-- Save custom templates for future use
+- Full flexibility for any decision type
+
+**How are calculations done?**  
+Using simple, transparent mathematics: Total Score = Σ(Weight × Score) / 100. No AI, no machine learning, no hidden factors. Every result can be verified with a calculator. See [ALGORITHMS_EXPLAINED.md](./ALGORITHMS_EXPLAINED.md) for complete formulas.
 
 **How was AI used in development?**  
 Fully documented in [RESEARCH_LOG.md](./RESEARCH_LOG.md) - all AI suggestions were human-reviewed.
 
 ## 📈 Future Enhancement Opportunities
 
-### Immediate Priorities
-- **Auto-save to localStorage**: Prevent data loss on browser refresh
-- **Enhanced Export Formats**: PowerPoint presentation slides, Excel workbooks
-- **Decision Templates Library**: Expand to 10+ industry-specific templates
-- **Mobile-Optimized UI**: Responsive improvements for smartphone usage
-
 ### User Experience Enhancements
 - **Guided Decision Wizard**: Step-by-step onboarding for new users
-- **AI-Powered Criteria Suggestions**: Smart recommendations based on decision type
-- **Template Customization**: Save and share custom templates
+- **AI-Powered Criteria Suggestions**: Smart recommendations based on decision type (optional feature)
 - **Keyboard Shortcuts**: Power-user features for faster navigation
 - **Undo/Redo Functionality**: Non-destructive editing workflow
+- **Template Library Expansion**: 10+ industry-specific templates
 
 ### Collaboration & Sharing
 - **Multi-User Collaboration**: Real-time co-editing of decisions

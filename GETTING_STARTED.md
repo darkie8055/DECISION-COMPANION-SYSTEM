@@ -37,6 +37,19 @@
 
 ## 📈 Understanding Your Results
 
+### How Decision Companion Works
+**Transparent Mathematics**: Decision Companion uses simple weighted scoring—no AI, no machine learning, no "black box" algorithms. Every score you see is calculated using this formula:
+
+```
+Total Score = Σ(Criterion Weight × Your Rating) / 100
+```
+
+This means:
+- You control every input (weights and scores)
+- Every result can be verified with a calculator
+- No hidden factors influencing your decision
+- Completely explainable and transparent
+
 ### Ranking Display
 - **#1 Recommendation**: Your best choice based on weighted scoring
 - **Progress Bars**: Visual representation of each option's total score
@@ -92,10 +105,11 @@ Click "Export Report" dropdown to choose format:
 
 **Available Export Formats:**
 - **PDF Report**: Professional printable format (opens with auto-print dialog)
+- **PowerPoint (PPT)**: Presentation-ready slides for stakeholder reviews
 - **Excel/CSV Export**: Spreadsheet-compatible format for Excel/Sheets
 - **JSON Data**: Complete structured data for programmatic use
 
-**Note:** Text (.txt) and separate CSV formats removed due to redundancy and mobile incompatibility.
+**All exports include**: Complete scoring matrix, weighted calculations, recommendations, and analysis results.
 
 ## 🔍 Common Use Cases & Queries
 
@@ -165,10 +179,11 @@ Click "Export Report" dropdown to choose format:
 
 ### For Better Decisions
 1. **Be specific with criteria names**: Instead of "Price", use "Total Cost of Ownership"
-2. **Validate your weights**: Weights should reflect true importance, not just add up
+2. **Validate your weights**: Weights should reflect true importance, not just add up to 100
 3. **Use full scale**: Rate from 0-10, don't cluster around 5
-4. **Trust the math**: Weighted scoring removes bias and emotion
-5. **Check sensitivity**: Always test how changes affect your outcome
+4. **Trust the math**: Weighted scoring removes bias and provides objective rankings
+5. **Check sensitivity**: Always test how weight changes affect your outcome
+6. **Understand the formula**: Simple weighted average means you can verify any result yourself
 
 ### Common Workflows
 - **Job Decision**: Weight work-life balance and career growth equally (25% each)
@@ -210,7 +225,10 @@ A: Yes! Go back to the Decision Info section to modify criteria/options.
 A: The form won't let you continue. Adjust until they equal 100%.
 
 **Q: Why is my top choice so different from what I expected?**
-A: You've uncovered your true priorities! The weighted system removes emotion.
+A: You've uncovered your true priorities! The weighted system removes emotion and bias, revealing what actually matters most based on your own ratings. This is transparent mathematics at work.
+
+**Q: How do I know the calculations are correct?**
+A: Every calculation is simple arithmetic you can verify yourself. Check ALGORITHMS_EXPLAINED.md for the complete mathematical breakdown, or manually calculate any score using: (Weight₁ × Score₁ + Weight₂ × Score₂ + ...) / 100
 
 **Q: Can I share my analysis with others?**
 A: Currently you can export the report. Future versions will include sharing links.
@@ -238,10 +256,12 @@ Decision Companion works on mobile:
 
 ## 🌙 Dark Mode
 
-Automatically follows your system settings:
-- Comfortable to use anytime
-- All charts and colors adjusted for dark backgrounds
-- Toggle in your OS settings to see the change
+The app includes a built-in theme toggle:
+- **Default**: Opens in dark mode for comfortable viewing
+- **Toggle Location**: Click the sun/moon icon in the top-right corner
+- **Options**: Switch between Light and Dark themes
+- **Persistent**: Your preference is saved automatically across sessions
+- **All components adapted**: Charts, tables, and UI elements optimized for your chosen theme
 
 ## 📞 Need Help?
 
@@ -254,4 +274,4 @@ Automatically follows your system settings:
 
 **Ready to make better decisions?** Start with a template or create your custom framework today!
 
-Remember: The best decision is an *informed* decision. Decision Companion helps you get informed.
+Remember: The best decision is an *informed* decision. Decision Companion provides transparent, explainable analysis using simple mathematics—no AI black boxes, just clear reasoning you can trust and verify.
