@@ -1,5 +1,7 @@
 # User Flow & Decision Process Flowcharts
 
+> **Transparency Note:** All development work, research, design, and coding in this project was performed by the human developer. AI tools (V0.dev, ChatGPT, GitHub Copilot) were used as assistants to help look up information, generate boilerplate code, and structure documentation professionally. This log itself was created by the developer and formatted with AI assistance to ensure clear, professional presentation. Every decision, modification, and implementation was human-driven.
+
 ## 1. Main Application Flow
 
 ```
@@ -24,7 +26,7 @@
                     │                          │
                     │ ActiveTabs (in results): │
                     │   'analysis', 'risk',    │
-                    │   'history' (=Sensitivity│
+                    │   'history'  =Sensitivity│
                     │   'comparison'           │
                     └──────────────────────────┘
                                   │

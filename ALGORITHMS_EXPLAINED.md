@@ -1,5 +1,7 @@
 # Decision Companion: Algorithms & Calculations Explained
 
+> **Transparency Note:** All development work, research, design, and coding in this project was performed by the human developer. AI tools (V0.dev, ChatGPT, GitHub Copilot) were used as assistants to help look up information, generate boilerplate code, and structure documentation professionally. This log itself was created by the developer and formatted with AI assistance to ensure clear, professional presentation. Every decision, modification, and implementation was human-driven.
+
 ## 📊 Overview
 
 This document explains how Decision Companion calculates scores, risk assessments, and analysis results. All algorithms are transparent and mathematically sound.

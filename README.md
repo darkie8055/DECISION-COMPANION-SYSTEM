@@ -32,6 +32,7 @@ A web application that helps you make complex decisions using structured weighte
 ## ✨ Key Features
 
 - **4 Pre-built Templates**: Job offers, laptop purchases, vacation planning, general purchases
+- **Custom Template Builder**: Create and save your own decision templates with custom criteria and weights
 - **Interactive Scoring**: Real-time visual feedback with color-coded sliders
 - **Risk Assessment**: Identifies decision uncertainty, low diversity, and unclear outcomes
 - **Sensitivity Analysis**: Test "what-if" scenarios by adjusting weights
@@ -113,7 +114,11 @@ PDF, PowerPoint, Excel/CSV, JSON - all mobile-optimized.
 Yes! Everything runs in your browser. No server involved.
 
 **Can I customize templates?**  
-Yes! Choose "Custom Decision" and define your own criteria.
+Yes! Choose "Custom Decision" to build from scratch, or start with any template and modify it. You can:
+- Add/remove criteria
+- Adjust weight distributions
+- Rename options and criteria
+- Save custom templates for future use
 
 **How was AI used in development?**  
 Fully documented in [RESEARCH_LOG.md](./RESEARCH_LOG.md) - all AI suggestions were human-reviewed.

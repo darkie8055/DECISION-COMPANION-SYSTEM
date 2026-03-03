@@ -3588,14 +3588,14 @@ OLD VERSION:
 ─────────────────────────────────
 
 NEW VERSION:
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ 💵 Price              [Medium]┃
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ 💵 Price             [Medium]┃
 ┃ This criterion affects your   ┃
 ┃ decision significantly        ┃
 ┃                               ┃
 ┃ Current Importance │ Spread   ┃
-┃      30%          │ 2.8 pts  ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┃      30%          │ 2.8 pts   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
 ### Implementation Details
