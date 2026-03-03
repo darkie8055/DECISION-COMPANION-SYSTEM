@@ -4,13 +4,58 @@
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- **Node.js** 18.x or higher ([Download here](https://nodejs.org/))
+- **Package Manager:** pnpm (recommended), npm, or yarn
+- **Modern Browser:** Chrome, Firefox, Safari, or Edge (latest version)
+
+### Installation & Setup
+
+**Step 1: Clone the Repository**
 ```bash
-# Install and run
-pnpm install && pnpm dev
-# Visit http://localhost:3000
+git clone https://github.com/darkie8055/DECISION-COMPANION-SYSTEM.git
+cd DECISION-COMPANION-SYSTEM
 ```
 
-**Requirements:** Node.js 18+, Modern browser (Chrome/Firefox/Safari/Edge)
+**Step 2: Install Dependencies**
+```bash
+# Using pnpm (recommended)
+pnpm install
+
+# Or using npm
+npm install
+
+# Or using yarn
+yarn install
+```
+
+**Step 3: Start Development Server**
+```bash
+# Using pnpm
+pnpm dev
+
+# Or using npm
+npm run dev
+
+# Or using yarn
+yarn dev
+```
+
+**Step 4: Open in Browser**
+```
+Visit: http://localhost:3000
+```
+
+The application will automatically open in your default browser. If not, manually navigate to the URL above.
+
+### Verify Installation
+
+Once running, you should see:
+- ✅ The Decision Companion homepage
+- ✅ Four template options (Job Offer, Laptop Purchase, Vacation Planning, General)
+- ✅ No console errors in browser developer tools
+
+If you encounter any issues, see the **Troubleshooting** section in Development below.
 
 ---
 
@@ -75,19 +120,81 @@ hooks/        # React hooks (mobile, toast)
 
 ## 🔧 Development
 
+### Available Scripts
+
+**Development Mode** (with hot reload)
 ```bash
-# Install dependencies
+pnpm dev          # Starts dev server on http://localhost:3000
+npm run dev       # Alternative with npm
+yarn dev          # Alternative with yarn
+```
+
+**Production Build**
+```bash
+pnpm build        # Creates optimized production build
+npm run build     # Alternative with npm
+yarn build        # Alternative with yarn
+```
+
+**Start Production Server**
+```bash
+pnpm start        # Runs production build locally
+npm run start     # Alternative with npm
+yarn start        # Alternative with yarn
+```
+
+**Type Checking**
+```bash
+npx tsc --noEmit  # Check TypeScript types without compilation
+```
+
+**Linting** (if configured)
+```bash
+pnpm lint         # Run ESLint
+npm run lint      # Alternative with npm
+```
+
+### Project Structure
+```
+app/          # Next.js app directory (pages & routing)
+components/   # React components (8 main + 40 shadcn/ui)
+lib/          # Core logic (decision-engine, templates, export, storage)
+hooks/        # Custom React hooks (mobile, toast)
+public/       # Static assets
+styles/       # Global styles
+```
+
+### Environment Variables
+No environment variables required - runs entirely client-side.
+
+### Troubleshooting
+
+**Port 3000 already in use?**
+```bash
+# Find and kill the process using port 3000
+# Windows
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# macOS/Linux
+lsof -ti:3000 | xargs kill -9
+
+# Or use a different port
+pnpm dev -- -p 3001
+```
+
+**Module not found errors?**
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules pnpm-lock.yaml
 pnpm install
+```
 
-# Development server
-pnpm dev             # http://localhost:3000
-
-# Production build
-pnpm build
-pnpm start
-
-# Type checking
-npx tsc --noEmit
+**TypeScript errors?**
+```bash
+# Restart TypeScript server in VS Code
+# Press: Ctrl+Shift+P (or Cmd+Shift+P on Mac)
+# Type: "TypeScript: Restart TS Server"
 ```
 
 ## 🚢 Deployment
